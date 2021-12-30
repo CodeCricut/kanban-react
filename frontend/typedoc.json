@@ -1,0 +1,6 @@
+{
+    "entryPoints": ["index.tsx"],
+    "includes": ["./docs/tutorials/"],
+    "out": "./docs/documentation",
+    "logLevel": "Verbose"
+}
