@@ -42,7 +42,6 @@
         ]
     },
     "devDependencies": {
-        "jsdoc": "^3.6.7",
         "typedoc": "^0.22.10"
     }
 }
