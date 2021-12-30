@@ -1,0 +1,7 @@
+{
+    "entryPoints": ["index.ts"],
+    "exclude": ["**/frontend/**"],
+    "includes": ["./server/docs/tutorials/"],
+    "out": "./server/docs/documentation",
+    "logLevel": "Verbose"
+}

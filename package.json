@@ -2,10 +2,12 @@
     "name": "kanbanreact",
     "version": "1.0.0",
     "description": "MERN implementation of Kanban board",
-    "main": "server/index.ts",
+    "main": "server/src/index.ts",
     "scripts": {
         "start": "node server/index.ts",
-        "test": "jest"
+        "test": "jest",
+        "document": "node_modules/.bin/typedoc --entryPointStrategy expand ./server/src",
+        "doc": "node_modules/.bin/typedoc --entryPointStrategy packages kanbanreact ."
     },
     "repository": {
         "type": "git",
@@ -30,6 +32,7 @@
     "devDependencies": {
         "@types/jest": "^27.0.3",
         "jest": "^27.4.5",
-        "ts-jest": "^27.1.2"
+        "ts-jest": "^27.1.2",
+        "typedoc": "^0.22.10"
     }
 }
