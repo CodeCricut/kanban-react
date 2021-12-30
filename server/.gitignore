@@ -12,7 +12,7 @@
 /build
 
 # generated documentation
-/server/docs/documentation
+/docs/documentation
 
 # misc
 .DS_Store

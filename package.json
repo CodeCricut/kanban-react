@@ -1,14 +1,6 @@
 {
-    "name": "kanbanreact",
-    "version": "1.0.0",
+    "name": "kanban-packages",
     "description": "MERN implementation of Kanban board",
-    "main": "server/src/index.ts",
-    "scripts": {
-        "start": "node server/index.ts",
-        "test": "jest",
-        "document": "node_modules/.bin/typedoc --entryPointStrategy expand ./server/src",
-        "doc": "node_modules/.bin/typedoc --entryPointStrategy packages kanbanreact ."
-    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/CodeCricut/kanban-react.git"
@@ -25,14 +17,12 @@
         "url": "https://github.com/CodeCricut/kanban-react/issues"
     },
     "homepage": "https://github.com/CodeCricut/kanban-react#readme",
-    "dependencies": {
-        "ts-node": "^10.4.0",
-        "typescript": "^4.5.4"
+    "scripts": {
+        "install:frontend": "cd frontend && npm install",
+        "install:server": "cd server && npm install",
+        "postinstall": "npm-run-all install:*"
     },
     "devDependencies": {
-        "@types/jest": "^27.0.3",
-        "jest": "^27.4.5",
-        "ts-jest": "^27.1.2",
-        "typedoc": "^0.22.10"
+        "npm-run-all": "^4.1.5"
     }
 }

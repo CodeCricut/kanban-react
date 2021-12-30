@@ -1,0 +1,21 @@
+{
+    "name": "kanbanreact",
+    "version": "1.0.0",
+    "main": "src/index.ts",
+    "scripts": {
+        "start": "node src/index.ts",
+        "test": "jest",
+        "document": "node_modules/.bin/typedoc --entryPointStrategy expand ./src",
+        "doc": "node_modules/.bin/typedoc --entryPointStrategy packages kanbanreact ."
+    },
+    "dependencies": {
+        "ts-node": "^10.4.0",
+        "typescript": "^4.5.4"
+    },
+    "devDependencies": {
+        "@types/jest": "^27.0.3",
+        "jest": "^27.4.5",
+        "ts-jest": "^27.1.2",
+        "typedoc": "^0.22.10"
+    }
+}
