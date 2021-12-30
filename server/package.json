@@ -5,8 +5,7 @@
     "scripts": {
         "start": "node src/index.ts",
         "test": "jest",
-        "document": "node_modules/.bin/typedoc --entryPointStrategy expand ./src",
-        "doc": "node_modules/.bin/typedoc --entryPointStrategy packages kanbanreact ."
+        "document": "node_modules/.bin/typedoc --entryPointStrategy expand ./src"
     },
     "dependencies": {
         "ts-node": "^10.4.0",
