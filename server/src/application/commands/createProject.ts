@@ -1,5 +1,5 @@
 import { Project } from "../../domain/project";
-import { ProjectRepository } from "../../domain/repository";
+import { IProjectRepository } from "../../domain/repository";
 import { ICommandHandler } from "../commandHandler";
 
 export type CreateProjectCommand = {
@@ -11,7 +11,7 @@ export type CreateProjectCommand = {
 export class CreateProjectHandler
     implements ICommandHandler<CreateProjectCommand, Project>
 {
-    constructor(private projectRepo: ProjectRepository) {}
+    constructor(private projectRepo: IProjectRepository) {}
 
     async handle(command: CreateProjectCommand): Promise<Project> {
         const { name, description, createdAt } = command;

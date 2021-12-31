@@ -2,15 +2,19 @@ import { Router } from "express";
 import { Config } from "../config";
 import { CreateProjectHandler } from "./application/commands/createProject";
 import { ProjectController } from "./controllers/projectController";
-import { ProjectRepository } from "./domain/repository";
+import { IProjectRepository } from "./domain/repository";
 import { makeApiRouter } from "./routers/api";
 import { makeDocsRouter } from "./routers/docsRouter";
 import { makeFrontendRouter } from "./routers/frontend";
 import { makeProjectRouter } from "./routers/api/projectRouter";
 import { TestProjectRepository } from "./services/testProjectRepository";
+import { ProjectRepository } from "./persistence/project/ProjectRepository";
+import { IDatabase } from "./application/contracts/database";
+import { MongoDatabase } from "./persistence/MongoDatabase";
 
 export type AppDependencies = {
-    projectRepository: ProjectRepository;
+    database: IDatabase;
+    projectRepository: IProjectRepository;
     createProjectHandler: CreateProjectHandler;
     projectController: ProjectController;
     projectRouter: Router;
@@ -20,7 +24,8 @@ export type AppDependencies = {
 };
 
 export function getAppDependencies(config: Config): AppDependencies {
-    const projectRepository = new TestProjectRepository();
+    const database = new MongoDatabase();
+    const projectRepository = new ProjectRepository();
     const createProjectHandler = new CreateProjectHandler(projectRepository);
     const projectController = new ProjectController(createProjectHandler);
 
@@ -31,6 +36,7 @@ export function getAppDependencies(config: Config): AppDependencies {
     const apiRouter: Router = makeApiRouter(projectRouter);
 
     return {
+        database,
         projectRepository,
         createProjectHandler,
         projectController,

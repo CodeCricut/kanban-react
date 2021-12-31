@@ -1,7 +1,7 @@
 import { Project } from "../domain/project";
-import { ProjectRepository } from "../domain/repository";
+import { IProjectRepository } from "../domain/repository";
 
-export class TestProjectRepository implements ProjectRepository {
+export class TestProjectRepository implements IProjectRepository {
     create(entity: Project): Promise<Project> {
         console.log("creating project...");
         console.dir(entity);
