@@ -7,10 +7,16 @@ dotenv.config();
 
 const app = express();
 
-export function makeApp(apiRouter: Router) {
+export function makeApp(
+    apiRouter: Router,
+    frontendRouter: Router,
+    docsRouter: Router
+) {
     app.use(cors());
     app.use(express.json());
     app.use("/api", apiRouter);
+    app.use("/docs", docsRouter);
+    app.use("/", frontendRouter);
     return app;
 }
 
