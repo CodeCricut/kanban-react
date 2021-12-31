@@ -4,6 +4,7 @@
     "main": "src/index.ts",
     "scripts": {
         "start": "ts-node ./src/index.ts",
+        "dev": "nodemon",
         "test": "jest",
         "document": "npx tsoa spec && npx tsoa routes && typedoc --entryPointStrategy expand ./src"
     },
@@ -23,6 +24,7 @@
         "@types/express": "^4.17.13",
         "@types/jest": "^27.0.3",
         "jest": "^27.4.5",
+        "nodemon": "^2.0.15",
         "ts-jest": "^27.1.2",
         "ts-node": "^10.4.0",
         "typedoc": "^0.22.10"
