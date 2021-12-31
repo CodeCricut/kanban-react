@@ -10,7 +10,7 @@ const app = express();
 export function makeApp(apiRouter: Router) {
     app.use(cors());
     app.use(express.json());
-    app.use(apiRouter);
+    app.use("/api", apiRouter);
     return app;
 }
 
