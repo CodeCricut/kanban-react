@@ -1,19 +1,15 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a simple example NodeJS API project to demonstrate Swagger Documentation",
+        "description": "API for the MERN Kanban project.",
         "version": "1.0.0",
-        "title": "Tasks API",
-        "contact": {
-            "email": "abc@gmail.com"
-        },
+        "title": "Kanban API",
         "license": {
             "name": "Apache 2.0",
             "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
         }
     },
     "schemes": ["http"],
-    "host": "localhost:3000",
     "basePath": "/api",
     "paths": {
         "/docs": {
