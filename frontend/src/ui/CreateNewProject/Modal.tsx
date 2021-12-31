@@ -8,14 +8,18 @@ import {
 } from "@mui/material";
 import { Form } from "./Form";
 import { CloseDialogTitle } from "../shared/CloseDialogTitle";
+import { useCreateProject } from "../../application/createProject/hook";
 
 export const Modal = () => {
+    const createProject = useCreateProject();
+
     const handleCancel = () => {
         console.log("cancel");
     };
 
-    const handleCreate = () => {
-        console.log("create");
+    const handleCreate = async () => {
+        const created = await createProject("test name", "test description");
+        console.dir(created);
     };
 
     return (
