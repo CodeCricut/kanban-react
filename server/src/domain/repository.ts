@@ -3,9 +3,9 @@ import { Issue } from "./issue";
 import { Project } from "./project";
 
 export interface EntityRepository<TEntity> {
-    create(issue: TEntity): Promise<TEntity>;
+    create(entity: TEntity): Promise<TEntity>;
     read(id: string): Promise<TEntity>;
-    update(id: string, issue: TEntity): Promise<TEntity>;
+    update(id: string, entity: TEntity): Promise<TEntity>;
     delete(id: string): Promise<void>;
 }
 

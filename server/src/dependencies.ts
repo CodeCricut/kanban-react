@@ -1,27 +1,36 @@
 import { Router } from "express";
-import { TestController } from "./controllers/testController";
+import { CreateProjectHandler } from "./application/commands/createProject";
+import { ProjectController } from "./controllers/projectController";
+import { ProjectRepository } from "./domain/repository";
 import { makeApiRouter } from "./routers";
 import { makeDocsRouter } from "./routers/docsRouter";
-import { makeTestRouter } from "./routers/testRouter";
+import { makeProjectRouter } from "./routers/projectRouter";
+import { TestProjectRepository } from "./services/testProjectRepository";
 
 export type AppDependencies = {
-    testController: TestController;
-    testRouter: Router;
+    projectRepository: ProjectRepository;
+    createProjectHandler: CreateProjectHandler;
+    projectController: ProjectController;
+    projectRouter: Router;
     docRouter: Router;
     apiRouter: Router;
 };
 
 export function getAppDependencies(): AppDependencies {
-    const testController = new TestController();
+    const projectRepository = new TestProjectRepository();
+    const createProjectHandler = new CreateProjectHandler(projectRepository);
+    const projectController = new ProjectController(createProjectHandler);
 
-    const testRouter = makeTestRouter(testController);
+    const projectRouter = makeProjectRouter(projectController);
     const docRouter = makeDocsRouter();
 
-    const apiRouter: Router = makeApiRouter(testRouter, docRouter);
+    const apiRouter: Router = makeApiRouter(projectRouter, docRouter);
 
     return {
-        testController,
-        testRouter,
+        projectRepository,
+        createProjectHandler,
+        projectController,
+        projectRouter,
         docRouter,
         apiRouter,
     };

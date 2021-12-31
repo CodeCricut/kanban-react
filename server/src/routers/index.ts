@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-export const makeApiRouter = (testRouter: Router, docRouter: Router) => {
+export const makeApiRouter = (projectRouter: Router, docRouter: Router) => {
     const apiRouter = Router();
 
-    apiRouter.use("/test", testRouter);
+    apiRouter.use("/projects", projectRouter);
     apiRouter.use("/docs", docRouter);
 
     return apiRouter;
