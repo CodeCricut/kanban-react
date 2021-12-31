@@ -1,12 +1,15 @@
 import express, { Express, Router } from "express";
 
 import * as dotenv from "dotenv";
+import cors from "cors";
 
 dotenv.config();
 
 const app = express();
 
 export function makeApp(apiRouter: Router) {
+    app.use(cors());
+    app.use(express.json());
     app.use(apiRouter);
     return app;
 }
