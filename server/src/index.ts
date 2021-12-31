@@ -1,9 +1,7 @@
-import { app } from "./app";
+import { makeApp, startApp } from "./app";
+import { AppDependencies, getAppDependencies } from "./dependencies";
 
-const port = process.env.PORT || process.env.TEST_PORT;
-if (!port)
-    throw new Error(
-        "Tried starting app without defining PORT or TEST_PORT environment variable."
-    );
+const dependencies: AppDependencies = getAppDependencies();
 
-app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
+const app = makeApp(dependencies.apiRouter);
+startApp(app);

@@ -1,11 +1,24 @@
-import * as dotenv from "dotenv";
-import express from "express";
-import * as swaggerUi from "swagger-ui-express";
+import express, { Express, Router } from "express";
 
-import swaggerSpec from "../swagger.json";
+import * as dotenv from "dotenv";
 
 dotenv.config();
 
-export const app = express();
+const app = express();
 
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+export function makeApp(apiRouter: Router) {
+    app.use(apiRouter);
+    return app;
+}
+
+export function startApp(app: Express) {
+    const port = process.env.PORT || process.env.TEST_PORT;
+    if (!port)
+        throw new Error(
+            "Tried starting app without defining PORT or TEST_PORT environment variable."
+        );
+
+    app.listen(port, () =>
+        console.log(`Listening at http://localhost:${port}`)
+    );
+}

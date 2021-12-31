@@ -1,19 +1,7 @@
-import { get } from "mongoose";
-import {
-    Body,
-    Controller,
-    Get,
-    Path,
-    Post,
-    Query,
-    Route,
-    SuccessResponse,
-} from "tsoa";
+import { Request, Response } from "express";
 
-@Route("test")
-export class TestController extends Controller {
-    @Get("{id}")
-    public async test(@Path() id: number): Promise<string> {
-        return Promise.resolve(`you queried the api with ${id}`);
+export class TestController {
+    public testHandler(req: Request, res: Response) {
+        res.send("Hello world :)");
     }
 }
