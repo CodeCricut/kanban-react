@@ -13,150 +13,47 @@
         }
     },
     "schemes": ["http"],
-    "host": "localhost:3080",
-    "basePath": "/api",
+    "host": "localhost:3000",
+    "basePath": "/",
     "paths": {
-        "/todos": {
+        "/docs": {
             "get": {
-                "summary": "Get all the tasks",
-                "description": "Get all the tasks",
-                "produces": ["application/json"],
-                "parameters": [],
+                "summary": "See the Swagger UI for the API",
+                "produces": "text/html",
                 "responses": {
                     "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/todosResponse"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid status value",
-                        "schema": {
-                            "$ref": "#/definitions/InvalidResponse"
-                        }
+                        "description": "successful operation"
                     }
                 }
             }
         },
-        "/todo": {
+        "/projects/create": {
             "post": {
-                "summary": "Save the task",
-                "description": "Save the task",
+                "summary": "Create a new project",
+                "description": "Create a project with the given name, description, and creation date.",
                 "produces": ["application/json"],
                 "consumes": ["application/json"],
                 "parameters": [
                     {
                         "in": "body",
                         "name": "body",
-                        "description": "task object",
+                        "description": "Project object",
                         "required": true,
                         "schema": {
                             "type": "object",
-                            "properties": {
-                                "task": {
-                                    "type": "object",
-                                    "$ref": "#/definitions/Task"
-                                }
-                            }
+                            "$ref": "#/definitions/projectBody"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "successful operation",
+                        "description": "Successful operation",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/todosResponse"
-                            }
+                            "$ref": "#/definitions/projectResponse"
                         }
                     },
                     "400": {
-                        "description": "Invalid status value",
-                        "schema": {
-                            "$ref": "#/definitions/InvalidResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/todos/{id}": {
-            "put": {
-                "summary": "Update the tasks",
-                "description": "Update the tasks",
-                "produces": ["application/json"],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "task id that needs to be deleted",
-                        "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "task object",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "task": {
-                                    "type": "object",
-                                    "$ref": "#/definitions/Task"
-                                }
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/todosResponse"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid status value",
-                        "schema": {
-                            "$ref": "#/definitions/InvalidResponse"
-                        }
-                    }
-                }
-            }
-        },
-        "/todo/{id}": {
-            "delete": {
-                "summary": "Delete the task",
-                "description": "Delete the task",
-                "produces": ["application/json"],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "task id that needs to be deleted",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/todosResponse"
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid status value",
+                        "description": "Invalid request",
                         "schema": {
                             "$ref": "#/definitions/InvalidResponse"
                         }
@@ -166,33 +63,49 @@
         }
     },
     "definitions": {
-        "todosResponse": {
+        "projectBody": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "task": {
+                "name": {
                     "type": "string"
                 },
-                "assignee": {
+                "description": {
                     "type": "string"
                 },
-                "status": {
-                    "type": "string"
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
                 }
             }
         },
-        "Task": {
+        "projectResponse": {
             "type": "object",
             "properties": {
-                "task": {
+                "id": {
                     "type": "string"
                 },
-                "assignee": {
+                "name": {
                     "type": "string"
                 },
-                "status": {
+                "description": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "columns": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/issueResponse"
+                    }
+                }
+            }
+        },
+        "issueResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
                     "type": "string"
                 }
             }
