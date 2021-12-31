@@ -1,6 +1,10 @@
 import { Project } from "../../domain/project";
-import { IProjectRepository } from "../../domain/repository";
 import { ICommandHandler } from "../commandHandler";
+import {
+    GetProjectDto,
+    IProjectRepository,
+    PostProjectDto,
+} from "../contracts/project";
 
 export type CreateProjectCommand = {
     name: string;
@@ -9,20 +13,13 @@ export type CreateProjectCommand = {
 };
 
 export class CreateProjectHandler
-    implements ICommandHandler<CreateProjectCommand, Project>
+    implements ICommandHandler<CreateProjectCommand, GetProjectDto>
 {
     constructor(private projectRepo: IProjectRepository) {}
 
-    async handle(command: CreateProjectCommand): Promise<Project> {
-        const { name, description, createdAt } = command;
-        const project: Project = {
-            name,
-            description,
-            createdAt,
-            columns: [],
-        };
-
-        const created = await this.projectRepo.create(project);
+    async handle(command: CreateProjectCommand): Promise<GetProjectDto> {
+        const postDto: PostProjectDto = command;
+        const created = await this.projectRepo.create(postDto);
         return created;
     }
 }

@@ -3,7 +3,7 @@ import {
     CreateProjectCommand,
     CreateProjectHandler,
 } from "../application/commands/createProject";
-import { Project } from "../domain/project";
+import { GetProjectDto } from "../application/contracts/project";
 
 export class ProjectController {
     private _createProjectHandler: CreateProjectHandler;
@@ -15,9 +15,8 @@ export class ProjectController {
         try {
             const command: CreateProjectCommand = req.body;
 
-            const created: Project = await this._createProjectHandler.handle(
-                command
-            );
+            const created: GetProjectDto =
+                await this._createProjectHandler.handle(command);
             return res.json(created);
         } catch (e: any) {
             next(e);

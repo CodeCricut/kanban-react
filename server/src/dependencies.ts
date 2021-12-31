@@ -2,15 +2,14 @@ import { Router } from "express";
 import { Config } from "../config";
 import { CreateProjectHandler } from "./application/commands/createProject";
 import { ProjectController } from "./controllers/projectController";
-import { IProjectRepository } from "./domain/repository";
 import { makeApiRouter } from "./routers/api";
 import { makeDocsRouter } from "./routers/docsRouter";
 import { makeFrontendRouter } from "./routers/frontend";
 import { makeProjectRouter } from "./routers/api/projectRouter";
-import { TestProjectRepository } from "./services/testProjectRepository";
 import { ProjectRepository } from "./persistence/project/ProjectRepository";
 import { IDatabase } from "./application/contracts/database";
 import { MongoDatabase } from "./persistence/MongoDatabase";
+import { IProjectRepository } from "./application/contracts/project";
 
 export type AppDependencies = {
     database: IDatabase;

@@ -1,16 +1,20 @@
+import { ProjectModel, ProjectModelType } from "./projectModel";
+import { CreateProjectCommand } from "../../application/commands/createProject";
+import {
+    GetProjectDto,
+    IProjectRepository,
+    PostProjectDto,
+} from "../../application/contracts/project";
+import { Document } from "mongoose";
 import { Project } from "../../domain/project";
-import { IProjectRepository } from "../../domain/repository";
-import { mapDomainToModel, mapModelToDomain } from "./mappers";
-import { ProjectModel } from "./projectModel";
 
 export class ProjectRepository implements IProjectRepository {
-    async create(entity: Project): Promise<Project> {
-        // TODO: verify entity contains required and valid fields
-        let createdProject = mapDomainToModel(entity);
+    async create(dto: PostProjectDto): Promise<GetProjectDto> {
+        let model = mapDtoToModel(dto);
 
-        await createdProject.save();
+        await model.save();
 
-        return mapModelToDomain(createdProject);
+        return mapModelToDto(model);
     }
 
     read(id: string): Promise<Project> {
@@ -22,4 +26,25 @@ export class ProjectRepository implements IProjectRepository {
     delete(id: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
+}
+
+function mapDtoToModel(dto: PostProjectDto): ProjectModelType {
+    const { name, description, createdAt } = dto;
+    return new ProjectModel({
+        name,
+        description,
+        columns: [],
+        createdAt: createdAt,
+    });
+}
+
+function mapModelToDto(model: ProjectModelType): GetProjectDto {
+    const { id, name, description, columns, createdAt } = model;
+    return {
+        id,
+        name,
+        description,
+        columns: Array.from([...columns]),
+        createdAt,
+    };
 }

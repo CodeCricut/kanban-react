@@ -12,6 +12,5 @@ function getClientBuildPath() {
             `Could not resolve client build path.\tBase directory:${baseDirectory}`
         );
     }
-    console.log(clientBuildPath);
     return clientBuildPath;
 }

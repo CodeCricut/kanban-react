@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 import { IDatabase } from "../application/contracts/database";
 
@@ -8,6 +8,10 @@ export class MongoDatabase implements IDatabase {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
+    }
+
+    async stopDatabase(): Promise<void> {
+        await mongoose.connection.close();
     }
 }
 

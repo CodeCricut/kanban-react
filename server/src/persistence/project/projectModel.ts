@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 import { Project } from "../../domain/project";
 import { COLUMN_MODEL_NAME } from "../column/columnModel";
 
@@ -15,3 +15,5 @@ export const ProjectModel = mongoose.model<Project>(
     PROJECT_MODEL_NAME,
     ProjectSchema
 );
+
+export type ProjectModelType = Project & Document<any, any, Project>;
