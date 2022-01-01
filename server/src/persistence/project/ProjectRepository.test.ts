@@ -1,7 +1,10 @@
 import { Project } from "../../domain/project";
 import { TestDatabase } from "../../test-helpers/TestDatabase";
 import { ProjectRepository } from "./ProjectRepository";
-import { validPostProjectDto } from "../../test-helpers/projectFixtures";
+import {
+    validPostProjectDto,
+    validUpdateProjectDto,
+} from "../../test-helpers/projectFixtures";
 import { expectProjectsEqual } from "../../test-helpers/projectAssertions";
 import { GetProjectDto } from "../../application/contracts/project";
 
@@ -65,6 +68,7 @@ describe("read", () => {
         }).rejects.toThrow(Error);
     });
 });
+
 describe("readAll", () => {
     it("returns all models", async () => {
         const created = await projectRepository.create(validPostProjectDto);
@@ -76,5 +80,58 @@ describe("readAll", () => {
             (proj) => proj.id === created.id
         );
         expect(containsCreated).toBe(true);
+    });
+});
+
+describe("update", () => {
+    it("throws if not found", async () => {
+        const updateDto = validUpdateProjectDto;
+        await expect(async () => {
+            await projectRepository.update("NON EXISTANT ID", updateDto);
+        }).rejects.toThrow(Error);
+    });
+
+    it("updates project in database", async () => {
+        // Seed with a project
+        const existingProject = await projectRepository.create(
+            validPostProjectDto
+        );
+
+        // Update the existing project
+        const updateDto = validUpdateProjectDto;
+        await projectRepository.update(existingProject.id, updateDto);
+
+        // Requery for the project to ensure it was actually updated
+        const updatedProject = await projectRepository.read(existingProject.id);
+
+        // Assert the non-updateable fields didn't change
+        expect(updatedProject.createdAt).toEqual(existingProject.createdAt);
+
+        // Assert the updateable fields changed
+        expect(updatedProject.name).toEqual(updateDto.name);
+        expect(updatedProject.description).toEqual(updateDto.description);
+        expect(updatedProject.columns).toEqual(updateDto.columns);
+    });
+
+    it("returns updated project", async () => {
+        // Seed with a project
+        const existingProject = await projectRepository.create(
+            validPostProjectDto
+        );
+
+        // Update the existing project
+        const updateDto = validUpdateProjectDto;
+        const updatedProject = await projectRepository.update(
+            existingProject.id,
+            updateDto
+        );
+
+        // Assert the project was returned
+        expect(updatedProject).not.toBeNull();
+
+        // Assert the updateable fields changed
+        expect(updatedProject.name).toEqual(updateDto.name);
+        expect(updatedProject.description).toEqual(updateDto.description);
+        expect(updatedProject.columns).toEqual(updateDto.columns);
     });
 });

@@ -4,6 +4,7 @@ import {
     GetProjectDto,
     IProjectRepository,
     PostProjectDto,
+    UpdateProjectDto,
 } from "../../application/contracts/project";
 import { Document } from "mongoose";
 import { Project } from "../../domain/project";
@@ -28,9 +29,19 @@ export class ProjectRepository implements IProjectRepository {
         return projectModels.map((model) => mapModelToDto(model));
     }
 
-    update(id: string, entity: Project): Promise<Project> {
-        throw new Error("Method not implemented.");
+    async update(id: string, dto: UpdateProjectDto): Promise<GetProjectDto> {
+        let projectModel = await ProjectModel.findById(id);
+        if (!projectModel) throw new Error("Not found");
+
+        const { name, description, columns } = dto;
+        projectModel.name = name;
+        projectModel.description = description;
+        projectModel.columns = columns;
+        await projectModel.save();
+
+        return mapModelToDto(projectModel);
     }
+
     delete(id: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
