@@ -1,6 +1,8 @@
 import { Box, Button, Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { Project } from "../../domain/project";
+import { useModalService } from "../../services/modalService";
+import { EditProject } from "../EditProject";
 
 type StylesType = {
     container: SxProps;
@@ -27,6 +29,8 @@ const styles: StylesType = {
 };
 
 export const ProjectDashboard = ({ project }: { project: Project }) => {
+    const { setModal } = useModalService();
+
     return (
         <Box sx={styles.container}>
             <Box sx={styles.header}>
@@ -37,7 +41,13 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
                     </Typography>
                 </Box>
                 <Box>
-                    <Button>More info...</Button>
+                    <Button
+                        onClick={() =>
+                            setModal(<EditProject project={project} />)
+                        }
+                    >
+                        More info...
+                    </Button>
                 </Box>
             </Box>
             <Box sx={styles.content}>content</Box>

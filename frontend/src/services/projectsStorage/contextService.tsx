@@ -19,10 +19,7 @@ export const ProjectsProvider = ({ children }: ProviderProps) => {
 
     useEffect(() => {
         const loadInitialProjects = async () => {
-            const loaded = await getAllProjects();
-            console.log("LOADED INITIAL PROJECTS:");
-            console.dir(loaded);
-            return loaded;
+            return await getAllProjects();
         };
         loadInitialProjects().then((projs) => setProjects(projs));
     }, []);
