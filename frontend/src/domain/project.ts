@@ -24,3 +24,21 @@ export function createProjectObject(
 export function addProject(project: Project, projects: Project[]): Project[] {
     return [...projects, project];
 }
+
+/** Pure function for updating the values of a single project in the array of projects. The project which has a matching id field will be updated. */
+export function updateProject(
+    project: Project,
+    projects: Project[]
+): Project[] {
+    // Find the project to update
+    const matchingIndex = projects.findIndex((proj) => proj.id === project.id);
+    if (matchingIndex < 0)
+        throw new Error(
+            "Tried to update project in array where it was not present."
+        );
+
+    // Copy the project arr and update the project at the index
+    const updatedProjects = [...projects];
+    updatedProjects[matchingIndex] = project;
+    return updatedProjects;
+}
