@@ -5,8 +5,8 @@ import { Project } from "../../domain/project";
 export const ProjectItem = ({ project }: { project: Project }) => {
     return (
         <Box>
-            <Typography variant="h5">{project.name}</Typography>
-            <Typography variant="h6">{project.description}</Typography>
+            <Typography variant="subtitle1">{project.name}</Typography>
+            <Typography variant="body2">{project.description}</Typography>
         </Box>
     );
 };

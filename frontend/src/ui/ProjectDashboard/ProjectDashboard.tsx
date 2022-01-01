@@ -1,14 +1,46 @@
-import React, { ReactNode } from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
-import { useSelectedProjectService } from "../../services/selectedProject";
 import { Project } from "../../domain/project";
 
-const styles: SxProps = {
-    display: "flex",
-    flexDirection: "column",
+type StylesType = {
+    container: SxProps;
+    header: SxProps;
+    headerInfo: SxProps;
+    content: SxProps;
+};
+const styles: StylesType = {
+    container: {
+        display: "flex",
+        flexDirection: "column",
+    },
+    header: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        padding: "30 0",
+    },
+    headerInfo: {},
+    content: {
+        backgroundColor: "red",
+        height: 1,
+    },
 };
 
 export const ProjectDashboard = ({ project }: { project: Project }) => {
-    return <Box sx={styles}>{project && project.name}</Box>;
+    return (
+        <Box sx={styles.container}>
+            <Box sx={styles.header}>
+                <Box sx={styles.headerInfo}>
+                    <Typography variant="h5">{project.name}</Typography>
+                    <Typography variant="subtitle2">
+                        {project.description}
+                    </Typography>
+                </Box>
+                <Box>
+                    <Button>More info...</Button>
+                </Box>
+            </Box>
+            <Box sx={styles.content}>content</Box>
+        </Box>
+    );
 };

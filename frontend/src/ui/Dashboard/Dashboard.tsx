@@ -1,11 +1,30 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
+import { SxProps } from "@mui/system";
 import { CreateNewProject } from "../CreateNewProject";
 import { useModalService } from "../../services/modalService";
 import { AllProjects } from "../ProjectsList/AllProjects";
 import { ProjectDashboard } from "../ProjectDashboard/ProjectDashboard";
 import { SelectedProjectProvider } from "../../services/selectedProject";
 import { MainPanel } from "../MainPanel/MainPanel";
+
+type StylesType = {
+    container: SxProps;
+    projectList: SxProps;
+    mainContent: SxProps;
+};
+const styles: StylesType = {
+    container: {
+        display: "grid",
+        gridTemplateColumns: "1fr 4fr",
+    },
+    projectList: {
+        gridColumn: "1",
+    },
+    mainContent: {
+        gridColumn: "2",
+    },
+};
 
 export const Dashboard = () => {
     const modalService = useModalService();
@@ -16,10 +35,14 @@ export const Dashboard = () => {
     };
 
     return (
-        <Box>
+        <Box sx={styles.container}>
             <Button onClick={handleCreateNewProject}>Create new project</Button>
-            <AllProjects />
-            <MainPanel />
+            <Box sx={styles.projectList}>
+                <AllProjects />
+            </Box>
+            <Box sx={styles.mainContent}>
+                <MainPanel />
+            </Box>
         </Box>
     );
 };
