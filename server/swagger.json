@@ -56,6 +56,21 @@
                     }
                 }
             }
+        },
+        "/projects": {
+            "get": {
+                "summary": "Get all projects",
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "$ref": "#/definitions/projectResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
