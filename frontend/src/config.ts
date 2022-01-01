@@ -12,14 +12,17 @@ export type AppConfig = {
     projectsRoute: string;
     createProjectRoute: string;
     getAllProjectsRoute: string;
+    editProjectRoute: (id: string) => string;
 };
 
 const projectsRoute = "/projects";
 const createProjectRoute = `${projectsRoute}/create`;
 const getAllProjectsRoute = "/projects";
+const editProjectRoute = (id: string) => `/projects/edit/${id}`;
 
 export const appConfig: AppConfig = {
     projectsRoute,
     createProjectRoute,
     getAllProjectsRoute,
+    editProjectRoute,
 };

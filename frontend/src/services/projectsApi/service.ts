@@ -24,4 +24,17 @@ export class ProjectsApiService implements IProjectsApiService {
         let returnedProject: Project = response.data;
         return returnedProject;
     }
+
+    async editProject(
+        id: string,
+        name: string,
+        description: string
+    ): Promise<Project> {
+        const response = await axios.put(this._config.editProjectRoute(id), {
+            name,
+            description,
+        });
+        let returnedProject: Project = response.data;
+        return returnedProject;
+    }
 }
