@@ -3,6 +3,7 @@ import { TestDatabase } from "../../test-helpers/TestDatabase";
 import { ProjectRepository } from "./ProjectRepository";
 import { validPostProjectDto } from "../../test-helpers/projectFixtures";
 import { expectProjectsEqual } from "../../test-helpers/projectAssertions";
+import { GetProjectDto } from "../../application/contracts/project";
 
 const testDb = new TestDatabase();
 const projectRepository = new ProjectRepository();
@@ -43,5 +44,19 @@ describe("create", () => {
         expect(created.name).toEqual(validPostDto.name);
         expect(created.description).toEqual(validPostDto.description);
         expect(created.createdAt).toEqual(validPostDto.createdAt);
+    });
+});
+
+describe("readAll", () => {
+    it("returns all models", async () => {
+        const created = await projectRepository.create(validPostProjectDto);
+
+        const returnedProjects: GetProjectDto[] =
+            await projectRepository.readAll();
+
+        const containsCreated = returnedProjects.some(
+            (proj) => proj.id === created.id
+        );
+        expect(containsCreated).toBe(true);
     });
 });

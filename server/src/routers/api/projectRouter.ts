@@ -5,6 +5,7 @@ export const makeProjectRouter = (projectController: ProjectController) => {
     const router = Router();
 
     router.post("/create", projectController.createProject);
+    router.get("/", projectController.getAllProjects);
 
     return router;
 };

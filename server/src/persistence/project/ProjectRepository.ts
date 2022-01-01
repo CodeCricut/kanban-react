@@ -20,6 +20,12 @@ export class ProjectRepository implements IProjectRepository {
     read(id: string): Promise<Project> {
         throw new Error("Method not implemented.");
     }
+
+    async readAll(): Promise<GetProjectDto[]> {
+        const projectModels: ProjectModelType[] = await ProjectModel.find({});
+        return projectModels.map((model) => mapModelToDto(model));
+    }
+
     update(id: string, entity: Project): Promise<Project> {
         throw new Error("Method not implemented.");
     }

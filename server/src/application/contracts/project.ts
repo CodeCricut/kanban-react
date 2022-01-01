@@ -22,6 +22,7 @@ export type UpdateProjectDto = {
 export interface IProjectRepository {
     create(dto: PostProjectDto): Promise<GetProjectDto>;
     read(id: string): Promise<GetProjectDto>;
+    readAll(): Promise<GetProjectDto[]>;
     update(id: string, dto: UpdateProjectDto): Promise<GetProjectDto>;
     delete(id: string): Promise<void>;
 }
