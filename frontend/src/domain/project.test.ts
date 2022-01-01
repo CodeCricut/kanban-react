@@ -1,4 +1,4 @@
-import { Project, updateProject } from "./project";
+import { Project, removeProject, updateProject } from "./project";
 
 const originalProjects: Project[] = [
     {
@@ -47,6 +47,39 @@ describe("updateProject", () => {
     it("throws if no project with matching", () => {
         expect(() => {
             updateProject(originalProjects[0], []);
+        }).toThrow(Error);
+    });
+});
+
+describe("removeProject", () => {
+    it("does not modify original projects", () => {
+        const originalProjectsCopy = [...originalProjects];
+        const projectToDelete = originalProjects[0];
+
+        // Remove the project
+        removeProject(projectToDelete.id ?? "", originalProjects);
+
+        // Assert original projects not modified
+        expect(originalProjects).toEqual(originalProjectsCopy);
+    });
+
+    it("removes the project with the matching id", () => {
+        const projectToDelete = originalProjects[0];
+        expect(originalProjects).toContain(projectToDelete);
+
+        // Remove the project
+        const updatedProjects = removeProject(
+            projectToDelete.id ?? "",
+            originalProjects
+        );
+
+        // Assert updated projects does not contain the project
+        expect(updatedProjects).not.toContain(projectToDelete);
+    });
+
+    it("throws if no project with matching id", () => {
+        expect(() => {
+            removeProject("ID", []);
         }).toThrow(Error);
     });
 });

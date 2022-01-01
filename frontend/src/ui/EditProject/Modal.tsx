@@ -6,6 +6,7 @@ import { Project } from "../../domain/project";
 import { useFormState } from "./formState";
 import { Form } from "./Form";
 import { useEditProject } from "../../application/editProject/hook";
+import { useDeleteProject } from "../../application/deleteProject/hook";
 
 type ModalDependencies = {
     project: Project;
@@ -18,6 +19,7 @@ export const Modal = ({ project }: ModalDependencies) => {
 
     const modalService = useModalService();
     const editProject = useEditProject();
+    const deleteProject = useDeleteProject();
 
     const handleCancel = () => {
         modalService.unsetModal();
@@ -26,6 +28,11 @@ export const Modal = ({ project }: ModalDependencies) => {
     const handleEdit = async () => {
         const { name, description } = formState.values;
         await editProject(project.id ?? "", name, description);
+        modalService.unsetModal();
+    };
+
+    const handleDelete = async () => {
+        await deleteProject(project.id ?? "");
         modalService.unsetModal();
     };
 
@@ -38,6 +45,9 @@ export const Modal = ({ project }: ModalDependencies) => {
                 <Form state={formState} />
             </DialogContent>
             <DialogActions>
+                <Button onClick={handleDelete} variant="outlined" color="error">
+                    Delete
+                </Button>
                 <Button
                     onClick={handleEdit}
                     variant="contained"

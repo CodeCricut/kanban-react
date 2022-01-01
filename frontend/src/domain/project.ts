@@ -42,3 +42,18 @@ export function updateProject(
     updatedProjects[matchingIndex] = project;
     return updatedProjects;
 }
+
+/** Pure function for removing project to array of projects. */
+export function removeProject(id: string, projects: Project[]): Project[] {
+    // Find the project to remove
+    const matchingIndex = projects.findIndex((proj) => proj.id === id);
+    if (matchingIndex < 0)
+        throw new Error(
+            "Tried to remove project from array where it was not present."
+        );
+
+    // Copy the project arr and remove the project at the index
+    const updatedProjects = [...projects];
+    updatedProjects.splice(matchingIndex, 1);
+    return updatedProjects;
+}

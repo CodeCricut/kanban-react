@@ -8,4 +8,5 @@ export interface IProjectsApiService {
         name: string,
         description: string
     ): Promise<Project>;
+    deleteProject(id: string): Promise<void>;
 }

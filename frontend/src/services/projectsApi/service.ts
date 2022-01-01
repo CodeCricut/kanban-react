@@ -37,4 +37,8 @@ export class ProjectsApiService implements IProjectsApiService {
         let returnedProject: Project = response.data;
         return returnedProject;
     };
+
+    deleteProject = async (id: string): Promise<void> => {
+        await axios.delete(this._config.deleteProjectRoute(id));
+    };
 }
