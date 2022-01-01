@@ -10,6 +10,7 @@ import { ProjectRepository } from "./persistence/project/ProjectRepository";
 import { IDatabase } from "./application/contracts/database";
 import { MongoDatabase } from "./persistence/MongoDatabase";
 import { IProjectRepository } from "./application/contracts/project";
+import { GetAllProjectsHandler } from "./application/queries/getAllProjects";
 
 export type AppDependencies = {
     database: IDatabase;
@@ -24,9 +25,16 @@ export type AppDependencies = {
 
 export function getAppDependencies(config: Config): AppDependencies {
     const database = new MongoDatabase();
+
     const projectRepository = new ProjectRepository();
+
     const createProjectHandler = new CreateProjectHandler(projectRepository);
-    const projectController = new ProjectController(createProjectHandler);
+    const getAllProjectsHandler = new GetAllProjectsHandler(projectRepository);
+
+    const projectController = new ProjectController(
+        createProjectHandler,
+        getAllProjectsHandler
+    );
 
     const projectRouter = makeProjectRouter(projectController);
     const docRouter = makeDocsRouter();
