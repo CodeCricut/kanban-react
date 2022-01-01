@@ -57,6 +57,47 @@
                 }
             }
         },
+        "/projects/edit/{id}": {
+            "put": {
+                "summary": "Update the project info",
+                "description": "Edit the project's name and description",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Project id that needs to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Update object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/editProjectBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/projectResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/projects": {
             "get": {
                 "summary": "Get all projects",
@@ -88,6 +129,17 @@
                 "createdAt": {
                     "type": "string",
                     "format": "date-time"
+                }
+            }
+        },
+        "editProjectBody": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
                 }
             }
         },

@@ -11,6 +11,7 @@ import { IDatabase } from "./application/contracts/database";
 import { MongoDatabase } from "./persistence/MongoDatabase";
 import { IProjectRepository } from "./application/contracts/project";
 import { GetAllProjectsHandler } from "./application/queries/getAllProjects";
+import { EditProjectHandler } from "./application/commands/editProject";
 
 export type AppDependencies = {
     database: IDatabase;
@@ -28,12 +29,15 @@ export function getAppDependencies(config: Config): AppDependencies {
 
     const projectRepository = new ProjectRepository();
 
+    // TODO: pack these handlers into a mediator object
     const createProjectHandler = new CreateProjectHandler(projectRepository);
     const getAllProjectsHandler = new GetAllProjectsHandler(projectRepository);
+    const editProjectHandler = new EditProjectHandler(projectRepository);
 
     const projectController = new ProjectController(
         createProjectHandler,
-        getAllProjectsHandler
+        getAllProjectsHandler,
+        editProjectHandler
     );
 
     const projectRouter = makeProjectRouter(projectController);
