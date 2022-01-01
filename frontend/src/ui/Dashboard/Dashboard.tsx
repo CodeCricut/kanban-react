@@ -1,16 +1,18 @@
 import React from "react";
 import { Box, Button } from "@mui/material";
 import { CreateNewProject } from "../CreateNewProject";
+import { useModalService } from "../../services/modalService";
 
 export const Dashboard = () => {
+    const modalService = useModalService();
+
     const handleCreateNewProject = (e: React.MouseEvent) => {
         e.preventDefault();
-        console.log("create new project");
+        modalService.setModal(<CreateNewProject />);
     };
 
     return (
         <Box>
-            <CreateNewProject />
             <Button onClick={handleCreateNewProject}>Create new project</Button>
         </Box>
     );

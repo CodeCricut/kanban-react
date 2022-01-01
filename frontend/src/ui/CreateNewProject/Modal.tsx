@@ -9,17 +9,23 @@ import {
 import { Form } from "./Form";
 import { CloseDialogTitle } from "../shared/CloseDialogTitle";
 import { useCreateProject } from "../../application/createProject/hook";
+import { useModalService } from "../../services/modalService";
+import { useFormState } from "./formState";
 
 export const Modal = () => {
+    const formState = useFormState();
+
+    const modalService = useModalService();
     const createProject = useCreateProject();
 
     const handleCancel = () => {
-        console.log("cancel");
+        modalService.unsetModal();
     };
 
     const handleCreate = async () => {
-        const created = await createProject("test name", "test description");
-        console.dir(created);
+        const { name, description } = formState.values;
+        await createProject(name, description);
+        modalService.unsetModal();
     };
 
     return (
@@ -28,7 +34,7 @@ export const Modal = () => {
                 Create new project
             </CloseDialogTitle>
             <DialogContent>
-                <Form />
+                <Form state={formState} />
             </DialogContent>
             <DialogActions>
                 <Button

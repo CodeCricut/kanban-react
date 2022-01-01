@@ -7,17 +7,24 @@ import {
     Select,
     MenuItem,
 } from "@mui/material";
+import { FormState } from "./formState";
 
-export const Form = () => {
+export const Form = ({ state }: { state: FormState }) => {
     return (
         <Box>
             <FormControl>
                 <Typography>Name</Typography>
-                <TextField />
+                <TextField
+                    value={state.values.name}
+                    onChange={(e) => state.setName(e.target.value)}
+                />
             </FormControl>
             <FormControl>
                 <Typography>Description</Typography>
-                <TextField />
+                <TextField
+                    value={state.values.description}
+                    onChange={(e) => state.setDescription(e.target.value)}
+                />
             </FormControl>
         </Box>
     );
