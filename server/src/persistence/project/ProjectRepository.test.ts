@@ -47,6 +47,24 @@ describe("create", () => {
     });
 });
 
+describe("read", () => {
+    it("returns project", async () => {
+        const created = await projectRepository.create(validPostProjectDto);
+
+        const returnedProject: GetProjectDto = await projectRepository.read(
+            created.id
+        );
+
+        expect(returnedProject).not.toBeNull();
+        expect(returnedProject.id).toEqual(created.id);
+    });
+
+    it("throws if not found", async () => {
+        await expect(async () => {
+            await projectRepository.read("NON EXISTANT ID");
+        }).rejects.toThrow(Error);
+    });
+});
 describe("readAll", () => {
     it("returns all models", async () => {
         const created = await projectRepository.create(validPostProjectDto);

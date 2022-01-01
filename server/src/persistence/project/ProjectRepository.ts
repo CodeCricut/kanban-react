@@ -17,8 +17,10 @@ export class ProjectRepository implements IProjectRepository {
         return mapModelToDto(model);
     }
 
-    read(id: string): Promise<Project> {
-        throw new Error("Method not implemented.");
+    async read(id: string): Promise<GetProjectDto> {
+        let projectModel = await ProjectModel.findById(id);
+        if (!projectModel) throw new Error("Not found");
+        return mapModelToDto(projectModel);
     }
 
     async readAll(): Promise<GetProjectDto[]> {
