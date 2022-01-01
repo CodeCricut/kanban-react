@@ -10,31 +10,31 @@ export class ProjectsApiService implements IProjectsApiService {
         this._config = config;
     }
 
-    async getAllProjects(): Promise<Project[]> {
+    getAllProjects = async (): Promise<Project[]> => {
         const response = await axios.get(this._config.getAllProjectsRoute);
         let returnedProjects: Project[] = response.data;
         return returnedProjects;
-    }
+    };
 
-    async createProject(project: Project) {
+    createProject = async (project: Project) => {
         const response = await axios.post(
             this._config.createProjectRoute,
             project
         );
         let returnedProject: Project = response.data;
         return returnedProject;
-    }
+    };
 
-    async editProject(
+    editProject = async (
         id: string,
         name: string,
         description: string
-    ): Promise<Project> {
+    ): Promise<Project> => {
         const response = await axios.put(this._config.editProjectRoute(id), {
             name,
             description,
         });
         let returnedProject: Project = response.data;
         return returnedProject;
-    }
+    };
 }
