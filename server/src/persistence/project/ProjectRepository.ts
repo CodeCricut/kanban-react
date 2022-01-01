@@ -42,8 +42,8 @@ export class ProjectRepository implements IProjectRepository {
         return mapModelToDto(projectModel);
     }
 
-    delete(id: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async delete(id: string): Promise<void> {
+        await ProjectModel.findByIdAndDelete(id);
     }
 }
 

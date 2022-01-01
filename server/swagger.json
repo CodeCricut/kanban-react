@@ -12,17 +12,6 @@
     "schemes": ["http"],
     "basePath": "/api",
     "paths": {
-        "/docs": {
-            "get": {
-                "summary": "See the Swagger UI for the API",
-                "produces": "text/html",
-                "responses": {
-                    "200": {
-                        "description": "successful operation"
-                    }
-                }
-            }
-        },
         "/projects/create": {
             "post": {
                 "summary": "Create a new project",
@@ -110,6 +99,32 @@
                             "items": {
                                 "$ref": "#/definitions/projectResponse"
                             }
+                        }
+                    }
+                }
+            }
+        },
+        "/projects/delete/{id}": {
+            "delete": {
+                "summary": "Delete a project",
+                "description": "Remove a project from the database",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Project id that needs to be deleted",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
                         }
                     }
                 }

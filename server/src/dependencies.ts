@@ -12,6 +12,7 @@ import { MongoDatabase } from "./persistence/MongoDatabase";
 import { IProjectRepository } from "./application/contracts/project";
 import { GetAllProjectsHandler } from "./application/queries/getAllProjects";
 import { EditProjectHandler } from "./application/commands/editProject";
+import { DeleteProjectHandler } from "./application/commands/deleteProject";
 
 export type AppDependencies = {
     database: IDatabase;
@@ -33,11 +34,13 @@ export function getAppDependencies(config: Config): AppDependencies {
     const createProjectHandler = new CreateProjectHandler(projectRepository);
     const getAllProjectsHandler = new GetAllProjectsHandler(projectRepository);
     const editProjectHandler = new EditProjectHandler(projectRepository);
+    const deleteProjectHandler = new DeleteProjectHandler(projectRepository);
 
     const projectController = new ProjectController(
         createProjectHandler,
         getAllProjectsHandler,
-        editProjectHandler
+        editProjectHandler,
+        deleteProjectHandler
     );
 
     const projectRouter = makeProjectRouter(projectController);

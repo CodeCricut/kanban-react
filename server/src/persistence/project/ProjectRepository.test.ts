@@ -135,3 +135,24 @@ describe("update", () => {
         expect(updatedProject.columns).toEqual(updateDto.columns);
     });
 });
+
+describe("delete", () => {
+    it("deletes project from database", async () => {
+        // Add project to delete
+        const created = await projectRepository.create(validPostProjectDto);
+
+        // Delete project
+        await projectRepository.delete(created.id);
+
+        // Expect to not be found
+        await expect(async () => {
+            await projectRepository.read(created.id);
+        }).rejects.toThrow(Error);
+    });
+
+    it("throws if not found", async () => {
+        await expect(async () => {
+            await projectRepository.delete("NON EXISTANT ID");
+        }).rejects.toThrow(Error);
+    });
+});
