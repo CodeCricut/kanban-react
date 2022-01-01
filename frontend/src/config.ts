@@ -1,6 +1,11 @@
 import axios from "axios";
 
-axios.defaults.baseURL = `api`;
+if (process.env.NODE_ENV === "development") {
+    axios.defaults.baseURL = `http://localhost:3001/api`;
+} else if (process.env.NODE_ENV === "production") {
+    axios.defaults.baseURL = `api`;
+}
+
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 export type AppConfig = {
