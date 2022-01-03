@@ -2,6 +2,7 @@ import { IProjectsApiService } from "../../application/contracts/projectsApiServ
 import { Project } from "../../domain/project";
 import axios from "axios";
 import { AppConfig } from "../../config";
+import { Column } from "../../domain/column";
 
 export class ProjectsApiService implements IProjectsApiService {
     private _config: AppConfig;
@@ -40,5 +41,26 @@ export class ProjectsApiService implements IProjectsApiService {
 
     deleteProject = async (id: string): Promise<void> => {
         await axios.delete(this._config.deleteProjectRoute(id));
+    };
+
+    addColumn = async (
+        projectId: string,
+        columnIndex: number,
+        column: Column
+    ): Promise<Project> => {
+        const requestBody = {
+            columnIndex,
+            name: column.name,
+            description: column.description,
+            createdAt: column.createdAt,
+        };
+
+        const response = await axios.post(
+            this._config.addColumnToProjectRoute(projectId),
+            requestBody
+        );
+
+        let returnedProject: Project = response.data;
+        return returnedProject;
     };
 }

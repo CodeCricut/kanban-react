@@ -11,6 +11,7 @@ import { CloseDialogTitle } from "../shared/CloseDialogTitle";
 import { Project } from "../../domain/project";
 import { useFormState } from "./formState";
 import { Form } from "./Form";
+import { useAddColumnToProject } from "../../application/addColumnToProject/hook";
 
 type ModalProps = {
     project: Project;
@@ -20,6 +21,7 @@ export const Modal = ({ project }: ModalProps) => {
     const formState = useFormState();
 
     const modalService = useModalService();
+    const addColumnToProject = useAddColumnToProject();
 
     const handleCancel = () => {
         modalService.unsetModal();
@@ -27,9 +29,8 @@ export const Modal = ({ project }: ModalProps) => {
 
     const handleCreate = async () => {
         const { name, description } = formState.values;
-        // await addColumnToProject(project.id, name, description);
+        await addColumnToProject(project, name, description);
         modalService.unsetModal();
-        console.dir(formState.values);
     };
 
     return (

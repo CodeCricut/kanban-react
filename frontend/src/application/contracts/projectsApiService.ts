@@ -1,3 +1,4 @@
+import { Column } from "../../domain/column";
 import { Project } from "../../domain/project";
 
 export interface IProjectsApiService {
@@ -9,4 +10,9 @@ export interface IProjectsApiService {
         description: string
     ): Promise<Project>;
     deleteProject(id: string): Promise<void>;
+    addColumn(
+        projectId: string,
+        columnIndex: number,
+        column: Column
+    ): Promise<Project>;
 }
