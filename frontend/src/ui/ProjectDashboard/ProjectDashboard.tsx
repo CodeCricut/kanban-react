@@ -1,10 +1,13 @@
 import { Box, Button, Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
+import { useProjectColumns } from "../../application/getProjectColumns/hook";
 import { Project } from "../../domain/project";
 import { useModalService } from "../../services/modalService";
 import { AddColumnModal } from "../AddColumn";
 import { AddColumnCard } from "../AddColumn/AddColumnCard";
 import { EditProject } from "../EditProject";
+import { Column as ColumnModel } from "../../domain/column";
+import { ColumnCard } from "../Column/ColumnCard";
 
 type StylesType = {
     container: SxProps;
@@ -16,6 +19,7 @@ const styles: StylesType = {
     container: {
         display: "flex",
         flexDirection: "column",
+        overflow: "hidden",
     },
     header: {
         display: "flex",
@@ -25,13 +29,16 @@ const styles: StylesType = {
     },
     headerInfo: {},
     content: {
-        backgroundColor: "red",
-        minHeight: 200,
+        minHeight: "70vh",
+        display: "flex",
+        overflow: "auto",
     },
 };
 
 export const ProjectDashboard = ({ project }: { project: Project }) => {
     const { setModal } = useModalService();
+
+    const projectColumns: ColumnModel[] = useProjectColumns(project.id ?? "");
 
     const handleAdd = () => {
         setModal(<AddColumnModal project={project} />);
@@ -57,6 +64,9 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
                 </Box>
             </Box>
             <Box sx={styles.content}>
+                {projectColumns.map((col) => (
+                    <ColumnCard key={col.id} column={col} />
+                ))}
                 <AddColumnCard handleAdd={handleAdd} />
             </Box>
         </Box>

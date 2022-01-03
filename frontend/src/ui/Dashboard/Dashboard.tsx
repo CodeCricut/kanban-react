@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { CreateNewProject } from "../CreateNewProject";
 import { useModalService } from "../../services/modalService";
@@ -16,13 +16,16 @@ type StylesType = {
 const styles: StylesType = {
     container: {
         display: "grid",
-        gridTemplateColumns: "1fr 4fr",
+        maxWidth: 1,
+        gridTemplateColumns: "minmax(0, 1fr) minmax(0, 4fr)",
     },
     projectList: {
         gridColumn: "1",
     },
     mainContent: {
         gridColumn: "2",
+        maxWidth: 1,
+        minWidth: 0,
     },
 };
 
