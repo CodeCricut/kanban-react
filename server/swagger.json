@@ -196,6 +196,47 @@
                     }
                 }
             }
+        },
+        "/columns/edit/{id}": {
+            "put": {
+                "summary": "Update the column info",
+                "description": "Edit the column's name and description",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Column id that needs to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Update object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/editColumnBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/columnResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -238,6 +279,18 @@
             }
         },
         "editProjectBody": {
+            "type": "object",
+            "required": ["name", "description"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                }
+            }
+        },
+        "editColumnBody": {
             "type": "object",
             "required": ["name", "description"],
             "properties": {

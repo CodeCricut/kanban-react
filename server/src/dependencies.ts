@@ -16,6 +16,9 @@ import { DeleteProjectHandler } from "./application/commands/deleteProject";
 import { AddColumnToProjectHandler } from "./application/commands/addColumnToProject";
 import { ColumnRepository } from "./persistence/column/ColumnRepository";
 import { GetProjectsColumnsHandler } from "./application/queries/getProjectsColumns";
+import { makeColumnRouter } from "./routers/api/columnRouter";
+import { ColumnController } from "./controllers/columnController";
+import { EditColumnHandler } from "./application/commands/editColumn";
 
 export type AppDependencies = {
     database: IDatabase;
@@ -58,10 +61,16 @@ export function getAppDependencies(config: Config): AppDependencies {
     );
 
     const projectRouter = makeProjectRouter(projectController);
+
+    const editColumnHandler = new EditColumnHandler(columnRepository);
+
+    const columnController = new ColumnController(editColumnHandler);
+    const columnRouter = makeColumnRouter(columnController);
     const docRouter = makeDocsRouter();
+
     const frontendRouter = makeFrontendRouter(config);
 
-    const apiRouter: Router = makeApiRouter(projectRouter);
+    const apiRouter: Router = makeApiRouter(projectRouter, columnRouter);
 
     return {
         database,
