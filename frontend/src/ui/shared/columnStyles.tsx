@@ -10,4 +10,5 @@ export const columnStyles: SxProps = {
         xs: 1,
         sm: 400,
     },
+    marginRight: 1,
 };

@@ -20,18 +20,20 @@ const styles: StylesType = {
         display: "flex",
         flexDirection: "column",
         overflow: "hidden",
+        padding: 2,
     },
     header: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        padding: "30 0",
+        padding: 1,
     },
     headerInfo: {},
     content: {
         minHeight: "70vh",
         display: "flex",
         overflow: "auto",
+        padding: 1,
     },
 };
 

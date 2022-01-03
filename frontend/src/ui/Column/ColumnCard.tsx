@@ -4,6 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import { SxProps } from "@mui/system";
 import { columnStyles } from "../shared/columnStyles";
 import { Column as ColumnModel } from "../../domain/column";
+import { AddIssueCard } from "../AddIssue/AddIssueCard";
 
 type StylesType = {
     container: SxProps;
@@ -32,9 +33,7 @@ const styles: StylesType = {
             },
         },
     },
-    content: {
-        backgroundColor: "red",
-    },
+    content: {},
 };
 
 type ColumnProps = {
@@ -47,7 +46,7 @@ export const ColumnCard = ({ column }: ColumnProps) => {
     };
 
     return (
-        <Card sx={styles.container} variant="outlined">
+        <Card sx={styles.container} elevation={2}>
             <Box sx={styles.header}>
                 <Box sx={styles.header.info}>
                     <Typography>{column.issues?.length ?? 0}</Typography>
@@ -59,7 +58,9 @@ export const ColumnCard = ({ column }: ColumnProps) => {
                     </IconButton>
                 </Box>
             </Box>
-            <Box sx={styles.content}>content</Box>
+            <Box sx={styles.content}>
+                <AddIssueCard handleAdd={() => console.log("add issue")} />
+            </Box>
         </Card>
     );
 };
