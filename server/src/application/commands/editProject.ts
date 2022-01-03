@@ -22,7 +22,7 @@ export class EditProjectHandler
         const updateDto: UpdateProjectDto = {
             name: command.name,
             description: command.description,
-            columns: existingProject.columns,
+            columns: existingProject.columns, // TODO: I don't think this even needs to be a property on the update dto
         };
 
         const updated = await this.projectRepo.update(command.id, updateDto);

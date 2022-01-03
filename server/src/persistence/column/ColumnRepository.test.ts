@@ -1,5 +1,8 @@
 import { GetColumnDto } from "../../application/contracts/column";
-import { createValidPostColumnDto } from "../../test-helpers/columnFixtures";
+import {
+    createValidPostColumnDto,
+    createValidUpdateColumnDto,
+} from "../../test-helpers/columnFixtures";
 import { createValidPostProjectDto } from "../../test-helpers/projectFixtures";
 import { TestDatabase } from "../../test-helpers/TestDatabase";
 import { ColumnRepository } from "./ColumnRepository";
@@ -103,5 +106,56 @@ describe("readArray", () => {
         await expect(async () => {
             await columnRepository.readArray(ids);
         }).rejects.toThrow(Error);
+    });
+});
+
+describe("update", () => {
+    it("throws if not found", async () => {
+        const updateDto = createValidUpdateColumnDto();
+        await expect(async () => {
+            await columnRepository.update("NON EXISTANT ID", updateDto);
+        }).rejects.toThrow(Error);
+    });
+
+    it("updates column in database", async () => {
+        // Seed with column
+        const validPostDto = createValidPostColumnDto();
+        const existingColumn = await columnRepository.create(validPostDto);
+
+        // Update the column
+        const updateColumnDto = createValidUpdateColumnDto();
+        await columnRepository.update(existingColumn.id, updateColumnDto);
+
+        // Requery for the issue to ensure it was actually updated
+        const updatedColumn = await columnRepository.read(existingColumn.id);
+
+        // Assert the non-updateable fields didn't change
+        expect(updatedColumn.createdAt).toEqual(existingColumn.createdAt);
+
+        // Assert the updateable fields changed
+        expect(updatedColumn.name).toEqual(updateColumnDto.name);
+        expect(updatedColumn.description).toEqual(updateColumnDto.description);
+        expect(updatedColumn.issues).toEqual(updateColumnDto.issues);
+    });
+
+    it("returns updated column", async () => {
+        // Seed with column
+        const validPostDto = createValidPostColumnDto();
+        const existingColumn = await columnRepository.create(validPostDto);
+
+        // Update the column
+        const updateColumnDto = createValidUpdateColumnDto();
+        const updatedColumn = await columnRepository.update(
+            existingColumn.id,
+            updateColumnDto
+        );
+
+        // Assert the non-updateable fields didn't change
+        expect(updatedColumn.createdAt).toEqual(existingColumn.createdAt);
+
+        // Assert the updateable fields changed
+        expect(updatedColumn.name).toEqual(updateColumnDto.name);
+        expect(updatedColumn.description).toEqual(updateColumnDto.description);
+        expect(updatedColumn.issues).toEqual(updateColumnDto.issues);
     });
 });

@@ -32,9 +32,19 @@ export class ColumnRepository implements IColumnRepository {
         return models.map((model) => mapModelToDto(model));
     }
 
-    update(id: string, dto: UpdateColumnDto): Promise<GetColumnDto> {
-        throw new Error("Method not implemented.");
+    async update(id: string, dto: UpdateColumnDto): Promise<GetColumnDto> {
+        let columnModel = await ColumnModel.findById(id);
+        if (!columnModel) throw new Error("Not found");
+
+        const { name, description, issues } = dto;
+        columnModel.name = name;
+        columnModel.description = description;
+        columnModel.issues = issues;
+        await columnModel.save();
+
+        return mapModelToDto(columnModel);
     }
+
     delete(id: string): Promise<void> {
         throw new Error("Method not implemented.");
     }
