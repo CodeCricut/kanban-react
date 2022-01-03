@@ -134,6 +134,8 @@
             "post": {
                 "summary": "Add a column to the project",
                 "description": "Add a new column and associate it with the given project",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
                 "parameters": [
                     {
                         "name": "id",
@@ -155,7 +157,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/projectResponse"
+                        }
                     },
                     "400": {
                         "description": "Invalid request",

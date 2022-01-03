@@ -8,6 +8,7 @@ export const makeProjectRouter = (projectController: ProjectController) => {
     router.post("/create", projectController.createProject);
     router.put("/edit/:id", projectController.editProject);
     router.delete("/delete/:id", projectController.deleteProject);
+    router.post("/add-column/:id", projectController.addColumn);
 
     return router;
 };

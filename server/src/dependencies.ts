@@ -13,6 +13,8 @@ import { IProjectRepository } from "./application/contracts/project";
 import { GetAllProjectsHandler } from "./application/queries/getAllProjects";
 import { EditProjectHandler } from "./application/commands/editProject";
 import { DeleteProjectHandler } from "./application/commands/deleteProject";
+import { AddColumnToProjectHandler } from "./application/commands/addColumnToProject";
+import { ColumnRepository } from "./persistence/column/ColumnRepository";
 
 export type AppDependencies = {
     database: IDatabase;
@@ -29,18 +31,24 @@ export function getAppDependencies(config: Config): AppDependencies {
     const database = new MongoDatabase();
 
     const projectRepository = new ProjectRepository();
+    const columnRepository = new ColumnRepository();
 
     // TODO: pack these handlers into a mediator object
     const createProjectHandler = new CreateProjectHandler(projectRepository);
     const getAllProjectsHandler = new GetAllProjectsHandler(projectRepository);
     const editProjectHandler = new EditProjectHandler(projectRepository);
     const deleteProjectHandler = new DeleteProjectHandler(projectRepository);
+    const addColumnToProjectHandler = new AddColumnToProjectHandler(
+        projectRepository,
+        columnRepository
+    );
 
     const projectController = new ProjectController(
         createProjectHandler,
         getAllProjectsHandler,
         editProjectHandler,
-        deleteProjectHandler
+        deleteProjectHandler,
+        addColumnToProjectHandler
     );
 
     const projectRouter = makeProjectRouter(projectController);

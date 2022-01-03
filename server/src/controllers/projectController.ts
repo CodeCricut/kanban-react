@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import {
+    AddColumnToProjectCommand,
+    AddColumnToProjectHandler,
+} from "../application/commands/addColumnToProject";
+import {
     CreateProjectCommand,
     CreateProjectHandler,
 } from "../application/commands/createProject";
@@ -22,7 +26,8 @@ export class ProjectController {
         private createProjectHandler: CreateProjectHandler,
         private getAllProjectsHandler: GetAllProjectsHandler,
         private editProjectHandler: EditProjectHandler,
-        private deleteProjectHandler: DeleteProjectHandler
+        private deleteProjectHandler: DeleteProjectHandler,
+        private addColumnToProjectHandler: AddColumnToProjectHandler
     ) {}
 
     createProject = async (req: Request, res: Response, next: NextFunction) => {
@@ -77,6 +82,26 @@ export class ProjectController {
             await this.deleteProjectHandler.handle(command);
             res.status(200);
             return res.send();
+        } catch (e: any) {
+            next(e);
+        }
+    };
+
+    addColumn = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { columnIndex, name, description, createdAt } = req.body;
+            const command: AddColumnToProjectCommand = {
+                projectId: req.params.id,
+                columnIndex,
+                name,
+                description,
+                createdAt,
+            };
+            const updatedProject = await this.addColumnToProjectHandler.handle(
+                command
+            );
+            res.status(200);
+            return res.json(updatedProject);
         } catch (e: any) {
             next(e);
         }
