@@ -129,11 +129,48 @@
                     }
                 }
             }
+        },
+        "/projects/add-column/{id}": {
+            "post": {
+                "summary": "Add a column to the project",
+                "description": "Add a new column and associate it with the given project",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the project to associate with the new column",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Column object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/createColumnBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
         "projectBody": {
             "type": "object",
+            "required": ["name", "description", "createdAt"],
             "properties": {
                 "name": {
                     "type": "string"
@@ -147,8 +184,31 @@
                 }
             }
         },
+        "createColumnBody": {
+            "type": "object",
+            "required": ["columnIndex", "name", "description", "createdAt"],
+            "properties": {
+                "columnIndex": {
+                    "type": "number",
+                    "description": "The index to insert the new column to the project's columns"
+                },
+                "name": {
+                    "type": "string",
+                    "description": " The name of the new column"
+                },
+                "description": {
+                    "type": "string",
+                    "description": " The name of the new column"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
         "editProjectBody": {
             "type": "object",
+            "required": ["name", "description"],
             "properties": {
                 "name": {
                     "type": "string"
@@ -177,16 +237,8 @@
                 "columns": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/issueResponse"
+                        "type": "string"
                     }
-                }
-            }
-        },
-        "issueResponse": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
                 }
             }
         },
