@@ -15,6 +15,7 @@ export type AppConfig = {
     editProjectRoute: (id: string) => string;
     deleteProjectRoute: (id: string) => string;
     addColumnToProjectRoute: (projectId: string) => string;
+    getProjectColumnsRoute: (projectId: string) => string;
 };
 
 const projectsRoute = "/projects";
@@ -24,6 +25,8 @@ const editProjectRoute = (id: string) => `/projects/edit/${id}`;
 const deleteProjectRoute = (id: string) => `/projects/delete/${id}`;
 const addColumnToProjectRoute = (projectId: string) =>
     `/projects/add-column/${projectId}`;
+const getProjectColumnsRoute = (projectId: string) =>
+    `/projects/columns/${projectId}`;
 
 export const appConfig: AppConfig = {
     projectsRoute,
@@ -32,4 +35,5 @@ export const appConfig: AppConfig = {
     editProjectRoute,
     deleteProjectRoute,
     addColumnToProjectRoute,
+    getProjectColumnsRoute,
 };
