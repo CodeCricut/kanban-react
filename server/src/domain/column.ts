@@ -3,7 +3,7 @@ export type Column = {
     name: string;
     description: string;
     /** The id of the project this column belongs to. */
-    projectId: string;
+    // projectId: string;
     /** An ordered array containing the ids of the issues belonging to this column. */
     issues: string[];
     createdAt: string;

@@ -1,17 +1,27 @@
+import { v4 as uuid } from "uuid";
 import {
     PostProjectDto,
     UpdateProjectDto,
 } from "../application/contracts/project";
 import { validCreatedAtString } from "./dateFixtures";
 
-export const validPostProjectDto: PostProjectDto = {
-    name: "VALID NAME",
-    description: "DESCRIPTION",
-    createdAt: validCreatedAtString,
+type CreateValidPostProjectDtoFunction = {
+    (): PostProjectDto;
 };
 
-export const validUpdateProjectDto: UpdateProjectDto = {
-    name: "UPDATED NAME",
-    description: "UPDATED DESCRIPTION",
-    columns: [],
+export const createValidPostProjectDto: CreateValidPostProjectDtoFunction =
+    () => ({
+        name: "VALID NAME",
+        description: "DESCRIPTION",
+        createdAt: validCreatedAtString,
+    });
+
+type CreateValidUpdateProjectDtoFunction = {
+    (): UpdateProjectDto;
 };
+export const createValidUpdateProjectDto: CreateValidUpdateProjectDtoFunction =
+    () => ({
+        name: `UPDATED NAME (ID=${uuid()})`,
+        description: `UPDATED DESCRIPTION (ID=${uuid()})`,
+        columns: [],
+    });
