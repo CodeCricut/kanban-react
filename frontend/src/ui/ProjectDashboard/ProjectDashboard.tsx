@@ -67,7 +67,7 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
             </Box>
             <Box sx={styles.content}>
                 {projectColumns.map((col) => (
-                    <ColumnCard key={col.id} column={col} />
+                    <ColumnCard key={col.id} column={col} project={project} />
                 ))}
                 <AddColumnCard handleAdd={handleAdd} />
             </Box>

@@ -12,7 +12,7 @@ export async function editColumn(
     id: string,
     name: string,
     description: string,
-    project: Project,
+    projectId: string,
     dependencies: Dependencies
 ) {
     const { columnsApiService: columnsApiServce, staleProjectService } =
@@ -26,7 +26,7 @@ export async function editColumn(
     );
 
     // Make project stale so columns are reloaded
-    staleProjectService.addStaleProject(project.id ?? "");
+    staleProjectService.addStaleProject(projectId);
 
     // Return updated column
     return updatedColumn;

@@ -10,7 +10,7 @@ type EditColumnFunction = {
         id: string,
         name: string,
         description: string,
-        project: Project
+        projectId: string
     ): Promise<Column>;
 };
 
@@ -19,8 +19,8 @@ export function useEditColumn(): EditColumnFunction {
     const staleProjectService = useStaleProjectService();
 
     const func = useCallback(
-        (id: string, name: string, description: string, project: Project) =>
-            editColumn(id, name, description, project, {
+        (id: string, name: string, description: string, projectId: string) =>
+            editColumn(id, name, description, projectId, {
                 columnsApiService,
                 staleProjectService,
             }),

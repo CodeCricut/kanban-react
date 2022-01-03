@@ -1,10 +1,14 @@
 import React from "react";
 import { Card, Typography, Box, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { SxProps } from "@mui/system";
 import { columnStyles } from "../shared/columnStyles";
 import { Column as ColumnModel } from "../../domain/column";
 import { AddIssueCard } from "../AddIssue/AddIssueCard";
+import { useModalService } from "../../services/modalService";
+import { EditColumnModal } from "../EditColumn";
+import { Project } from "../../domain/project";
 
 type StylesType = {
     container: SxProps;
@@ -38,11 +42,20 @@ const styles: StylesType = {
 
 type ColumnProps = {
     column: ColumnModel;
+    project: Project;
 };
 
-export const ColumnCard = ({ column }: ColumnProps) => {
+export const ColumnCard = ({ column, project }: ColumnProps) => {
+    const modalService = useModalService();
+
     const handleAddIssue = () => {
         console.log("add issue");
+    };
+
+    const handleEditIssue = () => {
+        modalService.setModal(
+            <EditColumnModal column={column} projectId={project.id ?? ""} />
+        );
     };
 
     return (
@@ -55,6 +68,9 @@ export const ColumnCard = ({ column }: ColumnProps) => {
                 <Box>
                     <IconButton onClick={handleAddIssue}>
                         <AddIcon />
+                    </IconButton>
+                    <IconButton onClick={handleEditIssue}>
+                        <MoreHorizIcon />
                     </IconButton>
                 </Box>
             </Box>
