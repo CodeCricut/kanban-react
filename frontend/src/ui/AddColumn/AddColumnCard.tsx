@@ -30,7 +30,7 @@ type AddColumnProps = {
     handleAdd: () => void;
 };
 
-export const AddColumn = (props: AddColumnProps) => {
+export const AddColumnCard = (props: AddColumnProps) => {
     return (
         <Card sx={styles.container} variant="outlined">
             <Box sx={styles.content}>

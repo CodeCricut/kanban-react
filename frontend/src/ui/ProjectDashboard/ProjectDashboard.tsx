@@ -2,7 +2,8 @@ import { Box, Button, Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { Project } from "../../domain/project";
 import { useModalService } from "../../services/modalService";
-import { AddColumn } from "../AddColumn/AddColumn";
+import { AddColumnModal } from "../AddColumn";
+import { AddColumnCard } from "../AddColumn/AddColumnCard";
 import { EditProject } from "../EditProject";
 
 type StylesType = {
@@ -33,7 +34,7 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
     const { setModal } = useModalService();
 
     const handleAdd = () => {
-        console.log("add column to " + project.name);
+        setModal(<AddColumnModal project={project} />);
     };
 
     return (
@@ -56,7 +57,7 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
                 </Box>
             </Box>
             <Box sx={styles.content}>
-                <AddColumn handleAdd={handleAdd} />
+                <AddColumnCard handleAdd={handleAdd} />
             </Box>
         </Box>
     );
