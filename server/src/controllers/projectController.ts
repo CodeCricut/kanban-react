@@ -15,11 +15,16 @@ import {
     EditProjectCommand,
     EditProjectHandler,
 } from "../application/commands/editProject";
+import { GetColumnDto } from "../application/contracts/column";
 import { GetProjectDto } from "../application/contracts/project";
 import {
     GetAllProjectsHandler,
     GetAllProjectsQuery,
 } from "../application/queries/getAllProjects";
+import {
+    GetProjectsColumnsHandler,
+    GetProjectsColumnsQuery,
+} from "../application/queries/getProjectsColumns";
 
 export class ProjectController {
     constructor(
@@ -27,7 +32,8 @@ export class ProjectController {
         private getAllProjectsHandler: GetAllProjectsHandler,
         private editProjectHandler: EditProjectHandler,
         private deleteProjectHandler: DeleteProjectHandler,
-        private addColumnToProjectHandler: AddColumnToProjectHandler
+        private addColumnToProjectHandler: AddColumnToProjectHandler,
+        private getProjectColumnsHandler: GetProjectsColumnsHandler
     ) {}
 
     createProject = async (req: Request, res: Response, next: NextFunction) => {
@@ -102,6 +108,24 @@ export class ProjectController {
             );
             res.status(200);
             return res.json(updatedProject);
+        } catch (e: any) {
+            next(e);
+        }
+    };
+
+    getProjectColumns = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) => {
+        try {
+            const query: GetProjectsColumnsQuery = {
+                projectId: req.params.id,
+            };
+            const projColumns: GetColumnDto[] =
+                await this.getProjectColumnsHandler.handle(query);
+            res.status(200);
+            return res.json(projColumns);
         } catch (e: any) {
             next(e);
         }

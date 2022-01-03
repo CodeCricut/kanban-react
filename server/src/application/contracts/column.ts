@@ -21,7 +21,7 @@ export type UpdateColumnDto = {
 export interface IColumnRepository {
     create(dto: PostColumnDto): Promise<GetColumnDto>;
     read(id: string): Promise<GetColumnDto>;
-    readAll(): Promise<GetColumnDto[]>;
+    readArray(ids: string[]): Promise<GetColumnDto[]>;
     update(id: string, dto: UpdateColumnDto): Promise<GetColumnDto>;
     delete(id: string): Promise<void>;
 }

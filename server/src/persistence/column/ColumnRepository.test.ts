@@ -1,3 +1,4 @@
+import { GetColumnDto } from "../../application/contracts/column";
 import { createValidPostColumnDto } from "../../test-helpers/columnFixtures";
 import { createValidPostProjectDto } from "../../test-helpers/projectFixtures";
 import { TestDatabase } from "../../test-helpers/TestDatabase";
@@ -59,5 +60,48 @@ describe("read", () => {
         await expect(async () => [
             await columnRepository.read("INVALID ID"),
         ]).rejects.toThrow(Error);
+    });
+});
+
+describe("readArray", () => {
+    it("returns all columns in array", async () => {
+        // Seed with columns
+        const columns: GetColumnDto[] = [];
+        for (let i = 0; i < 10; i++) {
+            const created = await columnRepository.create(
+                createValidPostColumnDto()
+            );
+            columns.push(created);
+        }
+
+        // Query some columns
+        const ids = [columns[0].id, columns[2].id, columns[3].id];
+        const response = await columnRepository.readArray(ids);
+
+        // Expect columns returned
+        expect(response.length).toBe(ids.length);
+        for (let i = 0; i < ids.length; i++) {
+            const containsCol = response.some((col) => col.id === ids[i]);
+            expect(containsCol).toBe(true);
+        }
+    });
+
+    it("throws if any column not found", async () => {
+        // Seed with columns
+        const columns: GetColumnDto[] = [];
+        for (let i = 0; i < 10; i++) {
+            const created = await columnRepository.create(
+                createValidPostColumnDto()
+            );
+            columns.push(created);
+        }
+
+        // Query with some invalid ids
+        const ids = [columns[0].id, "INVALID ID", columns[3].id];
+
+        // Expect error
+        await expect(async () => {
+            await columnRepository.readArray(ids);
+        }).rejects.toThrow(Error);
     });
 });

@@ -15,6 +15,7 @@ import { EditProjectHandler } from "./application/commands/editProject";
 import { DeleteProjectHandler } from "./application/commands/deleteProject";
 import { AddColumnToProjectHandler } from "./application/commands/addColumnToProject";
 import { ColumnRepository } from "./persistence/column/ColumnRepository";
+import { GetProjectsColumnsHandler } from "./application/queries/getProjectsColumns";
 
 export type AppDependencies = {
     database: IDatabase;
@@ -42,13 +43,18 @@ export function getAppDependencies(config: Config): AppDependencies {
         projectRepository,
         columnRepository
     );
+    const getProjectColumnsHandler = new GetProjectsColumnsHandler(
+        projectRepository,
+        columnRepository
+    );
 
     const projectController = new ProjectController(
         createProjectHandler,
         getAllProjectsHandler,
         editProjectHandler,
         deleteProjectHandler,
-        addColumnToProjectHandler
+        addColumnToProjectHandler,
+        getProjectColumnsHandler
     );
 
     const projectRouter = makeProjectRouter(projectController);

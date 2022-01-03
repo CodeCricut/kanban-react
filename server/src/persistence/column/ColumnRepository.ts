@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import {
     GetColumnDto,
     IColumnRepository,
@@ -18,9 +19,19 @@ export class ColumnRepository implements IColumnRepository {
         if (!model) throw new Error("Couldn't find column with id " + id);
         return mapModelToDto(model);
     }
-    readAll(): Promise<GetColumnDto[]> {
-        throw new Error("Method not implemented.");
+
+    async readArray(ids: string[]): Promise<GetColumnDto[]> {
+        const idArr: Types.ObjectId[] = ids.map((id) => Types.ObjectId(id));
+        const models = await ColumnModel.find({
+            _id: {
+                $in: idArr,
+            },
+        });
+        if (models.length != ids.length)
+            throw new Error("Couldn't retrieve one or more columns");
+        return models.map((model) => mapModelToDto(model));
     }
+
     update(id: string, dto: UpdateColumnDto): Promise<GetColumnDto> {
         throw new Error("Method not implemented.");
     }

@@ -170,6 +170,32 @@
                     }
                 }
             }
+        },
+        "/projects/columns/{id}": {
+            "get": {
+                "summary": "Get all columns for a project",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the project to associate with the new column",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/projectResponse"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -225,6 +251,7 @@
         },
         "projectResponse": {
             "type": "object",
+            "required": ["id", "name", "createdAt", "columns"],
             "properties": {
                 "id": {
                     "type": "string"
@@ -240,6 +267,31 @@
                     "format": "date-time"
                 },
                 "columns": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "columnResponse": {
+            "type": "object",
+            "required": ["id", "name", "createdAt", "issues"],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "issues": {
                     "type": "array",
                     "items": {
                         "type": "string"
