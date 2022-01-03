@@ -2,8 +2,8 @@ import { Project } from "../../domain/project";
 import { TestDatabase } from "../../test-helpers/TestDatabase";
 import { ProjectRepository } from "./ProjectRepository";
 import {
-    validPostProjectDto,
-    validUpdateProjectDto,
+    createValidPostProjectDto,
+    createValidUpdateProjectDto,
 } from "../../test-helpers/projectFixtures";
 import { expectProjectsEqual } from "../../test-helpers/projectAssertions";
 import { GetProjectDto } from "../../application/contracts/project";
@@ -12,18 +12,20 @@ const testDb = new TestDatabase();
 const projectRepository = new ProjectRepository();
 
 beforeAll(async () => {
-    testDb.initDatabase();
+    await testDb.initDatabase();
 });
 
 afterAll(async () => {
-    testDb.stopDatabase();
+    await testDb.stopDatabase();
 });
 
-afterEach(async () => testDb.resetDatabase());
+afterEach(async () => {
+    await testDb.resetDatabase();
+});
 
 describe("create", () => {
     it("populates id", async () => {
-        const validPostDto = validPostProjectDto;
+        const validPostDto = createValidPostProjectDto();
 
         const created = await projectRepository.create(validPostDto);
 
@@ -31,7 +33,7 @@ describe("create", () => {
     });
 
     it("initializes columns as empty", async () => {
-        const validPostDto = validPostProjectDto;
+        const validPostDto = createValidPostProjectDto();
 
         const created = await projectRepository.create(validPostDto);
 
@@ -40,7 +42,7 @@ describe("create", () => {
     });
 
     it("copies provided fields", async () => {
-        const validPostDto = validPostProjectDto;
+        const validPostDto = createValidPostProjectDto();
 
         const created = await projectRepository.create(validPostDto);
 
@@ -52,7 +54,8 @@ describe("create", () => {
 
 describe("read", () => {
     it("returns project", async () => {
-        const created = await projectRepository.create(validPostProjectDto);
+        const validPostDto = createValidPostProjectDto();
+        const created = await projectRepository.create(validPostDto);
 
         const returnedProject: GetProjectDto = await projectRepository.read(
             created.id
@@ -71,8 +74,8 @@ describe("read", () => {
 
 describe("readAll", () => {
     it("returns all models", async () => {
-        const created = await projectRepository.create(validPostProjectDto);
-
+        const validPostDto = createValidPostProjectDto();
+        const created = await projectRepository.create(validPostDto);
         const returnedProjects: GetProjectDto[] =
             await projectRepository.readAll();
 
@@ -85,20 +88,19 @@ describe("readAll", () => {
 
 describe("update", () => {
     it("throws if not found", async () => {
-        const updateDto = validUpdateProjectDto;
+        const updateDto = createValidUpdateProjectDto();
         await expect(async () => {
             await projectRepository.update("NON EXISTANT ID", updateDto);
         }).rejects.toThrow(Error);
     });
 
     it("updates project in database", async () => {
+        const postProjectDto = createValidPostProjectDto();
         // Seed with a project
-        const existingProject = await projectRepository.create(
-            validPostProjectDto
-        );
+        const existingProject = await projectRepository.create(postProjectDto);
 
         // Update the existing project
-        const updateDto = validUpdateProjectDto;
+        const updateDto = createValidUpdateProjectDto();
         await projectRepository.update(existingProject.id, updateDto);
 
         // Requery for the project to ensure it was actually updated
@@ -115,12 +117,11 @@ describe("update", () => {
 
     it("returns updated project", async () => {
         // Seed with a project
-        const existingProject = await projectRepository.create(
-            validPostProjectDto
-        );
+        const postProjectDto = createValidPostProjectDto();
+        const existingProject = await projectRepository.create(postProjectDto);
 
         // Update the existing project
-        const updateDto = validUpdateProjectDto;
+        const updateDto = createValidUpdateProjectDto();
         const updatedProject = await projectRepository.update(
             existingProject.id,
             updateDto
@@ -139,7 +140,8 @@ describe("update", () => {
 describe("delete", () => {
     it("deletes project from database", async () => {
         // Add project to delete
-        const created = await projectRepository.create(validPostProjectDto);
+        const postProjectDto = createValidPostProjectDto();
+        const created = await projectRepository.create(postProjectDto);
 
         // Delete project
         await projectRepository.delete(created.id);

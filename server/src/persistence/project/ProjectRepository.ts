@@ -1,13 +1,10 @@
 import { ProjectModel, ProjectModelType } from "./projectModel";
-import { CreateProjectCommand } from "../../application/commands/createProject";
 import {
     GetProjectDto,
     IProjectRepository,
     PostProjectDto,
     UpdateProjectDto,
 } from "../../application/contracts/project";
-import { Document } from "mongoose";
-import { Project } from "../../domain/project";
 
 export class ProjectRepository implements IProjectRepository {
     async create(dto: PostProjectDto): Promise<GetProjectDto> {
