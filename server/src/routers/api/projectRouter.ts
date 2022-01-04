@@ -12,5 +12,7 @@ export const makeProjectRouter = (projectController: ProjectController) => {
 
     router.get("/columns/:id", projectController.getProjectColumns);
 
+    router.put("/reorder-column/:id", projectController.reorderColumnRight);
+
     return router;
 };

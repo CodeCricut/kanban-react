@@ -21,15 +21,12 @@ export class ColumnRepository implements IColumnRepository {
     }
 
     async readArray(ids: string[]): Promise<GetColumnDto[]> {
-        const idArr: Types.ObjectId[] = ids.map((id) => Types.ObjectId(id));
-        const models = await ColumnModel.find({
-            _id: {
-                $in: idArr,
-            },
-        });
-        if (models.length != ids.length)
-            throw new Error("Couldn't retrieve one or more columns");
-        return models.map((model) => mapModelToDto(model));
+        const columns: GetColumnDto[] = [];
+        for (let i = 0; i < ids.length; i++) {
+            const column = await this.read(ids[i]);
+            columns.push(column);
+        }
+        return columns;
     }
 
     async update(id: string, dto: UpdateColumnDto): Promise<GetColumnDto> {

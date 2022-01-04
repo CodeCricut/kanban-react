@@ -197,6 +197,47 @@
                 }
             }
         },
+        "/projects/reorder-column/{id}": {
+            "put": {
+                "summary": "Reorder the columns of a project",
+                "description": "Move the column with the given id to the right. Must not be the last column in the project's project.",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the project to reorder the column's of.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "columnId",
+                        "description": "The column to move right.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/projectResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/columns/edit/{id}": {
             "put": {
                 "summary": "Update the column info",

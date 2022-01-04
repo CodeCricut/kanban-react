@@ -15,6 +15,10 @@ import {
     EditProjectCommand,
     EditProjectHandler,
 } from "../application/commands/editProject";
+import {
+    ReorderColumnRightCommand,
+    ReorderColumnRightHandler,
+} from "../application/commands/reorderColumnRight";
 import { GetColumnDto } from "../application/contracts/column";
 import { GetProjectDto } from "../application/contracts/project";
 import {
@@ -33,7 +37,8 @@ export class ProjectController {
         private editProjectHandler: EditProjectHandler,
         private deleteProjectHandler: DeleteProjectHandler,
         private addColumnToProjectHandler: AddColumnToProjectHandler,
-        private getProjectColumnsHandler: GetProjectsColumnsHandler
+        private getProjectColumnsHandler: GetProjectsColumnsHandler,
+        private reorderColumnRightHandler: ReorderColumnRightHandler
     ) {}
 
     createProject = async (req: Request, res: Response, next: NextFunction) => {
@@ -126,6 +131,27 @@ export class ProjectController {
                 await this.getProjectColumnsHandler.handle(query);
             res.status(200);
             return res.json(projColumns);
+        } catch (e: any) {
+            next(e);
+        }
+    };
+
+    reorderColumnRight = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) => {
+        const columnId: string = req.query.columnId as string;
+        try {
+            const command: ReorderColumnRightCommand = {
+                projectId: req.params.id,
+                columnId,
+            };
+            const updatedProject = await this.reorderColumnRightHandler.handle(
+                command
+            );
+            res.status(200);
+            return res.json(updatedProject);
         } catch (e: any) {
             next(e);
         }
