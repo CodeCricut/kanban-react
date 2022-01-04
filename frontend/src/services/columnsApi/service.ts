@@ -22,4 +22,12 @@ export class ColumnsApiService implements IColumnsApiService {
         const returnedColumn: Column = response.data;
         return returnedColumn;
     };
+
+    deleteColumn = async (
+        columnId: string,
+        projectId: string
+    ): Promise<void> => {
+        const route = this._config.deleteColumnRoute(columnId, projectId);
+        await axios.delete(route);
+    };
 }

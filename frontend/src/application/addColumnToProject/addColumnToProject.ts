@@ -11,6 +11,7 @@ type Dependencies = {
     dateTimeService: IDateTimeService;
 };
 
+// TODO: update to just make project stale instead of manually updating project state
 export async function addColumnToProject(
     project: Project,
     name: string,

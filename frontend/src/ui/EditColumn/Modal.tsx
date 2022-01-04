@@ -13,6 +13,7 @@ import { Project } from "../../domain/project";
 import { useFormState } from "./formState";
 import { Form } from "./Form";
 import { useEditColumn } from "../../application/editColumn/hook";
+import { useDeleteColumn } from "../../application/deleteColumn/hook";
 
 type ModalProps = {
     column: Column;
@@ -23,13 +24,18 @@ export const Modal = ({ column, projectId }: ModalProps) => {
 
     const modalService = useModalService();
     const editColumn = useEditColumn();
+    const deleteColumn = useDeleteColumn();
 
     const handleCancel = () => {
         modalService.unsetModal();
     };
 
+    const handleDelete = async () => {
+        await deleteColumn(column.id ?? "", projectId);
+        modalService.unsetModal();
+    };
+
     const handleCreate = async () => {
-        console.log("edit");
         const { name, description } = formState.values;
         await editColumn(column.id ?? "", name, description, projectId);
         modalService.unsetModal();
@@ -44,6 +50,9 @@ export const Modal = ({ column, projectId }: ModalProps) => {
                 <Form state={formState} />
             </DialogContent>
             <DialogActions>
+                <Button onClick={handleDelete} variant="outlined" color="error">
+                    Delete
+                </Button>
                 <Button
                     onClick={handleCreate}
                     variant="contained"
