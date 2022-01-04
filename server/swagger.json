@@ -179,7 +179,7 @@
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "The id of the project to associate with the new column",
+                        "description": "The id of the project to retrieve the columns of",
                         "required": true,
                         "type": "string"
                     }
@@ -228,6 +228,48 @@
                         "schema": {
                             "$ref": "#/definitions/columnResponse"
                         }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/columns/delete/{id}": {
+            "delete": {
+                "summary": "Delete a column",
+                "description": "Remove a column from the database",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Column id that needs to be deleted",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Parent project object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": ["projectId"],
+                            "properties": {
+                                "projectId": {
+                                    "type": "string",
+                                    "description": "The id of the parent project which this column belongs to."
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
                     },
                     "400": {
                         "description": "Invalid request",

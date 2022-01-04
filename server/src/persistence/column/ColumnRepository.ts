@@ -45,8 +45,8 @@ export class ColumnRepository implements IColumnRepository {
         return mapModelToDto(columnModel);
     }
 
-    delete(id: string): Promise<void> {
-        throw new Error("Method not implemented.");
+    async delete(id: string): Promise<void> {
+        await ColumnModel.findByIdAndDelete(id);
     }
 }
 

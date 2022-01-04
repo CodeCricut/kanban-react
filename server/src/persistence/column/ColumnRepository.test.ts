@@ -159,3 +159,25 @@ describe("update", () => {
         expect(updatedColumn.issues).toEqual(updateColumnDto.issues);
     });
 });
+
+describe("delete", () => {
+    it("deletes column from the database", async () => {
+        // Add column to delete
+        const validPostDto = createValidPostColumnDto();
+        const existingColumn = await columnRepository.create(validPostDto);
+
+        // Delete column
+        await columnRepository.delete(existingColumn.id);
+
+        // Expect not to be found
+        await expect(async () => {
+            await columnRepository.read(existingColumn.id);
+        }).rejects.toThrow(Error);
+    });
+
+    it("throws if not found", async () => {
+        await expect(async () => {
+            await columnRepository.delete("NON EXISTANT ID");
+        }).rejects.toThrow(Error);
+    });
+});

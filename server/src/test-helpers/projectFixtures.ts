@@ -17,11 +17,11 @@ export const createValidPostProjectDto: CreateValidPostProjectDtoFunction =
     });
 
 type CreateValidUpdateProjectDtoFunction = {
-    (): UpdateProjectDto;
+    (columns?: string[]): UpdateProjectDto;
 };
 export const createValidUpdateProjectDto: CreateValidUpdateProjectDtoFunction =
-    () => ({
+    (columns?: string[]) => ({
         name: `UPDATED NAME (ID=${uuid()})`,
         description: `UPDATED DESCRIPTION (ID=${uuid()})`,
-        columns: [],
+        columns: columns ?? [],
     });
