@@ -251,19 +251,12 @@
                         "type": "string"
                     },
                     {
-                        "in": "body",
-                        "name": "body",
+                        "in": "query",
+                        "name": "projectId",
                         "description": "Parent project object",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "required": ["projectId"],
-                            "properties": {
-                                "projectId": {
-                                    "type": "string",
-                                    "description": "The id of the parent project which this column belongs to."
-                                }
-                            }
+                            "type": "string"
                         }
                     }
                 ],

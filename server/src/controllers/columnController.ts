@@ -33,10 +33,11 @@ export class ColumnController {
     };
 
     deleteColumn = async (req: Request, res: Response, next: NextFunction) => {
+        const projectId: string = req.query.projectId as string;
         try {
             const command: DeleteColumnCommand = {
                 id: req.params.id,
-                projectId: req.body.projectId,
+                projectId,
             };
             await this.deleteColumnHandler.handle(command);
             return res.send();
