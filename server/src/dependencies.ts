@@ -20,7 +20,7 @@ import { makeColumnRouter } from "./routers/api/columnRouter";
 import { ColumnController } from "./controllers/columnController";
 import { EditColumnHandler } from "./application/commands/editColumn";
 import { DeleteColumnHandler } from "./application/commands/deleteColumn";
-import { ReorderColumnRightHandler } from "./application/commands/reorderColumnRight";
+import { ReorderColumnHandler } from "./application/commands/reorderColumn";
 
 export type AppDependencies = {
     database: IDatabase;
@@ -52,7 +52,7 @@ export function getAppDependencies(config: Config): AppDependencies {
         projectRepository,
         columnRepository
     );
-    const reorderColumnRightHandler = new ReorderColumnRightHandler(
+    const reorderColumnRightHandler = new ReorderColumnHandler(
         projectRepository
     );
 

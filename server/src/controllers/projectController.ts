@@ -16,9 +16,9 @@ import {
     EditProjectHandler,
 } from "../application/commands/editProject";
 import {
-    ReorderColumnRightCommand,
-    ReorderColumnRightHandler,
-} from "../application/commands/reorderColumnRight";
+    ReorderColumnCommand,
+    ReorderColumnHandler,
+} from "../application/commands/reorderColumn";
 import { GetColumnDto } from "../application/contracts/column";
 import { GetProjectDto } from "../application/contracts/project";
 import {
@@ -38,7 +38,7 @@ export class ProjectController {
         private deleteProjectHandler: DeleteProjectHandler,
         private addColumnToProjectHandler: AddColumnToProjectHandler,
         private getProjectColumnsHandler: GetProjectsColumnsHandler,
-        private reorderColumnRightHandler: ReorderColumnRightHandler
+        private reorderColumnRightHandler: ReorderColumnHandler
     ) {}
 
     createProject = async (req: Request, res: Response, next: NextFunction) => {
@@ -136,16 +136,14 @@ export class ProjectController {
         }
     };
 
-    reorderColumnRight = async (
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ) => {
+    reorderColumn = async (req: Request, res: Response, next: NextFunction) => {
         const columnId: string = req.query.columnId as string;
+        const newIndex: number = Number(req.query.newIndex);
         try {
-            const command: ReorderColumnRightCommand = {
+            const command: ReorderColumnCommand = {
                 projectId: req.params.id,
                 columnId,
+                newIndex,
             };
             const updatedProject = await this.reorderColumnRightHandler.handle(
                 command
