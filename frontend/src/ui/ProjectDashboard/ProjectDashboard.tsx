@@ -8,6 +8,7 @@ import { AddColumnCard } from "../AddColumn/AddColumnCard";
 import { EditProject } from "../EditProject";
 import { Column as ColumnModel } from "../../domain/column";
 import { ColumnCard } from "../Column/ColumnCard";
+import { ColumnContainer } from "../Column/ColumnContainer";
 
 type StylesType = {
     container: SxProps;
@@ -69,6 +70,7 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
                 {projectColumns.map((col) => (
                     <ColumnCard key={col.id} column={col} project={project} />
                 ))}
+                <ColumnContainer />
                 <AddColumnCard handleAdd={handleAdd} />
             </Box>
         </Box>
