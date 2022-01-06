@@ -17,6 +17,15 @@ export class IssueRepository implements IIssueRepository {
         if (!model) throw new Error(`Couldn't find issue with id ${id}`);
         return mapModelToDto(model);
     };
+
+    readArray = async (ids: string[]): Promise<GetIssueDto[]> => {
+        const issues: GetIssueDto[] = [];
+        for (let i = 0; i < ids.length; i++) {
+            const issue = await this.read(ids[i]);
+            issues.push(issue);
+        }
+        return issues;
+    };
 }
 
 function mapDtoToModel(dto: PostIssueDto): IssueModelType {

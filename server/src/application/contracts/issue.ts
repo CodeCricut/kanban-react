@@ -20,7 +20,7 @@ export type UpdateIssueDto = {
 export interface IIssueRepository {
     create(dto: PostIssueDto): Promise<GetIssueDto>;
     read(id: string): Promise<GetIssueDto>;
-    // readArray(ids: string[]): Promise<GetIssueDto[]>;
+    readArray(ids: string[]): Promise<GetIssueDto[]>;
     // update(id: string, dto: UpdateIssueDto): Promise<GetIssueDto>;
     // delete(id: string): Promise<void>;
 }
