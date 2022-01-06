@@ -9,7 +9,7 @@ type AddIssueToColumnFunction = {
     (column: Column, name: string, description: string): Promise<Column>;
 };
 
-export function useAddIssueToColumm(): AddIssueToColumnFunction {
+export function useAddIssueToColumn(): AddIssueToColumnFunction {
     const columnsApiService = useColumnsApiService();
     const dateTimeService = useDateTimeService();
     const staleColumnsService = useStaleColumnsService();

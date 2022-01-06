@@ -18,6 +18,7 @@ import {
     useDrop,
 } from "react-dnd";
 import { ItemTypes } from "../shared/itemTypes";
+import { AddIssueModal } from "../AddIssue";
 
 type StylesType = {
     container: SxProps;
@@ -59,7 +60,7 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
     const modalService = useModalService();
 
     const handleAddIssue = () => {
-        console.log("add issue");
+        modalService.setModal(<AddIssueModal column={column} />);
     };
 
     const handleEditIssue = () => {
@@ -88,7 +89,7 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
                 </Box>
             </Box>
             <Box sx={styles.content}>
-                <AddIssueCard handleAdd={() => console.log("add issue")} />
+                <AddIssueCard handleAdd={handleAddIssue} />
             </Box>
         </Card>
     );
