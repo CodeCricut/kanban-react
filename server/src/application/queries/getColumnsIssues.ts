@@ -5,7 +5,9 @@ type GetColumnsIssuesQuery = {
     columnId: string;
 };
 
-export async function getColumnsIssues({ columnId }: GetColumnsIssuesQuery) {
+export async function handleGetColumnsIssuesQuery({
+    columnId,
+}: GetColumnsIssuesQuery) {
     const column = await readColumn(columnId);
     return await readIssueArray(column.issues);
 }

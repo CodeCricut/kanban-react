@@ -10,7 +10,7 @@ type EditColumnCommand = {
     description: string;
 };
 
-export async function editColumn(command: EditColumnCommand) {
+export async function handleEditColumnCommand(command: EditColumnCommand) {
     const existingColumn = await readColumn(command.id);
 
     const updateDto: UpdateColumnDto = {

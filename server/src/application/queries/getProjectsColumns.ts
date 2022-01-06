@@ -5,7 +5,7 @@ type GetProjectsColumnsQuery = {
     projectId: string;
 };
 
-export async function getProjectsColumns({
+export async function handleGetProjectsColumnsQuery({
     projectId,
 }: GetProjectsColumnsQuery) {
     const project = await readProject(projectId);

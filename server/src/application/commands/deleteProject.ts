@@ -4,6 +4,8 @@ type DeleteProjectCommand = {
     id: string;
 };
 
-export async function deleteProject(command: DeleteProjectCommand) {
+export async function handleDeleteProjectCommand(
+    command: DeleteProjectCommand
+) {
     await deleteProjectFromDb(command.id);
 }

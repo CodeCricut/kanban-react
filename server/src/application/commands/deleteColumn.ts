@@ -9,7 +9,7 @@ type DeleteColumnCommand = {
     projectId: string;
 };
 
-export async function deleteColumn(command: DeleteColumnCommand) {
+export async function handleDeleteColumnCommand(command: DeleteColumnCommand) {
     const parentProject = await readProject(command.projectId);
 
     const columnIndex = parentProject.columns.findIndex(

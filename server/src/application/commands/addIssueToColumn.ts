@@ -13,7 +13,9 @@ type AddIssueToColumnCommand = {
     createdAt: string;
 };
 
-export async function addIssueToColumn(command: AddIssueToColumnCommand) {
+export async function handleAddIssueToColumnCommand(
+    command: AddIssueToColumnCommand
+) {
     const parentColumn = await readColumn(command.columnId);
     if (
         command.issueIndex > parentColumn.issues.length ||

@@ -7,7 +7,9 @@ type CreateProjectCommand = {
     createdAt: string;
 };
 
-export async function createProject(command: CreateProjectCommand) {
+export async function handleCreateProjectCommand(
+    command: CreateProjectCommand
+) {
     const postDto: PostProjectDto = command;
     const created = await createProjectInDb(postDto);
     return created;

@@ -10,7 +10,7 @@ type EditProjectCommand = {
     description: string;
 };
 
-export async function editProject(command: EditProjectCommand) {
+export async function handleEditProjectCommand(command: EditProjectCommand) {
     const existingProject = await readProject(command.id);
 
     const updateDto: UpdateProjectDto = {

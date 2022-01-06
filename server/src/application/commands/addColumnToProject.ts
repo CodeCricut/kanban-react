@@ -13,7 +13,9 @@ type AddColumnToProjectCommand = {
     createdAt: string;
 };
 
-export async function addColumnToProject(command: AddColumnToProjectCommand) {
+export async function handleAddColumnToProjectCommand(
+    command: AddColumnToProjectCommand
+) {
     const parentProject = await readProject(command.projectId);
     if (
         command.columnIndex > parentProject.columns.length ||

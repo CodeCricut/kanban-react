@@ -10,7 +10,9 @@ type ReorderColumnCommand = {
     newIndex: number;
 };
 
-export async function reorderColumns(command: ReorderColumnCommand) {
+export async function handleReorderColumnsCommand(
+    command: ReorderColumnCommand
+) {
     const { columnId, newIndex, projectId } = command;
     const project = await readProject(projectId);
 
