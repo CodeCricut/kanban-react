@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Card, Typography, Box, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -9,7 +9,12 @@ import { AddIssueCard } from "../AddIssue/AddIssueCard";
 import { useModalService } from "../../services/modalService";
 import { EditColumnModal } from "../EditColumn";
 import { Project } from "../../domain/project";
-import { useDrag } from "react-dnd";
+import {
+    DragSourceMonitor,
+    DropTargetMonitor,
+    useDrag,
+    useDrop,
+} from "react-dnd";
 import { ItemTypes } from "../shared/itemTypes";
 
 type StylesType = {
@@ -45,16 +50,62 @@ const styles: StylesType = {
 type ColumnProps = {
     column: ColumnModel;
     project: Project;
+    index: number;
+    moveColumn: (fromIndex: number, toIndex: number, columnId: string) => void;
 };
 
-export const ColumnCard = ({ column, project }: ColumnProps) => {
-    const [{ isDragging }, dragRef] = useDrag(() => ({
+export const ColumnCard = ({
+    column,
+    project,
+    index,
+    moveColumn,
+}: ColumnProps) => {
+    const ref = useRef<HTMLDivElement>(null);
+
+    const [{ isDragging }, drag] = useDrag(() => ({
         type: ItemTypes.COLUMN,
-        item: { id: column.id },
+        item: { id: column.id, index },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
     }));
+
+    const [, drop] = useDrop({
+        accept: ItemTypes.COLUMN,
+        canDrop: (item: any, monitor: DropTargetMonitor) => {
+            if (!ref.current) return false;
+            const dragIndex = item.index;
+            const hoverIndex = index;
+            // Don't replate items with themselves
+            if (dragIndex === hoverIndex) return false;
+
+            // Determine rectangle on screen
+            const hoverBoundingRect = ref.current.getBoundingClientRect();
+            // Get horizontal middle
+            const hoverMiddleX =
+                (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
+            // Determine mouse position
+            const clientOffset = monitor.getClientOffset();
+            // Get pixels to the left
+            const hoverClientX = clientOffset?.x ?? 0 - hoverBoundingRect.left;
+            // Only perform the move when the mouse has crossed half of the items height
+            // When dragging downwards, only move when the cursor is below 50%
+            // When dragging upwards, only move when the cursor is above 50%
+            // Dragging downwards
+            if (dragIndex < hoverIndex && hoverClientX < hoverMiddleX)
+                return false;
+
+            return true;
+        },
+        drop: (item: any) => {
+            const dragIndex = item.index;
+            const hoverIndex = index;
+            // Perform the action
+            moveColumn(dragIndex, hoverIndex, item.id);
+        },
+    });
+
+    drag(drop(ref));
 
     const modalService = useModalService();
 
@@ -69,8 +120,8 @@ export const ColumnCard = ({ column, project }: ColumnProps) => {
     };
 
     return (
-        <div style={{ opacity: isDragging ? 0.5 : 1 }}>
-            <div role="handle" ref={dragRef}>
+        <div style={{ opacity: isDragging ? 0.5 : 1 }} ref={ref}>
+            <div role="handle" ref={drag}>
                 <Card sx={styles.container} elevation={2}>
                     <Box sx={styles.header}>
                         <Box sx={styles.header.info}>
