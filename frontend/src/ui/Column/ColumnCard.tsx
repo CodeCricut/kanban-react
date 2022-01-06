@@ -26,6 +26,8 @@ type StylesType = {
     container: SxProps;
     header: SxProps & {
         info: SxProps;
+        numIssues: SxProps;
+        colName: SxProps;
     };
     content: SxProps;
 };
@@ -40,13 +42,23 @@ const styles: StylesType = {
     header: {
         display: "flex",
         flexDirection: "row",
+        alignItems: "center",
         justifyContent: "space-between",
         info: {
             display: "flex",
-            "& > *": {
-                fontSize: "1.25rem",
-                marginRight: 1,
-            },
+            alignItems: "baseline",
+            height: "fit-content",
+        },
+        numIssues: {
+            fontSize: "1rem",
+            backgroundColor: "grey.300",
+            borderRadius: "50%",
+            marginRight: 1,
+            textAlign: "center",
+            width: "1.5rem",
+        },
+        colName: {
+            fontSize: "1.25rem",
         },
     },
     content: {},
@@ -80,8 +92,12 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
         >
             <Box sx={styles.header}>
                 <Box sx={styles.header.info}>
-                    <Typography>{column.issues?.length ?? 0}</Typography>
-                    <Typography>{column.name}</Typography>
+                    <Typography sx={styles.header.numIssues}>
+                        {column.issues?.length ?? 0}
+                    </Typography>
+                    <Typography sx={styles.header.colName}>
+                        {column.name}
+                    </Typography>
                 </Box>
                 <Box>
                     <IconButton onClick={handleAddIssue}>
