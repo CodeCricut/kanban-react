@@ -1,157 +1,132 @@
 import { NextFunction, Request, Response } from "express";
-import {
-    AddColumnToProjectCommand,
-    AddColumnToProjectHandler,
-} from "../application/commands/addColumnToProject";
-import {
-    CreateProjectCommand,
-    CreateProjectHandler,
-} from "../application/commands/createProject";
-import {
-    DeleteProjectCommand,
-    DeleteProjectHandler,
-} from "../application/commands/deleteProject";
-import {
-    EditProjectCommand,
-    EditProjectHandler,
-} from "../application/commands/editProject";
-import {
-    ReorderColumnCommand,
-    ReorderColumnHandler,
-} from "../application/commands/reorderColumn";
-import { GetColumnDto } from "../application/contracts/column";
-import { GetProjectDto } from "../application/contracts/project";
-import {
-    GetAllProjectsHandler,
-    GetAllProjectsQuery,
-} from "../application/queries/getAllProjects";
-import {
-    GetProjectsColumnsHandler,
-    GetProjectsColumnsQuery,
-} from "../application/queries/getProjectsColumns";
+import { handleAddColumnToProjectCommand } from "../application/commands/addColumnToProject";
+import { handleCreateProjectCommand } from "../application/commands/createProject";
+import { handleDeleteProjectCommand } from "../application/commands/deleteProject";
+import { handleEditProjectCommand } from "../application/commands/editProject";
+import { handleReorderColumnsCommand } from "../application/commands/reorderColumn";
+import { handleGetAllProjectsQuery } from "../application/queries/getAllProjects";
+import { handleGetProjectsColumnsQuery } from "../application/queries/getProjectsColumns";
 
-export class ProjectController {
-    constructor(
-        private createProjectHandler: CreateProjectHandler,
-        private getAllProjectsHandler: GetAllProjectsHandler,
-        private editProjectHandler: EditProjectHandler,
-        private deleteProjectHandler: DeleteProjectHandler,
-        private addColumnToProjectHandler: AddColumnToProjectHandler,
-        private getProjectColumnsHandler: GetProjectsColumnsHandler,
-        private reorderColumnRightHandler: ReorderColumnHandler
-    ) {}
+export async function createProject(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
+        const { name, createdAt, description } = req.body;
+        const created = await handleCreateProjectCommand({
+            name,
+            createdAt,
+            description,
+        });
 
-    createProject = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const command: CreateProjectCommand = req.body;
+        res.status(200);
+        return res.json(created);
+    } catch (e: any) {
+        next(e);
+    }
+}
 
-            const created: GetProjectDto =
-                await this.createProjectHandler.handle(command);
-            res.status(200);
-            return res.json(created);
-        } catch (e: any) {
-            next(e);
-        }
-    };
-
-    getAllProjects = async (
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ) => {
-        try {
-            const allProjects = await this.getAllProjectsHandler.handle({});
+export async function getAllProjects(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    return handleGetAllProjectsQuery()
+        .then((allProjects) => {
             res.status(200);
             return res.json(allProjects);
-        } catch (e: any) {
-            next(e);
-        }
-    };
+        })
+        .catch(next);
+}
 
-    editProject = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const command: EditProjectCommand = {
-                id: req.params.id,
-                name: req.body.name,
-                description: req.body.description,
-            };
-            const updated: GetProjectDto = await this.editProjectHandler.handle(
-                command
-            );
-            res.status(200);
-            return res.json(updated);
-        } catch (e: any) {
-            next(e);
-        }
-    };
+export async function editProject(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
+        const { name, description } = req.body;
+        const updated = await handleEditProjectCommand({
+            id: req.params.id,
+            name,
+            description,
+        });
 
-    deleteProject = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const command: DeleteProjectCommand = {
-                id: req.params.id,
-            };
-            await this.deleteProjectHandler.handle(command);
+        res.status(200);
+        return res.json(updated);
+    } catch (e: any) {
+        next(e);
+    }
+}
+
+export async function deleteProject(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    return handleDeleteProjectCommand({
+        id: req.params.id,
+    })
+        .then(() => {
             res.status(200);
             return res.send();
-        } catch (e: any) {
-            next(e);
-        }
-    };
+        })
+        .catch(next);
+}
 
-    addColumn = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const { columnIndex, name, description, createdAt } = req.body;
-            const command: AddColumnToProjectCommand = {
-                projectId: req.params.id,
-                columnIndex,
-                name,
-                description,
-                createdAt,
-            };
-            const updatedProject = await this.addColumnToProjectHandler.handle(
-                command
-            );
-            res.status(200);
-            return res.json(updatedProject);
-        } catch (e: any) {
-            next(e);
-        }
-    };
+export async function addColumn(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
+        const { columnIndex, name, description, createdAt } = req.body;
+        const updatedProject = await handleAddColumnToProjectCommand({
+            projectId: req.params.id,
+            columnIndex,
+            name,
+            description,
+            createdAt,
+        });
 
-    getProjectColumns = async (
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ) => {
-        try {
-            const query: GetProjectsColumnsQuery = {
-                projectId: req.params.id,
-            };
-            const projColumns: GetColumnDto[] =
-                await this.getProjectColumnsHandler.handle(query);
-            res.status(200);
-            return res.json(projColumns);
-        } catch (e: any) {
-            next(e);
-        }
-    };
+        res.status(200);
+        return res.json(updatedProject);
+    } catch (e: any) {
+        next(e);
+    }
+}
 
-    reorderColumn = async (req: Request, res: Response, next: NextFunction) => {
+export async function getProjectColumns(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    return handleGetProjectsColumnsQuery({
+        projectId: req.params.id,
+    }).then((columns) => {
+        res.status(200);
+        return res.json(columns);
+    });
+}
+
+export async function reorderColumns(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
         const columnId: string = req.query.columnId as string;
         const newIndex: number = Number(req.query.newIndex);
-        try {
-            const command: ReorderColumnCommand = {
-                projectId: req.params.id,
-                columnId,
-                newIndex,
-            };
-            const updatedProject = await this.reorderColumnRightHandler.handle(
-                command
-            );
-            res.status(200);
-            return res.json(updatedProject);
-        } catch (e: any) {
-            next(e);
-        }
-    };
+        const updatedProject = await handleReorderColumnsCommand({
+            projectId: req.params.id,
+            columnId,
+            newIndex,
+        });
+
+        res.status(200);
+        return res.json(updatedProject);
+    } catch (e: any) {
+        next(e);
+    }
 }
