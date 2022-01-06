@@ -1,6 +1,6 @@
-import { GetColumnDto, IColumnRepository } from "../contracts/column";
-import { IProjectRepository } from "../contracts/project";
-import { IQueryHandler } from "../queryHandler";
+import { GetColumnDto, IColumnRepository } from "../../contracts/column";
+import { IProjectRepository } from "../../contracts/project";
+import { IQueryHandler } from "../../queryHandler";
 
 export type GetProjectsColumnsQuery = {
     projectId: string;

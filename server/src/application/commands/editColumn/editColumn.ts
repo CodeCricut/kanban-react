@@ -1,9 +1,9 @@
-import { ICommandHandler } from "../commandHandler";
+import { ICommandHandler } from "../../commandHandler";
 import {
     GetColumnDto,
     IColumnRepository,
     UpdateColumnDto,
-} from "../contracts/column";
+} from "../../contracts/column";
 
 export type EditColumnCommand = {
     id: string;

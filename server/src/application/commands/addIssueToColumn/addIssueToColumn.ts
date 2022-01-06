@@ -1,10 +1,10 @@
-import { ICommandHandler } from "../commandHandler";
-import { GetColumnDto, IColumnRepository } from "../contracts/column";
+import { ICommandHandler } from "../../commandHandler";
+import { GetColumnDto, IColumnRepository } from "../../contracts/column";
 import {
     GetIssueDto,
     IIssueRepository,
     PostIssueDto,
-} from "../contracts/issue";
+} from "../../contracts/issue";
 
 export type AddIssueToColumnCommand = {
     columnId: string;

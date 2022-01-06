@@ -1,9 +1,9 @@
-import { ColumnRepository } from "../../persistence/column/ColumnRepository";
-import { ProjectRepository } from "../../persistence/project/ProjectRepository";
-import { createValidPostColumnDto } from "../../test-helpers/columnFixtures";
-import { createValidPostProjectDto } from "../../test-helpers/projectFixtures";
-import { TestDatabase } from "../../test-helpers/TestDatabase";
-import { PostProjectDto } from "../contracts/project";
+import { ColumnRepository } from "../../../persistence/column/ColumnRepository";
+import { ProjectRepository } from "../../../persistence/project/ProjectRepository";
+import { createValidPostColumnDto } from "../../../test-helpers/columnFixtures";
+import { createValidPostProjectDto } from "../../../test-helpers/projectFixtures";
+import { TestDatabase } from "../../../test-helpers/TestDatabase";
+import { PostProjectDto } from "../../contracts/project";
 import {
     AddColumnToProjectCommand,
     AddColumnToProjectHandler,

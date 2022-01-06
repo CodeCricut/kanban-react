@@ -1,6 +1,6 @@
-import { ICommandHandler } from "../commandHandler";
-import { IColumnRepository } from "../contracts/column";
-import { IProjectRepository } from "../contracts/project";
+import { ICommandHandler } from "../../commandHandler";
+import { IColumnRepository } from "../../contracts/column";
+import { IProjectRepository } from "../../contracts/project";
 
 export type DeleteColumnCommand = {
     id: string;

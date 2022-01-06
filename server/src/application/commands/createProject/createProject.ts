@@ -1,10 +1,10 @@
-import { Project } from "../../domain/project";
-import { ICommandHandler } from "../commandHandler";
+import { Project } from "../../../domain/project";
+import { ICommandHandler } from "../../commandHandler";
 import {
     GetProjectDto,
     IProjectRepository,
     PostProjectDto,
-} from "../contracts/project";
+} from "../../contracts/project";
 
 export type CreateProjectCommand = {
     name: string;

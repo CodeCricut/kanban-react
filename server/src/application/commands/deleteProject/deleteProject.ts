@@ -1,5 +1,5 @@
-import { ICommandHandler } from "../commandHandler";
-import { IProjectRepository } from "../contracts/project";
+import { ICommandHandler } from "../../commandHandler";
+import { IProjectRepository } from "../../contracts/project";
 
 export type DeleteProjectCommand = {
     id: string;

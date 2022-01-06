@@ -1,12 +1,12 @@
-import { ColumnRepository } from "../../persistence/column/ColumnRepository";
-import { ProjectRepository } from "../../persistence/project/ProjectRepository";
-import { createValidPostColumnDto } from "../../test-helpers/columnFixtures";
+import { ColumnRepository } from "../../../persistence/column/ColumnRepository";
+import { ProjectRepository } from "../../../persistence/project/ProjectRepository";
+import { createValidPostColumnDto } from "../../../test-helpers/columnFixtures";
 import {
     createValidPostProjectDto,
     createValidUpdateProjectDto,
-} from "../../test-helpers/projectFixtures";
-import { TestDatabase } from "../../test-helpers/TestDatabase";
-import { GetProjectDto } from "../contracts/project";
+} from "../../../test-helpers/projectFixtures";
+import { TestDatabase } from "../../../test-helpers/TestDatabase";
+import { GetProjectDto } from "../../contracts/project";
 import { DeleteColumnCommand, DeleteColumnHandler } from "./deleteColumn";
 
 const testDb = new TestDatabase();

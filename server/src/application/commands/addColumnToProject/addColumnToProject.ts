@@ -1,10 +1,10 @@
-import { ICommandHandler } from "../commandHandler";
+import { ICommandHandler } from "../../commandHandler";
 import {
     GetColumnDto,
     IColumnRepository,
     PostColumnDto,
-} from "../contracts/column";
-import { GetProjectDto, IProjectRepository } from "../contracts/project";
+} from "../../contracts/column";
+import { GetProjectDto, IProjectRepository } from "../../contracts/project";
 
 export type AddColumnToProjectCommand = {
     projectId: string;

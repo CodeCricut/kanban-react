@@ -2,33 +2,33 @@ import { NextFunction, Request, Response } from "express";
 import {
     AddColumnToProjectCommand,
     AddColumnToProjectHandler,
-} from "../application/commands/addColumnToProject";
+} from "../application/commands/addColumnToProject/addColumnToProject";
 import {
     CreateProjectCommand,
     CreateProjectHandler,
-} from "../application/commands/createProject";
+} from "../application/commands/createProject/createProject";
 import {
     DeleteProjectCommand,
     DeleteProjectHandler,
-} from "../application/commands/deleteProject";
+} from "../application/commands/deleteProject/deleteProject";
 import {
     EditProjectCommand,
     EditProjectHandler,
-} from "../application/commands/editProject";
+} from "../application/commands/editProject/editProject";
 import {
     ReorderColumnCommand,
     ReorderColumnHandler,
-} from "../application/commands/reorderColumn";
+} from "../application/commands/reorderColumn/reorderColumn";
 import { GetColumnDto } from "../application/contracts/column";
 import { GetProjectDto } from "../application/contracts/project";
 import {
     GetAllProjectsHandler,
     GetAllProjectsQuery,
-} from "../application/queries/getAllProjects";
+} from "../application/queries/getAllProjects/getAllProjects";
 import {
     GetProjectsColumnsHandler,
     GetProjectsColumnsQuery,
-} from "../application/queries/getProjectsColumns";
+} from "../application/queries/getProjectsColumns/getProjectsColumns";
 
 export class ProjectController {
     constructor(

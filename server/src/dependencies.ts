@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { Config } from "../config";
-import { CreateProjectHandler } from "./application/commands/createProject";
+import { CreateProjectHandler } from "./application/commands/createProject/createProject";
 import { ProjectController } from "./controllers/projectController";
 import { makeApiRouter } from "./routers/api";
 import { makeDocsRouter } from "./routers/docsRouter";
@@ -10,20 +10,20 @@ import { ProjectRepository } from "./persistence/project/ProjectRepository";
 import { IDatabase } from "./application/contracts/database";
 import { MongoDatabase } from "./persistence/MongoDatabase";
 import { IProjectRepository } from "./application/contracts/project";
-import { GetAllProjectsHandler } from "./application/queries/getAllProjects";
-import { EditProjectHandler } from "./application/commands/editProject";
-import { DeleteProjectHandler } from "./application/commands/deleteProject";
-import { AddColumnToProjectHandler } from "./application/commands/addColumnToProject";
+import { GetAllProjectsHandler } from "./application/queries/getAllProjects/getAllProjects";
+import { EditProjectHandler } from "./application/commands/editProject/editProject";
+import { DeleteProjectHandler } from "./application/commands/deleteProject/deleteProject";
+import { AddColumnToProjectHandler } from "./application/commands/addColumnToProject/addColumnToProject";
 import { ColumnRepository } from "./persistence/column/ColumnRepository";
-import { GetProjectsColumnsHandler } from "./application/queries/getProjectsColumns";
+import { GetProjectsColumnsHandler } from "./application/queries/getProjectsColumns/getProjectsColumns";
 import { makeColumnRouter } from "./routers/api/columnRouter";
 import { ColumnController } from "./controllers/columnController";
-import { EditColumnHandler } from "./application/commands/editColumn";
-import { DeleteColumnHandler } from "./application/commands/deleteColumn";
-import { ReorderColumnHandler } from "./application/commands/reorderColumn";
-import { AddIssueToColumnHandler } from "./application/commands/addIssueToColumn";
+import { EditColumnHandler } from "./application/commands/editColumn/editColumn";
+import { DeleteColumnHandler } from "./application/commands/deleteColumn/deleteColumn";
+import { ReorderColumnHandler } from "./application/commands/reorderColumn/reorderColumn";
+import { AddIssueToColumnHandler } from "./application/commands/addIssueToColumn/addIssueToColumn";
 import { IssueRepository } from "./persistence/issues/IssueRepository";
-import { GetColumnsIssuesHandler } from "./application/queries/getColumnsIssues";
+import { GetColumnsIssuesHandler } from "./application/queries/getColumnsIssues/getColumnsIssues";
 
 export type AppDependencies = {
     database: IDatabase;

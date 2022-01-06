@@ -1,6 +1,6 @@
-import { IColumnRepository } from "../contracts/column";
-import { GetIssueDto, IIssueRepository } from "../contracts/issue";
-import { IQueryHandler } from "../queryHandler";
+import { IColumnRepository } from "../../contracts/column";
+import { GetIssueDto, IIssueRepository } from "../../contracts/issue";
+import { IQueryHandler } from "../../queryHandler";
 
 export type GetColumnsIssuesQuery = {
     columnId: string;

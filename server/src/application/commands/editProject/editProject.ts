@@ -1,9 +1,9 @@
-import { ICommandHandler } from "../commandHandler";
+import { ICommandHandler } from "../../commandHandler";
 import {
     GetProjectDto,
     IProjectRepository,
     UpdateProjectDto,
-} from "../contracts/project";
+} from "../../contracts/project";
 
 export type EditProjectCommand = {
     id: string;

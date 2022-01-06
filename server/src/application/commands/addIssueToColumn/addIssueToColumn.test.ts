@@ -1,8 +1,8 @@
-import { ColumnRepository } from "../../persistence/column/ColumnRepository";
-import { IssueRepository } from "../../persistence/issues/IssueRepository";
-import { createValidPostColumnDto } from "../../test-helpers/columnFixtures";
-import { createValidPostIssueDto } from "../../test-helpers/issueFixtures";
-import { TestDatabase } from "../../test-helpers/TestDatabase";
+import { ColumnRepository } from "../../../persistence/column/ColumnRepository";
+import { IssueRepository } from "../../../persistence/issues/IssueRepository";
+import { createValidPostColumnDto } from "../../../test-helpers/columnFixtures";
+import { createValidPostIssueDto } from "../../../test-helpers/issueFixtures";
+import { TestDatabase } from "../../../test-helpers/TestDatabase";
 import {
     AddIssueToColumnCommand as AddIssueToColumnCommand,
     AddIssueToColumnHandler,

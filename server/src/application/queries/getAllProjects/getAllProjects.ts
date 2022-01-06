@@ -1,5 +1,5 @@
-import { GetProjectDto, IProjectRepository } from "../contracts/project";
-import { IQueryHandler } from "../queryHandler";
+import { GetProjectDto, IProjectRepository } from "../../contracts/project";
+import { IQueryHandler } from "../../queryHandler";
 
 export type GetAllProjectsQuery = {};
 
