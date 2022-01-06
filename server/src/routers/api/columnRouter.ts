@@ -1,13 +1,16 @@
 import { Router } from "express";
-import { ColumnController } from "../../controllers/columnController";
+import {
+    addIssue,
+    deleteColumn,
+    editColumn,
+    getColumnIssues,
+} from "../../controllers/columnController";
 
-export const makeColumnRouter = (columnController: ColumnController) => {
-    const router = Router();
+const columnRouter = Router();
 
-    router.put("/edit/:id", columnController.editColumn);
-    router.delete("/delete/:id", columnController.deleteColumn);
-    router.post("/add-issue/:id", columnController.addIssue);
-    router.get("/issues/:id", columnController.getColumnIssues);
+columnRouter.put("/edit/:id", editColumn);
+columnRouter.delete("/delete/:id", deleteColumn);
+columnRouter.post("/add-issue/:id", addIssue);
+columnRouter.get("/issues/:id", getColumnIssues);
 
-    return router;
-};
+export { columnRouter };

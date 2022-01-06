@@ -1,26 +1,22 @@
-import express, { Express, Router } from "express";
+import express, { Express } from "express";
 
 import * as dotenv from "dotenv";
 import cors from "cors";
+import { frontendRouter } from "./routers/frontend";
+import { docsRouter } from "./routers/docsRouter";
+import { apiRouter } from "./routers/api";
 
 dotenv.config();
 
 const app = express();
 
-export function makeApp(
-    apiRouter: Router,
-    frontendRouter: Router,
-    docsRouter: Router
-) {
-    app.use(cors());
-    app.use(express.json());
-    app.use("/", frontendRouter);
-    app.use("/docs", docsRouter);
-    app.use("/api", apiRouter);
-    return app;
-}
+app.use(cors());
+app.use(express.json());
+app.use("/", frontendRouter);
+app.use("/docs", docsRouter);
+app.use("/api", apiRouter);
 
-export function startApp(app: Express) {
+function startApp(app: Express) {
     const port = process.env.PORT || process.env.TEST_PORT;
     if (!port)
         throw new Error(
@@ -31,3 +27,5 @@ export function startApp(app: Express) {
         console.log(`Listening at http://localhost:${port}`)
     );
 }
+
+export { app, startApp };

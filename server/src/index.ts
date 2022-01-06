@@ -1,18 +1,11 @@
-import { makeApp, startApp } from "./app";
-import { AppDependencies, getAppDependencies } from "./dependencies";
-import { config } from "../config";
+import { app, startApp } from "./app";
+import { MongoDatabase } from "./persistence/MongoDatabase";
 
-const dependencies: AppDependencies = getAppDependencies(config);
+const database = new MongoDatabase();
 
-// Start the app if the database was started
-dependencies.database
+database
     .initDatabase()
     .then(() => {
-        const app = makeApp(
-            dependencies.apiRouter,
-            dependencies.frontendRouter,
-            dependencies.docRouter
-        );
         startApp(app);
     })
     .catch((e) => {

@@ -2,10 +2,8 @@ import { Router } from "express";
 import * as swaggerUi from "swagger-ui-express";
 import swaggerSpec from "../../swagger.json";
 
-export const makeDocsRouter = () => {
-    const router = Router();
+const docsRouter = Router();
 
-    router.use(swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+docsRouter.use(swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-    return router;
-};
+export { docsRouter };

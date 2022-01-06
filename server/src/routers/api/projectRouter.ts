@@ -1,18 +1,22 @@
 import { Router } from "express";
-import { ProjectController } from "../../controllers/projectController";
+import {
+    addColumn,
+    createProject,
+    deleteProject,
+    editProject,
+    getAllProjects,
+    getProjectColumns,
+    reorderColumn,
+} from "../../controllers/projectController";
 
-export const makeProjectRouter = (projectController: ProjectController) => {
-    const router = Router();
+const projectRouter = Router();
 
-    router.get("/", projectController.getAllProjects);
-    router.post("/create", projectController.createProject);
-    router.put("/edit/:id", projectController.editProject);
-    router.delete("/delete/:id", projectController.deleteProject);
-    router.post("/add-column/:id", projectController.addColumn);
+projectRouter.get("/", getAllProjects);
+projectRouter.post("/create", createProject);
+projectRouter.put("/edit/:id", editProject);
+projectRouter.delete("/delete/:id", deleteProject);
+projectRouter.post("/add-column/:id", addColumn);
+projectRouter.get("/columns/:id", getProjectColumns);
+projectRouter.put("/reorder-column/:id", reorderColumn);
 
-    router.get("/columns/:id", projectController.getProjectColumns);
-
-    router.put("/reorder-column/:id", projectController.reorderColumn);
-
-    return router;
-};
+export { projectRouter };

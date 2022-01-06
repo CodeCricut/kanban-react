@@ -110,7 +110,7 @@ export async function getProjectColumns(
     });
 }
 
-export async function reorderColumns(
+export async function reorderColumn(
     req: Request,
     res: Response,
     next: NextFunction
