@@ -35,7 +35,7 @@ export class ColumnRepository implements IColumnRepository {
 
         const { name, description, issues } = dto;
         columnModel.name = name;
-        columnModel.description = description;
+        columnModel.description = description ?? "";
         columnModel.issues = issues;
         await columnModel.save();
 

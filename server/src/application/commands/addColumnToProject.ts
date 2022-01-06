@@ -30,11 +30,6 @@ export class AddColumnToProjectHandler
         )
             throw new Error("Tried inserting column at invalid index");
 
-        if (!parentProject)
-            throw new Error(
-                "Tried adding column to project which did not exist"
-            );
-
         const postDto: PostColumnDto = command;
         const created = await this.columnRepo.create(postDto);
 

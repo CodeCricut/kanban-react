@@ -14,7 +14,7 @@ export type PostColumnDto = {
 
 export type UpdateColumnDto = {
     name: string;
-    description: string;
+    description?: string;
     issues: string[];
 };
 

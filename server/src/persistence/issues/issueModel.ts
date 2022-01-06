@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 import { Issue } from "../../domain/issue";
 
 export const ISSUE_MODEL_NAME = "Issue";
@@ -10,3 +10,5 @@ const IssueSchema = new mongoose.Schema<Issue>({
 });
 
 export const IssueModel = mongoose.model<Issue>(ISSUE_MODEL_NAME, IssueSchema);
+
+export type IssueModelType = Issue & Document<any, any, Issue>;
