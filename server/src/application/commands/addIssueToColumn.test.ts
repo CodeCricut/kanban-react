@@ -4,7 +4,7 @@ import { createValidPostColumnDto } from "../../test-helpers/columnFixtures";
 import { createValidPostIssueDto } from "../../test-helpers/issueFixtures";
 import { TestDatabase } from "../../test-helpers/TestDatabase";
 import {
-    AddIssueToColumn as AddIssueToColumnCommand,
+    AddIssueToColumnCommand as AddIssueToColumnCommand,
     AddIssueToColumnHandler,
 } from "./addIssueToColumn";
 

@@ -6,7 +6,7 @@ import {
     PostIssueDto,
 } from "../contracts/issue";
 
-export type AddIssueToColumn = {
+export type AddIssueToColumnCommand = {
     columnId: string;
     issueIndex: number;
     name: string;
@@ -15,14 +15,14 @@ export type AddIssueToColumn = {
 };
 
 export class AddIssueToColumnHandler
-    implements ICommandHandler<AddIssueToColumn, GetColumnDto>
+    implements ICommandHandler<AddIssueToColumnCommand, GetColumnDto>
 {
     constructor(
         private columnRepo: IColumnRepository,
         private issueRepo: IIssueRepository
     ) {}
 
-    async handle(command: AddIssueToColumn): Promise<GetColumnDto> {
+    async handle(command: AddIssueToColumnCommand): Promise<GetColumnDto> {
         const parentColumn = await this.columnRepo.read(command.columnId);
         if (
             command.issueIndex > parentColumn.issues.length ||

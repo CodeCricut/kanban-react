@@ -21,6 +21,8 @@ import { ColumnController } from "./controllers/columnController";
 import { EditColumnHandler } from "./application/commands/editColumn";
 import { DeleteColumnHandler } from "./application/commands/deleteColumn";
 import { ReorderColumnHandler } from "./application/commands/reorderColumn";
+import { AddIssueToColumnHandler } from "./application/commands/addIssueToColumn";
+import { IssueRepository } from "./persistence/issues/IssueRepository";
 
 export type AppDependencies = {
     database: IDatabase;
@@ -38,6 +40,7 @@ export function getAppDependencies(config: Config): AppDependencies {
 
     const projectRepository = new ProjectRepository();
     const columnRepository = new ColumnRepository();
+    const issueRepository = new IssueRepository();
 
     // TODO: pack these handlers into a mediator object
     const createProjectHandler = new CreateProjectHandler(projectRepository);
@@ -73,10 +76,15 @@ export function getAppDependencies(config: Config): AppDependencies {
         columnRepository,
         projectRepository
     );
+    const addIssueToColumnHandler = new AddIssueToColumnHandler(
+        columnRepository,
+        issueRepository
+    );
 
     const columnController = new ColumnController(
         editColumnHandler,
-        deleteColumnHandler
+        deleteColumnHandler,
+        addIssueToColumnHandler
     );
     const columnRouter = makeColumnRouter(columnController);
     const docRouter = makeDocsRouter();

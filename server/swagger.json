@@ -322,12 +322,53 @@
                     }
                 }
             }
+        },
+        "/columns/add-issue/{id}": {
+            "post": {
+                "summary": "Add a issue to the column",
+                "description": "Add a new issue and associate it with the given column",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the column to associate with the new issue",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Issue object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/createIssueBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/columnResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
         "projectBody": {
             "type": "object",
-            "required": ["name", "description", "createdAt"],
+            "required": ["name", "createdAt"],
             "properties": {
                 "name": {
                     "type": "string"
@@ -343,7 +384,7 @@
         },
         "createColumnBody": {
             "type": "object",
-            "required": ["columnIndex", "name", "description", "createdAt"],
+            "required": ["columnIndex", "name", "createdAt"],
             "properties": {
                 "columnIndex": {
                     "type": "number",
@@ -356,6 +397,28 @@
                 "description": {
                     "type": "string",
                     "description": " The name of the new column"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "createIssueBody": {
+            "type": "object",
+            "required": ["issueIndex", "name", "createdAt"],
+            "properties": {
+                "issueIndex": {
+                    "type": "number",
+                    "description": "The index to insert the new issue to the columns's issues"
+                },
+                "name": {
+                    "type": "string",
+                    "description": " The name of the new issue"
+                },
+                "description": {
+                    "type": "string",
+                    "description": " The name of the new issue"
                 },
                 "createdAt": {
                     "type": "string",

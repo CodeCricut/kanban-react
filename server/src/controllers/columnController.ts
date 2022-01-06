@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import {
+    AddIssueToColumnCommand,
+    AddIssueToColumnHandler,
+} from "../application/commands/addIssueToColumn";
+import {
     DeleteColumnCommand,
     DeleteColumnHandler,
 } from "../application/commands/deleteColumn";
@@ -12,7 +16,8 @@ import { GetColumnDto } from "../application/contracts/column";
 export class ColumnController {
     constructor(
         private editColumnHandler: EditColumnHandler,
-        private deleteColumnHandler: DeleteColumnHandler
+        private deleteColumnHandler: DeleteColumnHandler,
+        private addIssueHandler: AddIssueToColumnHandler
     ) {}
 
     editColumn = async (req: Request, res: Response, next: NextFunction) => {
@@ -40,6 +45,23 @@ export class ColumnController {
                 projectId,
             };
             await this.deleteColumnHandler.handle(command);
+            return res.send();
+        } catch (e: any) {
+            next(e);
+        }
+    };
+
+    addIssue = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const { issueIndex, name, description, createdAt } = req.body;
+            const command: AddIssueToColumnCommand = {
+                columnId: req.params.id,
+                issueIndex,
+                name,
+                description,
+                createdAt,
+            };
+            await this.addIssueHandler.handle(command);
             return res.send();
         } catch (e: any) {
             next(e);

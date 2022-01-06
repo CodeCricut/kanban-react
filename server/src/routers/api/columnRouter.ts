@@ -6,6 +6,7 @@ export const makeColumnRouter = (columnController: ColumnController) => {
 
     router.put("/edit/:id", columnController.editColumn);
     router.delete("/delete/:id", columnController.deleteColumn);
+    router.post("/add-issue/:id", columnController.addIssue);
 
     return router;
 };
