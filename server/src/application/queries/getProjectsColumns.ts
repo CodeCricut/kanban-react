@@ -1,5 +1,5 @@
-import { readColumnArray } from "../../../persistence/column/ColumnRepository";
-import { readProject } from "../../../persistence/project/ProjectRepository";
+import { readColumnArray } from "../../persistence/column/ColumnRepository";
+import { readProject } from "../../persistence/project/ProjectRepository";
 
 type GetProjectsColumnsQuery = {
     projectId: string;

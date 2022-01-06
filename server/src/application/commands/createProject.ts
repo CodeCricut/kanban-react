@@ -1,5 +1,5 @@
-import { createProject as createProjectInDb } from "../../../persistence/project/ProjectRepository";
-import { PostProjectDto } from "../../contracts/project";
+import { createProject as createProjectInDb } from "../../persistence/project/ProjectRepository";
+import { PostProjectDto } from "../contracts/project";
 
 type CreateProjectCommand = {
     name: string;

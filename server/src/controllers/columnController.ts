@@ -2,21 +2,21 @@ import { NextFunction, Request, Response } from "express";
 import {
     AddIssueToColumnCommand,
     AddIssueToColumnHandler,
-} from "../application/commands/addIssueToColumn/addIssueToColumn";
+} from "../application/commands/addIssueToColumn";
 import {
     DeleteColumnCommand,
     DeleteColumnHandler,
-} from "../application/commands/deleteColumn/deleteColumn";
+} from "../application/commands/deleteColumn";
 import {
     EditColumnCommand,
     EditColumnHandler,
-} from "../application/commands/editColumn/editColumn";
+} from "../application/commands/editColumn";
 import { GetColumnDto } from "../application/contracts/column";
 import { GetIssueDto } from "../application/contracts/issue";
 import {
     GetColumnsIssuesHandler,
     GetColumnsIssuesQuery,
-} from "../application/queries/getColumnsIssues/getColumnsIssues";
+} from "../application/queries/getColumnsIssues";
 
 export class ColumnController {
     constructor(

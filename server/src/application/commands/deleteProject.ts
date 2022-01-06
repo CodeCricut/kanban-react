@@ -1,4 +1,4 @@
-import { deleteProject as deleteProjectFromDb } from "../../../persistence/project/ProjectRepository";
+import { deleteProject as deleteProjectFromDb } from "../../persistence/project/ProjectRepository";
 
 type DeleteProjectCommand = {
     id: string;

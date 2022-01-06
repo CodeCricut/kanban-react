@@ -1,8 +1,8 @@
 import {
     readProject,
     updateProject,
-} from "../../../persistence/project/ProjectRepository";
-import { deleteColumn as deleteColumnFromDb } from "../../../persistence/column/ColumnRepository";
+} from "../../persistence/project/ProjectRepository";
+import { deleteColumn as deleteColumnFromDb } from "../../persistence/column/ColumnRepository";
 
 type DeleteColumnCommand = {
     id: string;

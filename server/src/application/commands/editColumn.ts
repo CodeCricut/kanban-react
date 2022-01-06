@@ -1,8 +1,8 @@
 import {
     readColumn,
     updateColumn,
-} from "../../../persistence/column/ColumnRepository";
-import { UpdateColumnDto } from "../../contracts/column";
+} from "../../persistence/column/ColumnRepository";
+import { UpdateColumnDto } from "../contracts/column";
 
 type EditColumnCommand = {
     id: string;

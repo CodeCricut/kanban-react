@@ -1,9 +1,9 @@
-import { createColumn } from "../../../persistence/column/ColumnRepository";
+import { createColumn } from "../../persistence/column/ColumnRepository";
 import {
     readProject,
     updateProject,
-} from "../../../persistence/project/ProjectRepository";
-import { PostColumnDto } from "../../contracts/column";
+} from "../../persistence/project/ProjectRepository";
+import { PostColumnDto } from "../contracts/column";
 
 type AddColumnToProjectCommand = {
     projectId: string;

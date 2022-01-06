@@ -1,8 +1,8 @@
 import {
     readProject,
     updateProject,
-} from "../../../persistence/project/ProjectRepository";
-import { UpdateProjectDto } from "../../contracts/project";
+} from "../../persistence/project/ProjectRepository";
+import { UpdateProjectDto } from "../contracts/project";
 
 type EditProjectCommand = {
     id: string;
