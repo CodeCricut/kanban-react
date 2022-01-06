@@ -49,4 +49,11 @@ export class ColumnsApiService implements IColumnsApiService {
         const returnedColumn: Column = response.data;
         return returnedColumn;
     };
+
+    getColumnIssues = async (columnId: string): Promise<Issue[]> => {
+        const route = this._config.getColumnIssuesRoute(columnId);
+        const response = await axios.get(route);
+        const returnedIssues: Issue[] = response.data;
+        return returnedIssues;
+    };
 }

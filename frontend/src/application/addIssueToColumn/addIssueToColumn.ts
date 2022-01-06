@@ -36,7 +36,7 @@ export async function addIssueToColumn(
     );
 
     // Mark the col as stale so it is reloaded
-    staleColumnsService.addStaleColumn(updatedColumn.id ?? "");
+    staleColumnsService.addStaleColumn(column.id ?? "");
 
     return updatedColumn;
 }

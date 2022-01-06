@@ -15,7 +15,10 @@ export function useProjectColumns(projectId: string): Column[] {
     useEffect(() => {
         getProjectColumns(projectId, {
             projectsApiService,
-        }).then((columns) => setProjectColumns(columns));
+        }).then((columns) => {
+            setProjectColumns(columns);
+            // TODO: I think that when the columns are reloaded, the project should be set as not stale
+        });
     }, [
         projectId,
         projectsApiService,
