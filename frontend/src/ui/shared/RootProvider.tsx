@@ -6,6 +6,9 @@ import { ProjectsProvider } from "../../services/projectsStorage";
 import { ModalProvider } from "../../services/modalService";
 import { SelectedProjectProvider } from "../../services/selectedProject";
 import { StaleProjectsProvider } from "../../services/staleProjects/contextService";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const theme = createTheme();
 
 export const RootProvider = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -13,7 +16,9 @@ export const RootProvider = ({ children }: { children: React.ReactNode }) => {
             <SelectedProjectProvider>
                 <StaleProjectsProvider>
                     <DndProvider backend={HTML5Backend}>
-                        <ModalProvider>{children}</ModalProvider>
+                        <ThemeProvider theme={theme}>
+                            <ModalProvider>{children}</ModalProvider>
+                        </ThemeProvider>
                     </DndProvider>
                 </StaleProjectsProvider>
             </SelectedProjectProvider>

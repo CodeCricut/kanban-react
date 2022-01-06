@@ -9,6 +9,8 @@ import { AddIssueCard } from "../AddIssue/AddIssueCard";
 import { useModalService } from "../../services/modalService";
 import { EditColumnModal } from "../EditColumn";
 import { Project } from "../../domain/project";
+import { Theme } from "@mui/material";
+
 import {
     DragSourceMonitor,
     DropTargetMonitor,
@@ -50,9 +52,10 @@ const styles: StylesType = {
 type ColumnProps = {
     column: ColumnModel;
     project: Project;
+    cardStyles: SxProps;
 };
 
-export const ColumnCard = ({ column, project }: ColumnProps) => {
+export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
     const modalService = useModalService();
 
     const handleAddIssue = () => {
@@ -66,7 +69,10 @@ export const ColumnCard = ({ column, project }: ColumnProps) => {
     };
 
     return (
-        <Card sx={styles.container} elevation={2}>
+        <Card
+            sx={{ ...styles.container, ...cardStyles } as SxProps}
+            elevation={2}
+        >
             <Box sx={styles.header}>
                 <Box sx={styles.header.info}>
                     <Typography>{column.issues?.length ?? 0}</Typography>

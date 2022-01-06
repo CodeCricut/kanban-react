@@ -5,6 +5,25 @@ import { ItemTypes } from "../shared/itemTypes";
 import { Column } from "../../domain/column";
 import { ColumnCard } from "./ColumnCard";
 import { Box } from "@mui/system";
+import { SxProps } from "@mui/system";
+
+const getOutlineColor = (isOver: boolean, canDrop: boolean) => {};
+
+type MakeOutlineStyles = {
+    (isOver: boolean, canDrop: boolean): SxProps;
+};
+
+const makeCardStyles: MakeOutlineStyles = (
+    isOver: boolean,
+    canDrop: boolean
+) => ({
+    border: "2px solid red",
+    borderColor: (theme) => {
+        if (!isOver) return "transparent";
+        if (canDrop) return "primary.main";
+        return "danger.main";
+    },
+});
 
 type DraggableColumnProps = {
     column: Column;
@@ -71,21 +90,18 @@ export const DraggableColumn = ({
 
     drag(drop(ref));
 
-    const outlineColor = useMemo((): string => {
-        if (!isOver) return "transparent";
-        if (canDrop) return "blue";
-        return "red";
-    }, [isOver, canDrop]);
+    const cardStyles = useMemo(
+        () => makeCardStyles(isOver, canDrop),
+        [isOver, canDrop]
+    );
 
     return (
-        <div
-            ref={ref}
-            style={{
-                outline: "3px solid transparent",
-                outlineColor,
-            }}
-        >
-            <ColumnCard project={project} column={column} />;
-        </div>
+        <Box ref={ref}>
+            <ColumnCard
+                project={project}
+                column={column}
+                cardStyles={cardStyles}
+            />
+        </Box>
     );
 };
