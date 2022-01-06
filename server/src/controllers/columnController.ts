@@ -12,12 +12,18 @@ import {
     EditColumnHandler,
 } from "../application/commands/editColumn";
 import { GetColumnDto } from "../application/contracts/column";
+import { GetIssueDto } from "../application/contracts/issue";
+import {
+    GetColumnsIssuesHandler,
+    GetColumnsIssuesQuery,
+} from "../application/queries/getColumnsIssues";
 
 export class ColumnController {
     constructor(
         private editColumnHandler: EditColumnHandler,
         private deleteColumnHandler: DeleteColumnHandler,
-        private addIssueHandler: AddIssueToColumnHandler
+        private addIssueHandler: AddIssueToColumnHandler,
+        private getColumnIssuesHandler: GetColumnsIssuesHandler
     ) {}
 
     editColumn = async (req: Request, res: Response, next: NextFunction) => {
@@ -63,6 +69,24 @@ export class ColumnController {
             };
             await this.addIssueHandler.handle(command);
             return res.send();
+        } catch (e: any) {
+            next(e);
+        }
+    };
+
+    getColumnIssues = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) => {
+        try {
+            const query: GetColumnsIssuesQuery = {
+                columnId: req.params.id,
+            };
+            const colIssues: GetIssueDto[] =
+                await this.getColumnIssuesHandler.handle(query);
+            res.status(200);
+            return res.json(colIssues);
         } catch (e: any) {
             next(e);
         }

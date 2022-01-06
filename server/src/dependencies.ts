@@ -23,6 +23,7 @@ import { DeleteColumnHandler } from "./application/commands/deleteColumn";
 import { ReorderColumnHandler } from "./application/commands/reorderColumn";
 import { AddIssueToColumnHandler } from "./application/commands/addIssueToColumn";
 import { IssueRepository } from "./persistence/issues/IssueRepository";
+import { GetColumnsIssuesHandler } from "./application/queries/getColumnsIssues";
 
 export type AppDependencies = {
     database: IDatabase;
@@ -80,11 +81,16 @@ export function getAppDependencies(config: Config): AppDependencies {
         columnRepository,
         issueRepository
     );
+    const getColumnIssuesHandler = new GetColumnsIssuesHandler(
+        columnRepository,
+        issueRepository
+    );
 
     const columnController = new ColumnController(
         editColumnHandler,
         deleteColumnHandler,
-        addIssueToColumnHandler
+        addIssueToColumnHandler,
+        getColumnIssuesHandler
     );
     const columnRouter = makeColumnRouter(columnController);
     const docRouter = makeDocsRouter();

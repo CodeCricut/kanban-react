@@ -190,7 +190,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/projectResponse"
+                                "$ref": "#/definitions/columnResponse"
                             }
                         }
                     }
@@ -363,6 +363,32 @@
                     }
                 }
             }
+        },
+        "/columns/issues/{id}": {
+            "get": {
+                "summary": "Get all issues for a column",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the column to retrieve the issues of",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/issueResponse"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -497,6 +523,25 @@
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "issueResponse": {
+            "type": "object",
+            "required": ["id", "name", "createdAt"],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
                 }
             }
         },
