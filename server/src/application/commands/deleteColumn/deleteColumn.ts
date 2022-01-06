@@ -1,36 +1,29 @@
-import { ICommandHandler } from "../../commandHandler";
-import { IColumnRepository } from "../../contracts/column";
-import { IProjectRepository } from "../../contracts/project";
+import {
+    readProject,
+    updateProject,
+} from "../../../persistence/project/ProjectRepository";
+import { deleteColumn as deleteColumnFromDb } from "../../../persistence/column/ColumnRepository";
 
-export type DeleteColumnCommand = {
+type DeleteColumnCommand = {
     id: string;
     projectId: string;
 };
 
-export class DeleteColumnHandler
-    implements ICommandHandler<DeleteColumnCommand, void>
-{
-    constructor(
-        private columnRepo: IColumnRepository,
-        private projectRepo: IProjectRepository
-    ) {}
+export async function deleteColumn(command: DeleteColumnCommand) {
+    const parentProject = await readProject(command.projectId);
 
-    async handle(command: DeleteColumnCommand): Promise<void> {
-        const parentProject = await this.projectRepo.read(command.projectId);
-
-        const columnIndex = parentProject.columns.findIndex(
-            (col) => col == command.id
+    const columnIndex = parentProject.columns.findIndex(
+        (col) => col == command.id
+    );
+    if (columnIndex < 0)
+        throw new Error(
+            "Tried to remove column from a project it did not belong to."
         );
-        if (columnIndex < 0)
-            throw new Error(
-                "Tried to remove column from a project it did not belong to."
-            );
 
-        // Remove the column from the project
-        parentProject.columns.splice(columnIndex, 1);
-        await this.projectRepo.update(command.projectId, parentProject);
+    // Remove the column from the project
+    parentProject.columns.splice(columnIndex, 1);
+    await updateProject(command.projectId, parentProject);
 
-        // Delete the column
-        await this.columnRepo.delete(command.id);
-    }
+    // Delete the column
+    await deleteColumnFromDb(command.id);
 }

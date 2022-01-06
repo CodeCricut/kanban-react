@@ -1,21 +1,13 @@
-import { GetColumnDto, IColumnRepository } from "../../contracts/column";
-import { IProjectRepository } from "../../contracts/project";
-import { IQueryHandler } from "../../queryHandler";
+import { readColumnArray } from "../../../persistence/column/ColumnRepository";
+import { readProject } from "../../../persistence/project/ProjectRepository";
 
-export type GetProjectsColumnsQuery = {
+type GetProjectsColumnsQuery = {
     projectId: string;
 };
 
-export class GetProjectsColumnsHandler
-    implements IQueryHandler<GetProjectsColumnsQuery, GetColumnDto[]>
-{
-    constructor(
-        private projectRepo: IProjectRepository,
-        private columnRepo: IColumnRepository
-    ) {}
-
-    async handle(query: GetProjectsColumnsQuery): Promise<GetColumnDto[]> {
-        const project = await this.projectRepo.read(query.projectId);
-        return await this.columnRepo.readArray(project.columns);
-    }
+export async function getProjectsColumns({
+    projectId,
+}: GetProjectsColumnsQuery) {
+    const project = await readProject(projectId);
+    return readColumnArray(project.columns);
 }

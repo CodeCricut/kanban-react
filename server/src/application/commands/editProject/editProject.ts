@@ -1,31 +1,23 @@
-import { ICommandHandler } from "../../commandHandler";
 import {
-    GetProjectDto,
-    IProjectRepository,
-    UpdateProjectDto,
-} from "../../contracts/project";
+    readProject,
+    updateProject,
+} from "../../../persistence/project/ProjectRepository";
+import { UpdateProjectDto } from "../../contracts/project";
 
-export type EditProjectCommand = {
+type EditProjectCommand = {
     id: string;
     name: string;
     description: string;
 };
 
-export class EditProjectHandler
-    implements ICommandHandler<EditProjectCommand, GetProjectDto>
-{
-    constructor(private projectRepo: IProjectRepository) {}
+export async function editProject(command: EditProjectCommand) {
+    const existingProject = await readProject(command.id);
 
-    async handle(command: EditProjectCommand): Promise<GetProjectDto> {
-        const existingProject = await this.projectRepo.read(command.id);
+    const updateDto: UpdateProjectDto = {
+        name: command.name,
+        description: command.description,
+        columns: existingProject.columns,
+    };
 
-        const updateDto: UpdateProjectDto = {
-            name: command.name,
-            description: command.description,
-            columns: existingProject.columns, // TODO: I don't think this even needs to be a property on the update dto
-        };
-
-        const updated = await this.projectRepo.update(command.id, updateDto);
-        return updated;
-    }
+    return await updateProject(command.id, updateDto);
 }

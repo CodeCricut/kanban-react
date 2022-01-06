@@ -1,16 +1,9 @@
-import { ICommandHandler } from "../../commandHandler";
-import { IProjectRepository } from "../../contracts/project";
+import { deleteProject as deleteProjectFromDb } from "../../../persistence/project/ProjectRepository";
 
-export type DeleteProjectCommand = {
+type DeleteProjectCommand = {
     id: string;
 };
 
-export class DeleteProjectHandler
-    implements ICommandHandler<DeleteProjectCommand, void>
-{
-    constructor(private projectRepo: IProjectRepository) {}
-
-    async handle(command: DeleteProjectCommand): Promise<void> {
-        await this.projectRepo.delete(command.id);
-    }
+export async function deleteProject(command: DeleteProjectCommand) {
+    await deleteProjectFromDb(command.id);
 }

@@ -1,47 +1,49 @@
 import { ProjectModel, ProjectModelType } from "./projectModel";
 import {
     GetProjectDto,
-    IProjectRepository,
     PostProjectDto,
     UpdateProjectDto,
 } from "../../application/contracts/project";
 
-export class ProjectRepository implements IProjectRepository {
-    async create(dto: PostProjectDto): Promise<GetProjectDto> {
-        let model = mapDtoToModel(dto);
+export async function createProject(
+    dto: PostProjectDto
+): Promise<GetProjectDto> {
+    let model = mapDtoToModel(dto);
 
-        await model.save();
+    await model.save();
 
-        return mapModelToDto(model);
-    }
+    return mapModelToDto(model);
+}
 
-    async read(id: string): Promise<GetProjectDto> {
-        let projectModel = await ProjectModel.findById(id);
-        if (!projectModel) throw new Error("Not found");
-        return mapModelToDto(projectModel);
-    }
+export async function readAllProjects(): Promise<GetProjectDto[]> {
+    const projectModels: ProjectModelType[] = await ProjectModel.find({});
+    return projectModels.map((model) => mapModelToDto(model));
+}
 
-    async readAll(): Promise<GetProjectDto[]> {
-        const projectModels: ProjectModelType[] = await ProjectModel.find({});
-        return projectModels.map((model) => mapModelToDto(model));
-    }
+export async function readProject(id: string): Promise<GetProjectDto> {
+    let projectModel = await ProjectModel.findById(id);
+    if (!projectModel) throw new Error("Not found");
+    return mapModelToDto(projectModel);
+}
 
-    async update(id: string, dto: UpdateProjectDto): Promise<GetProjectDto> {
-        let projectModel = await ProjectModel.findById(id);
-        if (!projectModel) throw new Error("Not found");
+export async function updateProject(
+    id: string,
+    dto: UpdateProjectDto
+): Promise<GetProjectDto> {
+    let projectModel = await ProjectModel.findById(id);
+    if (!projectModel) throw new Error("Not found");
 
-        const { name, description, columns } = dto;
-        projectModel.name = name;
-        projectModel.description = description;
-        projectModel.columns = columns;
-        await projectModel.save();
+    const { name, description, columns } = dto;
+    projectModel.name = name;
+    projectModel.description = description;
+    projectModel.columns = columns;
+    await projectModel.save();
 
-        return mapModelToDto(projectModel);
-    }
+    return mapModelToDto(projectModel);
+}
 
-    async delete(id: string): Promise<void> {
-        await ProjectModel.findByIdAndDelete(id);
-    }
+export async function deleteProject(id: string): Promise<void> {
+    await ProjectModel.findByIdAndDelete(id);
 }
 
 function mapDtoToModel(dto: PostProjectDto): ProjectModelType {

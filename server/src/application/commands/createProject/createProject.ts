@@ -1,25 +1,14 @@
-import { Project } from "../../../domain/project";
-import { ICommandHandler } from "../../commandHandler";
-import {
-    GetProjectDto,
-    IProjectRepository,
-    PostProjectDto,
-} from "../../contracts/project";
+import { createProject as createProjectInDb } from "../../../persistence/project/ProjectRepository";
+import { PostProjectDto } from "../../contracts/project";
 
-export type CreateProjectCommand = {
+type CreateProjectCommand = {
     name: string;
     description: string;
     createdAt: string;
 };
 
-export class CreateProjectHandler
-    implements ICommandHandler<CreateProjectCommand, GetProjectDto>
-{
-    constructor(private projectRepo: IProjectRepository) {}
-
-    async handle(command: CreateProjectCommand): Promise<GetProjectDto> {
-        const postDto: PostProjectDto = command;
-        const created = await this.projectRepo.create(postDto);
-        return created;
-    }
+export async function createProject(command: CreateProjectCommand) {
+    const postDto: PostProjectDto = command;
+    const created = await createProjectInDb(postDto);
+    return created;
 }

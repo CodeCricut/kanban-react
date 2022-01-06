@@ -17,11 +17,3 @@ export type UpdateColumnDto = {
     description?: string;
     issues: string[];
 };
-
-export interface IColumnRepository {
-    create(dto: PostColumnDto): Promise<GetColumnDto>;
-    read(id: string): Promise<GetColumnDto>;
-    readArray(ids: string[]): Promise<GetColumnDto[]>;
-    update(id: string, dto: UpdateColumnDto): Promise<GetColumnDto>;
-    delete(id: string): Promise<void>;
-}

@@ -1,14 +1,6 @@
-import { GetProjectDto, IProjectRepository } from "../../contracts/project";
-import { IQueryHandler } from "../../queryHandler";
+import { readAllProjects } from "../../../persistence/project/ProjectRepository";
 
-export type GetAllProjectsQuery = {};
-
-export class GetAllProjectsHandler
-    implements IQueryHandler<GetAllProjectsQuery, GetProjectDto[]>
-{
-    constructor(private projectRepo: IProjectRepository) {}
-
-    async handle(query: GetAllProjectsQuery): Promise<GetProjectDto[]> {
-        return await this.projectRepo.readAll();
-    }
+type GetAllProjectsQuery = {};
+export async function getAllProjects(query: GetAllProjectsQuery = {}) {
+    return await readAllProjects();
 }
