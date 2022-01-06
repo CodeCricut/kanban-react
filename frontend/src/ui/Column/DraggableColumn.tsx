@@ -7,8 +7,6 @@ import { ColumnCard } from "./ColumnCard";
 import { Box } from "@mui/system";
 import { SxProps } from "@mui/system";
 
-const getOutlineColor = (isOver: boolean, canDrop: boolean) => {};
-
 type MakeOutlineStyles = {
     (isOver: boolean, canDrop: boolean): SxProps;
 };
@@ -17,11 +15,14 @@ const makeCardStyles: MakeOutlineStyles = (
     isOver: boolean,
     canDrop: boolean
 ) => ({
-    border: "2px solid red",
+    border: (theme) => {
+        if (!isOver) return "1px solid"; // default
+        return "2px solid"; // if hovering drop target
+    },
     borderColor: (theme) => {
-        if (!isOver) return "transparent";
-        if (canDrop) return "primary.main";
-        return "danger.main";
+        if (!isOver) return "grey.300";
+        if (canDrop) return "primary.light";
+        return "error.light";
     },
 });
 

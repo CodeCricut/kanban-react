@@ -1,4 +1,3 @@
-import React, { useRef } from "react";
 import { Card, Typography, Box, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -9,18 +8,10 @@ import { AddIssueCard } from "../AddIssue/AddIssueCard";
 import { useModalService } from "../../services/modalService";
 import { EditColumnModal } from "../EditColumn";
 import { Project } from "../../domain/project";
-import { Theme } from "@mui/material";
-
-import {
-    DragSourceMonitor,
-    DropTargetMonitor,
-    useDrag,
-    useDrop,
-} from "react-dnd";
-import { ItemTypes } from "../shared/itemTypes";
 import { AddIssueModal } from "../AddIssue";
 import { useColumnIssues } from "../../application/getColumnIssues/hook";
 import { IssueCard } from "../Issue/IssueCard";
+import { Issue } from "../../domain/issue";
 
 type StylesType = {
     container: SxProps;
@@ -38,6 +29,7 @@ const styles: StylesType = {
         display: "flex",
         flexDirection: "column",
         padding: 1,
+        backgroundColor: "grey.100",
     },
     header: {
         display: "flex",
@@ -109,11 +101,17 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
                 </Box>
             </Box>
             <Box sx={styles.content}>
-                {issues.map((issue) => (
-                    <IssueCard issue={issue} key={issue.id} />
-                ))}
+                {issues.map((issue) => renderIssue(issue))}
                 <AddIssueCard handleAdd={handleAddIssue} />
             </Box>
         </Card>
     );
+
+    function renderIssue(issue: Issue) {
+        return (
+            <Box key={issue.id} sx={{ marginBottom: 1 }}>
+                <IssueCard issue={issue} column={column} cardStyles={{}} />
+            </Box>
+        );
+    }
 };
