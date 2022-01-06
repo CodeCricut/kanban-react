@@ -9,6 +9,7 @@ import { EditProject } from "../EditProject";
 import { Column as ColumnModel } from "../../domain/column";
 import { ColumnCard } from "../Column/ColumnCard";
 import { useMoveColumn } from "../../application/moveColumn/hook";
+import { DraggableColumn } from "../Column/DraggableColumn";
 
 type StylesType = {
     container: SxProps;
@@ -49,7 +50,6 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
     };
 
     const handleMoveColumn = async (columnId: string, toIndex: number) => {
-        console.log(`move col ${columnId}} to ${toIndex}`);
         await moveColumn(columnId, project.id ?? "", toIndex);
     };
 
@@ -74,7 +74,7 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
             </Box>
             <Box sx={styles.content}>
                 {projectColumns.map((col, index) => (
-                    <ColumnCard
+                    <DraggableColumn
                         key={col.id}
                         column={col}
                         project={project}
