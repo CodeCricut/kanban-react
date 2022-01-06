@@ -67,8 +67,9 @@ export class ColumnController {
                 description,
                 createdAt,
             };
-            await this.addIssueHandler.handle(command);
-            return res.send();
+            const updatedColumn = await this.addIssueHandler.handle(command);
+            res.status(200);
+            return res.json(updatedColumn);
         } catch (e: any) {
             next(e);
         }
