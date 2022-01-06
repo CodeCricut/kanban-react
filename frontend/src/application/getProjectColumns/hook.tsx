@@ -13,7 +13,6 @@ export function useProjectColumns(projectId: string): Column[] {
     const [projectColumns, setProjectColumns] = useState<Column[]>([]);
 
     useEffect(() => {
-        console.log("project columns reloaded");
         getProjectColumns(projectId, {
             projectsApiService,
         }).then((columns) => setProjectColumns(columns));

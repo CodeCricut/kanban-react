@@ -18,6 +18,11 @@ export type AppConfig = {
     getProjectColumnsRoute: (projectId: string) => string;
     editColumnRoute: (columnId: string) => string;
     deleteColumnRoute: (id: string, projectId: string) => string;
+    reorderColumnRoute: (
+        projectId: string,
+        columnid: string,
+        newIndex: number
+    ) => string;
 };
 
 const projectsRoute = "/projects";
@@ -33,6 +38,12 @@ const getProjectColumnsRoute = (projectId: string) =>
 const editColumnRoute = (columnId: string) => `/columns/edit/${columnId}`;
 const deleteColumnRoute = (id: string, projectId: string) =>
     `/columns/delete/${id}?projectId=${projectId}`;
+const reorderColumnRoute = (
+    projectId: string,
+    columnId: string,
+    newIndex: number
+) =>
+    `/projects/reorder-column/${projectId}?columnId=${columnId}&newIndex=${newIndex}`;
 
 export const appConfig: AppConfig = {
     projectsRoute,
@@ -44,4 +55,5 @@ export const appConfig: AppConfig = {
     getProjectColumnsRoute,
     editColumnRoute,
     deleteColumnRoute,
+    reorderColumnRoute,
 };

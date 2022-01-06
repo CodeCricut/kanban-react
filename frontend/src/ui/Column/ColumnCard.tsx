@@ -51,7 +51,7 @@ type ColumnProps = {
     column: ColumnModel;
     project: Project;
     index: number;
-    moveColumn: (fromIndex: number, toIndex: number, columnId: string) => void;
+    moveColumn: (columnId: string, toIndex: number) => void;
 };
 
 export const ColumnCard = ({
@@ -98,10 +98,10 @@ export const ColumnCard = ({
             return true;
         },
         drop: (item: any) => {
-            const dragIndex = item.index;
+            const columnId: string = item.id;
             const hoverIndex = index;
             // Perform the action
-            moveColumn(dragIndex, hoverIndex, item.id);
+            moveColumn(columnId, hoverIndex);
         },
     });
 

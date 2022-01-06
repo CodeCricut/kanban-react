@@ -71,4 +71,16 @@ export class ProjectsApiService implements IProjectsApiService {
         let returnedColumns: Column[] = response.data;
         return returnedColumns;
     };
+
+    reorderColumns = async (
+        projectId: string,
+        columnId: string,
+        newIndex: number
+    ): Promise<Project> => {
+        const response = await axios.put(
+            this._config.reorderColumnRoute(projectId, columnId, newIndex)
+        );
+        let returnedProject: Project = response.data;
+        return returnedProject;
+    };
 }

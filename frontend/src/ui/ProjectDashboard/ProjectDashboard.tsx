@@ -8,6 +8,7 @@ import { AddColumnCard } from "../AddColumn/AddColumnCard";
 import { EditProject } from "../EditProject";
 import { Column as ColumnModel } from "../../domain/column";
 import { ColumnCard } from "../Column/ColumnCard";
+import { useMoveColumn } from "../../application/moveColumn/hook";
 
 type StylesType = {
     container: SxProps;
@@ -39,6 +40,7 @@ const styles: StylesType = {
 
 export const ProjectDashboard = ({ project }: { project: Project }) => {
     const { setModal } = useModalService();
+    const moveColumn = useMoveColumn();
 
     const projectColumns: ColumnModel[] = useProjectColumns(project.id ?? "");
 
@@ -46,14 +48,9 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
         setModal(<AddColumnModal project={project} />);
     };
 
-    const handleMoveColumn = (
-        fromIndex: number,
-        toIndex: number,
-        columnIndex: string
-    ) => {
-        console.log(
-            `move col from ${fromIndex} to ${toIndex} (${columnIndex})`
-        );
+    const handleMoveColumn = async (columnId: string, toIndex: number) => {
+        console.log(`move col ${columnId}} to ${toIndex}`);
+        await moveColumn(columnId, project.id ?? "", toIndex);
     };
 
     return (
