@@ -41,6 +41,10 @@ export async function updateIssue(
     return mapModelToDto(issueModel);
 }
 
+export async function deleteIssue(id: string): Promise<void> {
+    await IssueModel.findByIdAndDelete(id);
+}
+
 function mapDtoToModel(dto: PostIssueDto): IssueModelType {
     const { name, description, createdAt } = dto;
     return new IssueModel({

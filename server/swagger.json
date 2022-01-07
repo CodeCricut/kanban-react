@@ -390,7 +390,41 @@
                 }
             }
         },
-
+        "/issues/delete/{id}": {
+            "delete": {
+                "summary": "Delete a issue",
+                "description": "Remove a issue from the database",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Issue id that needs to be deleted",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "columnId",
+                        "description": "Parent column id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/issues/edit/{id}": {
             "put": {
                 "summary": "Update the issue info",
