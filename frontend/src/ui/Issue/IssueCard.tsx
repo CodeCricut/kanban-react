@@ -4,6 +4,8 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { SxProps } from "@mui/system";
 import { Issue } from "../../domain/issue";
 import { Column } from "../../domain/column";
+import { useModalService } from "../../services/modalService";
+import { EditIssueModal } from "../EditIssue";
 
 type StylesType = {
     container: SxProps;
@@ -46,8 +48,11 @@ type IssueCardProps = {
 };
 
 export const IssueCard = ({ issue, column, cardStyles }: IssueCardProps) => {
+    const modalService = useModalService();
     const handleEditIssue = () => {
-        console.log("edit issue");
+        modalService.setModal(
+            <EditIssueModal issue={issue} columnId={column.id ?? ""} />
+        );
     };
 
     return (
