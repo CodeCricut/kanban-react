@@ -1,4 +1,8 @@
-import { GetIssueDto, PostIssueDto } from "../../application/contracts/issue";
+import {
+    GetIssueDto,
+    PostIssueDto,
+    UpdateIssueDto,
+} from "../../application/contracts/issue";
 import { IssueModel, IssueModelType } from "./issueModel";
 
 export async function createIssue(dto: PostIssueDto): Promise<GetIssueDto> {
@@ -20,6 +24,21 @@ export async function readIssueArray(ids: string[]): Promise<GetIssueDto[]> {
         issues.push(issue);
     }
     return issues;
+}
+
+export async function updateIssue(
+    id: string,
+    dto: UpdateIssueDto
+): Promise<GetIssueDto> {
+    let issueModel = await IssueModel.findById(id);
+    if (!issueModel) throw new Error("Not found");
+
+    const { name, description } = dto;
+    issueModel.name = name;
+    issueModel.description = description;
+    await issueModel.save();
+
+    return mapModelToDto(issueModel);
 }
 
 function mapDtoToModel(dto: PostIssueDto): IssueModelType {

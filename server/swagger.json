@@ -389,8 +389,51 @@
                     }
                 }
             }
+        },
+
+        "/issues/edit/{id}": {
+            "put": {
+                "summary": "Update the issue info",
+                "description": "Edit the issue's name and description",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Issue id that needs to be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Update object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/editIssueBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/issueResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
         }
     },
+
     "definitions": {
         "projectBody": {
             "type": "object",
@@ -449,6 +492,18 @@
                 "createdAt": {
                     "type": "string",
                     "format": "date-time"
+                }
+            }
+        },
+        "editIssueBody": {
+            "type": "object",
+            "required": ["name", "description"],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
                 }
             }
         },

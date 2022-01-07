@@ -14,5 +14,4 @@ export type PostIssueDto = {
 export type UpdateIssueDto = {
     name: string;
     description: string;
-    issues: string[];
 };
