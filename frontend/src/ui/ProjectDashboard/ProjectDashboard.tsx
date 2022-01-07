@@ -41,16 +41,11 @@ const styles: StylesType = {
 
 export const ProjectDashboard = ({ project }: { project: Project }) => {
     const { setModal } = useModalService();
-    const moveColumn = useMoveColumn();
 
     const projectColumns: ColumnModel[] = useProjectColumns(project.id ?? "");
 
     const handleAdd = () => {
         setModal(<AddColumnModal project={project} />);
-    };
-
-    const handleMoveColumn = async (columnId: string, toIndex: number) => {
-        await moveColumn(columnId, project.id ?? "", toIndex);
     };
 
     return (
@@ -79,7 +74,6 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
                         column={col}
                         project={project}
                         index={index}
-                        moveColumn={handleMoveColumn}
                     />
                 ))}
                 <AddColumnCard handleAdd={handleAdd} />

@@ -6,6 +6,7 @@ import { Column } from "../../domain/column";
 import { ColumnCard } from "./ColumnCard";
 import { Box } from "@mui/system";
 import { SxProps } from "@mui/system";
+import { useMoveColumn } from "../../application/moveColumn/hook";
 
 type MakeOutlineStyles = {
     (isOver: boolean, canDrop: boolean): SxProps;
@@ -30,16 +31,16 @@ type DraggableColumnProps = {
     column: Column;
     project: Project;
     index: number;
-    moveColumn: (columnId: string, toIndex: number) => void;
 };
 
 export const DraggableColumn = ({
     column,
     project,
     index,
-    moveColumn,
 }: DraggableColumnProps) => {
     const ref = useRef<HTMLDivElement>(null);
+
+    const moveColumn = useMoveColumn();
 
     const [, drag] = useDrag(
         () => ({
@@ -76,12 +77,12 @@ export const DraggableColumn = ({
 
             return true;
         },
-        drop: (item: any) => {
+        drop: async (item: any) => {
             const columnId: string = item.id;
             const hoverIndex = index;
 
             // TODO: technically, I think this is moving the column at the drop zone to the column from the drag start
-            moveColumn(columnId, hoverIndex);
+            await moveColumn(columnId, project.id ?? "", hoverIndex);
         },
         collect: (monitor: DropTargetMonitor) => ({
             isOver: monitor.isOver(),

@@ -12,6 +12,7 @@ import { AddIssueModal } from "../AddIssue";
 import { useColumnIssues } from "../../application/getColumnIssues/hook";
 import { IssueCard } from "../Issue/IssueCard";
 import { Issue } from "../../domain/issue";
+import { DraggableIssue } from "../Issue/DraggableIssue";
 
 type StylesType = {
     container: SxProps;
@@ -101,16 +102,16 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
                 </Box>
             </Box>
             <Box sx={styles.content}>
-                {issues.map((issue) => renderIssue(issue))}
+                {issues.map((issue, index) => renderIssue(issue, index))}
                 <AddIssueCard handleAdd={handleAddIssue} />
             </Box>
         </Card>
     );
 
-    function renderIssue(issue: Issue) {
+    function renderIssue(issue: Issue, index: number) {
         return (
             <Box key={issue.id} sx={{ marginBottom: 1 }}>
-                <IssueCard issue={issue} column={column} cardStyles={{}} />
+                <DraggableIssue issue={issue} column={column} index={index} />
             </Box>
         );
     }
