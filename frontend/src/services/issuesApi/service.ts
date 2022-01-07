@@ -22,4 +22,9 @@ export class IssuesApiService implements IIssuesApiService {
         const returnedIssue: Issue = response.data;
         return returnedIssue;
     };
+
+    deleteIssue = async (id: string, columnId: string): Promise<void> => {
+        const route = this._config.deleteIssueRoute(id, columnId);
+        await axios.delete(route);
+    };
 }

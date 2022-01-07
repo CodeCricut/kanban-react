@@ -35,7 +35,7 @@ export const Modal = ({ column, projectId }: ModalProps) => {
         modalService.unsetModal();
     };
 
-    const handleCreate = async () => {
+    const handleEdit = async () => {
         const { name, description } = formState.values;
         await editColumn(column.id ?? "", name, description, projectId);
         modalService.unsetModal();
@@ -54,7 +54,7 @@ export const Modal = ({ column, projectId }: ModalProps) => {
                     Delete
                 </Button>
                 <Button
-                    onClick={handleCreate}
+                    onClick={handleEdit}
                     variant="contained"
                     color="primary"
                 >

@@ -12,6 +12,7 @@ import { useEditIssue } from "../../application/editIssue/hook";
 import { Issue } from "../../domain/issue";
 import { useFormState } from "./formState";
 import { Form } from "./Form";
+import { useDeleteIssue } from "../../application/deleteIssue/hook";
 
 type ModalProps = {
     issue: Issue;
@@ -22,6 +23,7 @@ export const Modal = ({ issue, columnId }: ModalProps) => {
 
     const modalService = useModalService();
     const editIssue = useEditIssue();
+    const deleteIssue = useDeleteIssue();
 
     const handleCancel = () => {
         modalService.unsetModal();
@@ -30,6 +32,11 @@ export const Modal = ({ issue, columnId }: ModalProps) => {
     const handleEdit = async () => {
         const { name, description } = formState.values;
         await editIssue(issue.id ?? "", name, description, columnId);
+        modalService.unsetModal();
+    };
+
+    const handleDelete = async () => {
+        await deleteIssue(issue.id ?? "", columnId);
         modalService.unsetModal();
     };
 
@@ -42,6 +49,9 @@ export const Modal = ({ issue, columnId }: ModalProps) => {
                 <Form state={formState} />
             </DialogContent>
             <DialogActions>
+                <Button onClick={handleDelete} variant="outlined" color="error">
+                    Delete
+                </Button>
                 <Button
                     onClick={handleEdit}
                     variant="contained"

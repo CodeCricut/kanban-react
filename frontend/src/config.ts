@@ -26,6 +26,7 @@ export type AppConfig = {
     addIssueRoute: (columnId: string) => string;
     getColumnIssuesRoute: (columnId: string) => string;
     editIssueRoute: (issueId: string) => string;
+    deleteIssueRoute: (id: string, columnId: string) => string;
 };
 
 const projectsRoute = "/projects";
@@ -51,6 +52,8 @@ const addIssueRoute = (columnId: string) => `/columns/add-issue/${columnId}`;
 const getColumnIssuesRoute = (columnId: string) =>
     `/columns/issues/${columnId}`;
 const editIssueRoute = (issueId: string) => `/issues/edit/${issueId}`;
+const deleteIssueRoute = (id: string, columnId: string) =>
+    `/issues/delete/${id}?columnId=${columnId}`;
 
 export const appConfig: AppConfig = {
     projectsRoute,
@@ -66,4 +69,5 @@ export const appConfig: AppConfig = {
     addIssueRoute,
     getColumnIssuesRoute,
     editIssueRoute,
+    deleteIssueRoute,
 };
