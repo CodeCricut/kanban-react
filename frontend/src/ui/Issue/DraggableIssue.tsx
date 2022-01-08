@@ -1,6 +1,7 @@
 import { Box, SxProps } from "@mui/material";
 import React, { useMemo, useRef } from "react";
 import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
+import { useRelocateIssue } from "../../application/relocateIssue/hook";
 import { Column } from "../../domain/column";
 import { Issue } from "../../domain/issue";
 import { ItemTypes } from "../shared/itemTypes";
@@ -78,22 +79,22 @@ export const DraggableIssue = (props: DraggableIssueProps) => {
         [isOver, canDrop]
     );
 
-    return (
-        <Box ref={ref}>
-            <IssueCard issue={issue} column={column} cardStyles={cardStyles} />
-        </Box>
-    );
+    const relocateIssue = useRelocateIssue();
 
-    function moveIssue(
+    async function moveIssue(
         issueId: string,
         oldColumnId: string,
         newColumnId: string,
         toIndex: number
     ) {
-        console.log(
-            `move issue=${issueId} from column=${oldColumnId} to column=${newColumnId} at index=${toIndex}`
-        );
+        await relocateIssue(issueId, oldColumnId, newColumnId, toIndex);
     }
+
+    return (
+        <Box ref={ref}>
+            <IssueCard issue={issue} column={column} cardStyles={cardStyles} />
+        </Box>
+    );
 };
 
 function makeCardStyles(isOver: boolean, canDrop: boolean): SxProps {
