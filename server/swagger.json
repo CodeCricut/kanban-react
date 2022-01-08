@@ -465,6 +465,63 @@
                     }
                 }
             }
+        },
+
+        "/issues/relocate/{id}": {
+            "put": {
+                "summary": "Relocate an issue",
+                "description": "Relocate an issue within the current column, or to a new column and index.",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The id of the issue to relocate",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "Update object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "required": [
+                                "oldColumnId",
+                                "newColumnId",
+                                "newIndex"
+                            ],
+                            "properties": {
+                                "oldColumnId": {
+                                    "type": "string"
+                                },
+                                "newColumnId": {
+                                    "type": "string"
+                                },
+                                "newIndex": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/columnResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidResponse"
+                        }
+                    }
+                }
+            }
         }
     },
 

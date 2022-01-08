@@ -104,10 +104,12 @@ export async function getProjectColumns(
 ) {
     return handleGetProjectsColumnsQuery({
         projectId: req.params.id,
-    }).then((columns) => {
-        res.status(200);
-        return res.json(columns);
-    });
+    })
+        .then((columns) => {
+            res.status(200);
+            return res.json(columns);
+        })
+        .catch(next);
 }
 
 export async function reorderColumn(

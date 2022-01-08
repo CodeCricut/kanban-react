@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { handleDeleteIssueCommand } from "../application/commands/deleteIssue";
 import { handleEditIssueCommand } from "../application/commands/editIssue";
+import { handleRelocateIssueCommand } from "../application/commands/relocateIssue";
 
 export async function editIssue(
     req: Request,
@@ -33,4 +34,24 @@ export async function deleteIssue(
             return res.json();
         })
         .catch(next);
+}
+
+export async function relocateIssue(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
+        const { oldColumnId, newColumnId, newIndex } = req.body;
+        const updatedColumn = await handleRelocateIssueCommand({
+            issueId: req.params.id,
+            newColumnId,
+            oldColumnId,
+            newIndex,
+        });
+        res.status(200);
+        return res.json(updatedColumn);
+    } catch (e: any) {
+        next(e);
+    }
 }
