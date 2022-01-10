@@ -2,12 +2,10 @@ import { readPrivateUser } from "../../persistence/user/UserRepository";
 import { GetPrivateUserDto } from "../contracts/user";
 
 type GetLoggedInUserQuery = {
-    user: {
-        id: string;
-    };
+    id: string;
 };
-export async function handleGetLoggedInUserHandler(
+export async function handleGetLoggedInUserQuery(
     query: GetLoggedInUserQuery
 ): Promise<GetPrivateUserDto> {
-    return await readPrivateUser(query.user.id);
+    return await readPrivateUser(query.id);
 }
