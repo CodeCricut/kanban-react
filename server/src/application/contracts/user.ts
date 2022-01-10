@@ -1,0 +1,19 @@
+export type GetPublicUserDto = {
+    id: string;
+    username: string;
+    createdAt: string;
+    ownedProjects: string[];
+    ownedColumns: string[];
+    ownedIssues: string[];
+};
+
+export type RegisterUserDto = {
+    username: string;
+    email: string;
+    password: string;
+};
+
+export type LoginUserDto = {
+    username: string;
+    password: string;
+};
