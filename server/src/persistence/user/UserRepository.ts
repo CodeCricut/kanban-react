@@ -1,5 +1,7 @@
 import {
+    GetPrivateUserDto,
     GetPublicUserDto,
+    LoginUserDto,
     RegisterUserDto,
 } from "../../application/contracts/user";
 import { User } from "../../domain/user";
@@ -39,6 +41,14 @@ export async function getUserByEmail(email: string): Promise<GetPublicUserDto> {
     return mapModelToPublicUser(model);
 }
 
+export async function readPrivateUser({
+    username,
+}: LoginUserDto): Promise<GetPrivateUserDto> {
+    const model = await UserModel.findOne({ username });
+    if (!model) throw new Error("Couldn't find user with given username.");
+    return mapModelToPrivateUser(model);
+}
+
 function mapModelToPublicUser(model: UserModelType): GetPublicUserDto {
     const {
         id,
@@ -51,6 +61,29 @@ function mapModelToPublicUser(model: UserModelType): GetPublicUserDto {
     return {
         id,
         username,
+        createdAt,
+        ownedProjects,
+        ownedColumns,
+        ownedIssues,
+    };
+}
+
+function mapModelToPrivateUser(model: UserModelType): GetPrivateUserDto {
+    const {
+        id,
+        username,
+        email,
+        passwordHash,
+        createdAt,
+        ownedProjects,
+        ownedColumns,
+        ownedIssues,
+    } = model;
+    return {
+        id,
+        username,
+        email,
+        passwordHash,
         createdAt,
         ownedProjects,
         ownedColumns,
