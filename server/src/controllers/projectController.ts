@@ -13,11 +13,13 @@ export async function createProject(
     next: NextFunction
 ) {
     try {
+        if (!req.user) throw new Error("User not defined for request.");
         const { name, createdAt, description } = req.body;
         const created = await handleCreateProjectCommand({
             name,
             createdAt,
             description,
+            userId: req.user.id,
         });
 
         res.status(200);

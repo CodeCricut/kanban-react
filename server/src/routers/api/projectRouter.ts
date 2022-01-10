@@ -8,11 +8,12 @@ import {
     getProjectColumns,
     reorderColumn,
 } from "../../controllers/projectController";
+import { auth } from "../middleware/auth";
 
 const projectRouter = Router();
 
 projectRouter.get("/", getAllProjects);
-projectRouter.post("/create", createProject);
+projectRouter.post("/create", auth, createProject);
 projectRouter.put("/edit/:id", editProject);
 projectRouter.delete("/delete/:id", deleteProject);
 projectRouter.post("/add-column/:id", addColumn);
