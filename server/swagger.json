@@ -12,6 +12,46 @@
     "schemes": ["http"],
     "basePath": "/api",
     "paths": {
+        "/auth/register": {
+            "post": {
+                "summary": "Register a new user",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "New user object",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/registerUserBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "object",
+                            "required": ["jwt"],
+                            "properties": {
+                                "jwt": {
+                                    "type": "string",
+                                    "description": "The JWT token for future authenticated requests for the new user."
+                                }
+                            }
+                        },
+                        "400": {
+                            "description": "Invalid request",
+                            "schema": {
+                                "$ref": "#/definitions/InvalidResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/projects/create": {
             "post": {
                 "summary": "Create a new project",
@@ -524,8 +564,22 @@
             }
         }
     },
-
     "definitions": {
+        "registerUserBody": {
+            "type": "object",
+            "required": ["username", "email", "password"],
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
         "projectBody": {
             "type": "object",
             "required": ["name", "createdAt"],

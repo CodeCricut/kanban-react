@@ -20,6 +20,8 @@ export async function handleRegisterUserCommand(
         ...command,
         createdAt: currDtStr,
     };
+    // TODO: ensure user with username or password doesn't already exist
+    // TODO: validate fields (username, email, password)
     const user: GetPublicUserDto = await registerUser(registerUserDto);
 
     return createUserJwt(user.id, command.password);

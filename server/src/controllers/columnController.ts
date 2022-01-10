@@ -29,10 +29,12 @@ export async function deleteColumn(
     return handleDeleteColumnCommand({
         id: req.params.id,
         projectId: req.query.projectId as string,
-    }).then((updated) => {
-        res.status(200);
-        return res.json(updated);
-    });
+    })
+        .then((updated) => {
+            res.status(200);
+            return res.json(updated);
+        })
+        .catch(next);
 }
 
 export async function addIssue(
