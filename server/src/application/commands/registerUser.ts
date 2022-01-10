@@ -1,5 +1,5 @@
 import { getCurrentDateTimeString } from "../../library/dates";
-import { RegisterUserDto } from "../contracts/user";
+import { GetPublicUserDto, RegisterUserDto } from "../contracts/user";
 
 type RegisterUserCommand = {
     username: string;
@@ -13,4 +13,8 @@ export async function handleRegisterUserCommand(command: RegisterUserCommand) {
         ...command,
         createdAt: currDtStr,
     };
+    const user: GetPublicUserDto = await registerUser(registerUserDto);
+
+    const jwt = await createUserJwt(user.id, command.password);
+    return jwt;
 }
