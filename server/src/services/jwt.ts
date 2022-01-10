@@ -1,6 +1,11 @@
 import * as jwt from "jsonwebtoken";
+
+export type JwtUser = {
+    id: string;
+};
+
 export function createUserJwt(userId: string, userPassword: string): string {
-    const payload = {
+    const payload: { user: JwtUser } = {
         user: {
             id: userId,
         },
@@ -8,6 +13,11 @@ export function createUserJwt(userId: string, userPassword: string): string {
 
     const jwtOpts = {};
     return jwt.sign(payload, getPrivateJwtKey(), jwtOpts);
+}
+
+export function decodeUserJwt(token: string): JwtUser {
+    const decoded: any = jwt.verify(token, getPrivateJwtKey());
+    return decoded.user as JwtUser;
 }
 
 function getPrivateJwtKey() {
