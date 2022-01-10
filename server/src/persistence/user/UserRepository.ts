@@ -25,6 +25,20 @@ export async function registerUser(
     return mapModelToPublicUser(model);
 }
 
+export async function getUserByUsername(
+    username: string
+): Promise<GetPublicUserDto> {
+    const model = await UserModel.findOne({ username });
+    if (!model) throw new Error("Couldn't find user with given username.");
+    return mapModelToPublicUser(model);
+}
+
+export async function getUserByEmail(email: string): Promise<GetPublicUserDto> {
+    const model = await UserModel.findOne({ email });
+    if (!model) throw new Error("Couldn't find user with given email.");
+    return mapModelToPublicUser(model);
+}
+
 function mapModelToPublicUser(model: UserModelType): GetPublicUserDto {
     const {
         id,

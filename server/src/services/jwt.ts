@@ -13,10 +13,9 @@ export function createUserJwt(userId: string, userPassword: string): string {
 function getPrivateJwtKey() {
     const privateKey = process.env.PRIVATE_JWT_KEY;
     if (!privateKey) {
-        console.error(
+        throw new Error(
             "Tried generating a JWT without setting the PRIVATE_JWT_KEY environment variable."
         );
-        process.exit(1);
     }
     return privateKey;
 }
