@@ -1,9 +1,12 @@
+import { Project } from "../../domain/project";
+import { GetColumnDto } from "./column";
+
 export type GetProjectDto = {
     id: string;
+    users: string[];
     name: string;
     description?: string;
-    /** An ordered array containing the ids of the columsn belonging to this project. */
-    columns: string[];
+    columns: GetColumnDto[];
     createdAt: string;
 };
 
@@ -13,8 +16,14 @@ export type PostProjectDto = {
     createdAt: string;
 };
 
-export type UpdateProjectDto = {
-    name: string;
-    description?: string;
-    columns: string[];
-};
+export function mapToGetProjectDto(project: Project): GetProjectDto {
+    const { id, users, name, description, columns, createdAt } = project;
+    return {
+        id,
+        users,
+        name,
+        description,
+        columns,
+        createdAt,
+    };
+}

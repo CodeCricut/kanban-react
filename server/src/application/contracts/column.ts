@@ -1,8 +1,10 @@
+import { GetIssueDto } from "./issue";
+
 export type GetColumnDto = {
     id: string;
     name: string;
     description?: string;
-    issues: string[];
+    issues: GetIssueDto[];
     createdAt: string;
 };
 
@@ -12,8 +14,8 @@ export type PostColumnDto = {
     createdAt: string;
 };
 
-export type UpdateColumnDto = {
-    name: string;
-    description?: string;
-    issues: string[];
-};
+// export type UpdateColumnDto = {
+//     name: string;
+//     description?: string;
+//     issues: string[];
+// };

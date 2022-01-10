@@ -2,9 +2,7 @@ export type GetPublicUserDto = {
     id: string;
     username: string;
     createdAt: string;
-    ownedProjects: string[];
-    ownedColumns: string[];
-    ownedIssues: string[];
+    projects: string[];
 };
 
 export type GetPrivateUserDto = {
@@ -13,9 +11,7 @@ export type GetPrivateUserDto = {
     email: string;
     passwordHash: string;
     createdAt: string;
-    ownedProjects: string[];
-    ownedColumns: string[];
-    ownedIssues: string[];
+    projects: string[];
 };
 
 export type RegisterUserDto = {
@@ -29,3 +25,45 @@ export type LoginUserDto = {
     username: string;
     password: string;
 };
+
+function mapModelToPublicUser(model: UserModelType): GetPublicUserDto {
+    const {
+        id,
+        username,
+        createdAt,
+        ownedProjects,
+        ownedColumns,
+        ownedIssues,
+    } = model;
+    return {
+        id,
+        username,
+        createdAt,
+        projects: ownedProjects,
+        ownedColumns,
+        ownedIssues,
+    };
+}
+
+function mapModelToPrivateUser(model: UserModelType): GetPrivateUserDto {
+    const {
+        id,
+        username,
+        email,
+        passwordHash,
+        createdAt,
+        ownedProjects,
+        ownedColumns,
+        ownedIssues,
+    } = model;
+    return {
+        id,
+        username,
+        email,
+        passwordHash,
+        createdAt,
+        ownedProjects,
+        ownedColumns,
+        ownedIssues,
+    };
+}

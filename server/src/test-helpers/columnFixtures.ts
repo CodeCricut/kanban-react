@@ -5,7 +5,7 @@ import {
     PostColumnDto,
     UpdateColumnDto,
 } from "../application/contracts/column";
-import { validCreatedAtString } from "./dateFixtures";
+import { dateStringFixture } from "./dateFixtures";
 
 type createValidPostColumnDtoFunction = {
     (): PostColumnDto;
@@ -14,7 +14,7 @@ export const createValidPostColumnDto: createValidPostColumnDtoFunction =
     () => ({
         name: "VALID NAME",
         description: "DESCRIPTION",
-        createdAt: validCreatedAtString,
+        createdAt: dateStringFixture,
     });
 
 type createValidUpdateColumnDtoFunction = {
@@ -35,5 +35,5 @@ export const createValidGetColumnDto: createValidGetColumnDtoFunctin = () => ({
     name: `VALID NAME (ID=${uuid()})`,
     description: `DESCRIPTION(ID=${uuid()})`,
     issues: [],
-    createdAt: validCreatedAtString,
+    createdAt: dateStringFixture,
 });

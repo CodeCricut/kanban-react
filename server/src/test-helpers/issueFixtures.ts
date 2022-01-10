@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { PostIssueDto, UpdateIssueDto } from "../application/contracts/issue";
-import { validCreatedAtString } from "./dateFixtures";
+import { dateStringFixture } from "./dateFixtures";
 
 type createValidPostIssueDtoFunction = {
     (): PostIssueDto;
@@ -8,7 +8,7 @@ type createValidPostIssueDtoFunction = {
 export const createValidPostIssueDto: createValidPostIssueDtoFunction = () => ({
     name: "VALID NAME",
     description: "DESCRIPTION",
-    createdAt: validCreatedAtString,
+    createdAt: dateStringFixture,
 });
 
 type createValidUpdateIssueDtoFunction = {
