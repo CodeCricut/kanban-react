@@ -41,11 +41,17 @@ export async function getUserByEmail(email: string): Promise<GetPublicUserDto> {
     return mapModelToPublicUser(model);
 }
 
-export async function readPrivateUser({
+export async function getPrivateUserByUsername({
     username,
 }: LoginUserDto): Promise<GetPrivateUserDto> {
     const model = await UserModel.findOne({ username });
     if (!model) throw new Error("Couldn't find user with given username.");
+    return mapModelToPrivateUser(model);
+}
+
+export async function readPrivateUser(id: string): Promise<GetPrivateUserDto> {
+    const model = await UserModel.findById(id);
+    if (!model) throw new Error("Couldn't find user with given id.");
     return mapModelToPrivateUser(model);
 }
 

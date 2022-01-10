@@ -1,4 +1,4 @@
-import { readPrivateUser } from "../../persistence/user/UserRepository";
+import { getPrivateUserByUsername } from "../../persistence/user/UserRepository";
 import { isCorrectPassword } from "../../services/bcrypt";
 import { createUserJwt } from "../../services/jwt";
 import { GetPrivateUserDto, LoginUserDto } from "../contracts/user";
@@ -12,7 +12,9 @@ export async function handleLoginCommand(
     command: LoginCommand
 ): Promise<string> {
     const loginDto: LoginUserDto = command;
-    const privateUser: GetPrivateUserDto = await readPrivateUser(loginDto);
+    const privateUser: GetPrivateUserDto = await getPrivateUserByUsername(
+        loginDto
+    );
 
     const passwordsMatch = await isCorrectPassword(
         loginDto.password,
