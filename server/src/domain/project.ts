@@ -1,8 +1,10 @@
+import { Column } from "./column";
+
 export type Project = {
     id: string;
+    users: string[];
     name: string;
     description?: string;
-    /** An ordered array containing the ids of the columsn belonging to this project. */
-    columns: string[];
+    columns: Column[];
     createdAt: string;
 };
