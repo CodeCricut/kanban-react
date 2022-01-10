@@ -1,4 +1,5 @@
 import { getCurrentDateTimeString } from "../../library/dates";
+import { createUserJwt } from "../../services/jwt";
 import { GetPublicUserDto, RegisterUserDto } from "../contracts/user";
 
 type RegisterUserCommand = {
@@ -15,6 +16,5 @@ export async function handleRegisterUserCommand(command: RegisterUserCommand) {
     };
     const user: GetPublicUserDto = await registerUser(registerUserDto);
 
-    const jwt = await createUserJwt(user.id, command.password);
-    return jwt;
+    return createUserJwt(user.id, command.password);
 }
