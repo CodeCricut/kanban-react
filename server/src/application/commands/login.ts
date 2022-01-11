@@ -1,4 +1,4 @@
-import { getPrivateUserByUsername } from "../../persistence/user/UserRepository";
+import { getPrivateUserByUsername } from "../../persistence/repository/UserRepository";
 import { isCorrectPassword } from "../../services/bcrypt";
 import { createUserJwt } from "../../services/jwt";
 import { GetPrivateUserDto, LoginUserDto } from "../contracts/user";

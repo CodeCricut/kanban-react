@@ -1,7 +1,7 @@
 import {
-    readProject,
+    getProjectById,
     updateProject,
-} from "../../persistence/project/ProjectRepository";
+} from "../../persistence/repository/ProjectRepository";
 import { UpdateProjectDto } from "../contracts/project";
 
 type EditProjectCommand = {
@@ -11,7 +11,7 @@ type EditProjectCommand = {
 };
 
 export async function handleEditProjectCommand(command: EditProjectCommand) {
-    const existingProject = await readProject(command.id);
+    const existingProject = await getProjectById(command.id);
 
     const updateDto: UpdateProjectDto = {
         name: command.name,

@@ -1,8 +1,8 @@
 import {
-    readProject,
+    getProjectById,
     updateProject,
-} from "../../persistence/project/ProjectRepository";
-import { deleteColumn as deleteColumnFromDb } from "../../persistence/column/ColumnRepository";
+} from "../../persistence/repository/ProjectRepository";
+import { deleteColumn as deleteColumnFromDb } from "../../persistence/project/ColumnRepository";
 
 type DeleteColumnCommand = {
     id: string;
@@ -10,7 +10,7 @@ type DeleteColumnCommand = {
 };
 
 export async function handleDeleteColumnCommand(command: DeleteColumnCommand) {
-    const parentProject = await readProject(command.projectId);
+    const parentProject = await getProjectById(command.projectId);
 
     const columnIndex = parentProject.columns.findIndex(
         (col) => col == command.id

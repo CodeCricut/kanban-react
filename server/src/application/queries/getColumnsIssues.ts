@@ -1,5 +1,5 @@
-import { readColumn } from "../../persistence/column/ColumnRepository";
-import { readIssueArray } from "../../persistence/issues/IssueRepository";
+import { readColumn } from "../../persistence/project/ColumnRepository";
+import { readIssueArray } from "../../persistence/project/IssueRepository";
 
 type GetColumnsIssuesQuery = {
     columnId: string;

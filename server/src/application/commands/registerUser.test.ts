@@ -1,5 +1,5 @@
 import * as validator from "validator";
-import * as UserRepository from "../../persistence/user/UserRepository";
+import * as UserRepository from "../../persistence/repository/UserRepository";
 import * as jwt from "../../services/jwt";
 import { RegisterUserDto } from "../contracts/user";
 import { handleRegisterUserCommand } from "./registerUser";

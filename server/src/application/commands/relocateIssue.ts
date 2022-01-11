@@ -1,8 +1,8 @@
 import {
     readColumn,
     updateColumn,
-} from "../../persistence/column/ColumnRepository";
-import { readIssue } from "../../persistence/issues/IssueRepository";
+} from "../../persistence/project/ColumnRepository";
+import { readIssue } from "../../persistence/project/IssueRepository";
 
 type RelocateIssueCommand = {
     issueId: string;

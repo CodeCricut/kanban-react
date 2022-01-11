@@ -1,8 +1,8 @@
 import {
     readColumn,
     updateColumn,
-} from "../../persistence/column/ColumnRepository";
-import { deleteIssue } from "../../persistence/issues/IssueRepository";
+} from "../../persistence/project/ColumnRepository";
+import { deleteIssue } from "../../persistence/project/IssueRepository";
 
 type DeleteIssueCommand = {
     id: string;

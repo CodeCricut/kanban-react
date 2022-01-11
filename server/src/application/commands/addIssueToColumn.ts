@@ -1,8 +1,8 @@
 import {
     readColumn,
     updateColumn,
-} from "../../persistence/column/ColumnRepository";
-import { createIssue } from "../../persistence/issues/IssueRepository";
+} from "../../persistence/project/ColumnRepository";
+import { createIssue } from "../../persistence/project/IssueRepository";
 import { PostIssueDto } from "../contracts/issue";
 
 type AddIssueToColumnCommand = {

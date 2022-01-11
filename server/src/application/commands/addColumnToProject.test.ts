@@ -1,5 +1,5 @@
-import * as columnRepository from "../../persistence/column/ColumnRepository";
-import * as projectRepository from "../../persistence/project/ProjectRepository";
+import * as columnRepository from "../../persistence/project/ColumnRepository";
+import * as projectRepository from "../../persistence/repository/ProjectRepository";
 import { handleAddColumnToProjectCommand } from "./addColumnToProject";
 import {
     createValidPostColumnDto,

@@ -1,8 +1,8 @@
-import { createColumn } from "../../persistence/column/ColumnRepository";
+import { createColumn } from "../../persistence/project/ColumnRepository";
 import {
-    readProject,
+    getProjectById,
     updateProject,
-} from "../../persistence/project/ProjectRepository";
+} from "../../persistence/repository/ProjectRepository";
 import { PostColumnDto } from "../contracts/column";
 
 type AddColumnToProjectCommand = {
@@ -16,7 +16,7 @@ type AddColumnToProjectCommand = {
 export async function handleAddColumnToProjectCommand(
     command: AddColumnToProjectCommand
 ) {
-    const parentProject = await readProject(command.projectId);
+    const parentProject = await getProjectById(command.projectId);
     if (
         command.columnIndex > parentProject.columns.length ||
         command.columnIndex < 0

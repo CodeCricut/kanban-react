@@ -1,4 +1,4 @@
-import { readAllProjects } from "../../persistence/project/ProjectRepository";
+import { readAllProjects } from "../../persistence/repository/ProjectRepository";
 
 type GetAllProjectsQuery = {};
 export async function handleGetAllProjectsQuery(

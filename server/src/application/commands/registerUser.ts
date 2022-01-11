@@ -4,7 +4,7 @@ import {
     getUserByEmail,
     getUserByUsername,
     registerUser,
-} from "../../persistence/user/UserRepository";
+} from "../../persistence/repository/UserRepository";
 import { createUserJwt } from "../../services/jwt";
 import { GetPublicUserDto, RegisterUserDto } from "../contracts/user";
 

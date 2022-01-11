@@ -1,7 +1,7 @@
 import {
-    readProject,
+    getProjectById,
     updateProject,
-} from "../../persistence/project/ProjectRepository";
+} from "../../persistence/repository/ProjectRepository";
 import { UpdateProjectDto } from "../contracts/project";
 
 type ReorderColumnCommand = {
@@ -14,7 +14,7 @@ export async function handleReorderColumnsCommand(
     command: ReorderColumnCommand
 ) {
     const { columnId, newIndex, projectId } = command;
-    const project = await readProject(projectId);
+    const project = await getProjectById(projectId);
 
     if (newIndex < 0 || newIndex > project.columns.length - 1)
         throw new Error("Tried moving column to invalid index.");

@@ -1,4 +1,4 @@
-import * as UserRepository from "../../persistence/user/UserRepository";
+import * as UserRepository from "../../persistence/repository/UserRepository";
 import * as jwt from "../../services/jwt";
 import * as bcrypt from "../../services/bcrypt";
 

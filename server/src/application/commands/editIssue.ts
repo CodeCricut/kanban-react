@@ -1,7 +1,7 @@
 import {
     readIssue,
     updateIssue,
-} from "../../persistence/issues/IssueRepository";
+} from "../../persistence/project/IssueRepository";
 import { UpdateIssueDto } from "../contracts/issue";
 
 type EditIssueCommand = {
