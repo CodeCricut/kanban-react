@@ -24,3 +24,12 @@ export function addUserToProject(
     project.users.splice(index, 0, user.id);
     return updatedProject;
 }
+
+/** Pure function for editing a project. */
+export function editProject(
+    project: Project,
+    name: string,
+    description?: string
+) {
+    return { ...project, name, description };
+}
