@@ -4,3 +4,17 @@ export class NotAuthenticatedError extends Error {
         this.name = "NotAuthenticatedError";
     }
 }
+
+export class NotAuthorizedError extends Error {
+    constructor(msg: string = "Not authorized.") {
+        super(msg);
+        this.name = "NotAuthenticatedError";
+    }
+}
+
+export class NotFoundError extends Error {
+    constructor(msg: string = "Not found.") {
+        super(msg);
+        this.name = "NotFoundError";
+    }
+}
