@@ -38,7 +38,7 @@ export const userPaths = {
 export const userDefinitions = {
     PrivateUser: {
         type: "object",
-        required: ["id", "username", "email", "createdAt"],
+        required: ["id", "username", "email", "createdAt", "projects"],
         properties: {
             id: {
                 type: "string",
@@ -57,6 +57,7 @@ export const userDefinitions = {
             projects: {
                 type: "array",
                 items: {
+                    description: "The project id.",
                     type: "string",
                 },
             },

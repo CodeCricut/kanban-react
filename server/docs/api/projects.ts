@@ -9,23 +9,11 @@ export const projectsPaths = {
             consumes: ["application/json"],
             parameters: [
                 { $ref: "#/parameters/JwtParameter" },
-                {
-                    in: "body",
-                    name: "body",
-                    description: "Project object",
-                    required: true,
-                    schema: {
-                        type: "object",
-                        $ref: "#/definitions/projectBody",
-                    },
-                },
+                { $ref: "#/parameters/NewProjectParameter" },
             ],
             responses: {
                 200: {
-                    description: "Successful operation",
-                    schema: {
-                        $ref: "#/definitions/Project",
-                    },
+                    $ref: "#/responses/ProjectResponse",
                 },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
@@ -42,30 +30,12 @@ export const projectsPaths = {
             consumes: ["application/json"],
             parameters: [
                 { $ref: "#/parameters/JwtParameter" },
-                {
-                    name: "id",
-                    in: "path",
-                    description: "Project id that needs to be updated",
-                    required: true,
-                    type: "string",
-                },
-                {
-                    in: "body",
-                    name: "body",
-                    description: "Update object",
-                    required: true,
-                    schema: {
-                        type: "object",
-                        $ref: "#/definitions/editProjectBody",
-                    },
-                },
+                { $ref: "#/parameters/ProjectIdParameter" },
+                { $ref: "#/parameters/EditProjectParameter" },
             ],
             responses: {
                 200: {
-                    description: "Successful operation",
-                    schema: {
-                        $ref: "#/definitions/Project",
-                    },
+                    $ref: "#/responses/ProjectResponse",
                 },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
@@ -80,17 +50,11 @@ export const projectsPaths = {
             tags: ["projects"],
             parameters: [
                 { $ref: "#/parameters/JwtParameter" },
-                {
-                    name: "id",
-                    in: "path",
-                    description: "Project id that needs to be deleted",
-                    required: true,
-                    type: "string",
-                },
+                { $ref: "#/parameters/ProjectIdParameter" },
             ],
             responses: {
                 200: {
-                    description: "Successful operation",
+                    $ref: "#/responses/DeletedProjectResponse",
                 },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
@@ -108,31 +72,12 @@ export const projectsPaths = {
             consumes: ["application/json"],
             parameters: [
                 { $ref: "#/parameters/JwtParameter" },
-                {
-                    name: "id",
-                    in: "path",
-                    description:
-                        "The id of the project to associate with the new column",
-                    required: true,
-                    type: "string",
-                },
-                {
-                    in: "body",
-                    name: "body",
-                    description: "Column object",
-                    required: true,
-                    schema: {
-                        type: "object",
-                        $ref: "#/definitions/createColumnBody",
-                    },
-                },
+                { $ref: "#/parameters/ProjectIdParameter" },
+                { $ref: "#/parameters/AddColumnParameter" },
             ],
             responses: {
                 200: {
-                    description: "Successful operation",
-                    schema: {
-                        $ref: "#/definitions/Project",
-                    },
+                    $ref: "#/responses/ProjectResponse",
                 },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
@@ -142,34 +87,81 @@ export const projectsPaths = {
     },
 };
 
+export const projectParameters = {
+    NewProjectParameter: {
+        in: "body",
+        name: "body",
+        description: "Project object",
+        required: true,
+        schema: {
+            type: "object",
+            required: ["name"],
+            properties: {
+                name: {
+                    type: "string",
+                },
+                description: {
+                    type: "string",
+                },
+            },
+        },
+    },
+    ProjectIdParameter: {
+        name: "id",
+        in: "path",
+        description: "The id of the project",
+        required: true,
+        type: "string",
+    },
+    EditProjectParameter: {
+        in: "body",
+        name: "body",
+        description: "Update object",
+        required: true,
+        schema: {
+            type: "object",
+            required: ["name", "description"],
+            properties: {
+                name: {
+                    type: "string",
+                },
+                description: {
+                    type: "string",
+                },
+            },
+        },
+    },
+    AddColumnParameter: {
+        in: "body",
+        name: "body",
+        description: "The column to add.",
+        required: true,
+        schema: {
+            type: "object",
+            required: ["columnIndex", "name"],
+            properties: {
+                columnIndex: {
+                    type: "number",
+                    description:
+                        "The index to insert the new column to the project's columns",
+                },
+                name: {
+                    type: "string",
+                    description: " The name of the new column",
+                },
+                description: {
+                    type: "string",
+                    description: " The name of the new column",
+                },
+            },
+        },
+    },
+};
+
 export const projectDefinitions = {
-    projectBody: {
-        type: "object",
-        required: ["name"],
-        properties: {
-            name: {
-                type: "string",
-            },
-            description: {
-                type: "string",
-            },
-        },
-    },
-    editProjectBody: {
-        type: "object",
-        required: ["name", "description"],
-        properties: {
-            name: {
-                type: "string",
-            },
-            description: {
-                type: "string",
-            },
-        },
-    },
     Project: {
         type: "object",
-        required: ["id", "name", "createdAt"],
+        required: ["id", "name", "createdAt", "users"],
         properties: {
             id: {
                 type: "string",
@@ -190,6 +182,25 @@ export const projectDefinitions = {
                     $ref: "#/definitions/Column",
                 },
             },
+            users: {
+                type: "array",
+                items: {
+                    definition: "The user id",
+                    type: "string",
+                },
+            },
         },
+    },
+};
+
+export const projectResponses = {
+    ProjectResponse: {
+        description: "The project which was returned.",
+        schema: {
+            $ref: "#/definitions/Project",
+        },
+    },
+    DeletedProjectResponse: {
+        description: "Successfully deleted project",
     },
 };

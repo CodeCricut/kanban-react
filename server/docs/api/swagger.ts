@@ -1,7 +1,12 @@
 import { authDefinitions, authParams, authPaths, authResponses } from "./auth";
 import { columnDefinitions, columnsPaths } from "./columns";
 import { issueDefinitions, issuesPaths } from "./issues";
-import { projectDefinitions, projectsPaths } from "./projects";
+import {
+    projectDefinitions,
+    projectParameters,
+    projectResponses,
+    projectsPaths,
+} from "./projects";
 import { sharedParameters, sharedResponses } from "./shared";
 import { userDefinitions, userPaths, userResponses } from "./users";
 export default {
@@ -34,10 +39,12 @@ export default {
     parameters: {
         ...sharedParameters,
         ...authParams,
+        ...projectParameters,
     },
     responses: {
         ...sharedResponses,
         ...authResponses,
         ...userResponses,
+        ...projectResponses,
     },
 };
