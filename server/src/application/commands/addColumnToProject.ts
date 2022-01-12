@@ -52,7 +52,7 @@ export async function handleAddColumnToProjectCommand(
 
     // Update project to include column
     project = addColumnToProject(project, column, columnIndex);
-    await updateProject(project.id, project);
+    project = await updateProject(project.id, project);
 
     // Return updated project
     return mapToGetProjectDto(project);

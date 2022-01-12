@@ -1,5 +1,5 @@
 import { Project } from "../../domain/project";
-import { GetColumnDto } from "./column";
+import { GetColumnDto, mapToGetColumnDto } from "./column";
 
 export type GetProjectDto = {
     id: string;
@@ -23,7 +23,7 @@ export function mapToGetProjectDto(project: Project): GetProjectDto {
         users,
         name,
         description,
-        columns,
+        columns: columns.map((col) => mapToGetColumnDto(col)),
         createdAt,
     };
 }

@@ -1,4 +1,5 @@
-import { GetIssueDto } from "./issue";
+import { Column } from "../../domain/column";
+import { GetIssueDto, mapToGetIssueDto } from "./issue";
 
 export type GetColumnDto = {
     id: string;
@@ -14,8 +15,13 @@ export type PostColumnDto = {
     createdAt: string;
 };
 
-// export type UpdateColumnDto = {
-//     name: string;
-//     description?: string;
-//     issues: string[];
-// };
+export function mapToGetColumnDto(column: Column): GetColumnDto {
+    const { id, name, description, createdAt, issues } = column;
+    return {
+        id,
+        name,
+        description,
+        createdAt,
+        issues: issues.map((issue) => mapToGetIssueDto(issue)),
+    };
+}
