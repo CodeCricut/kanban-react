@@ -1,4 +1,4 @@
-import { authDefinitions, authPaths, authResponses } from "./auth";
+import { authDefinitions, authParams, authPaths, authResponses } from "./auth";
 import { columnDefinitions, columnsPaths } from "./columns";
 import { issueDefinitions, issuesPaths } from "./issues";
 import { projectDefinitions, projectsPaths } from "./projects";
@@ -30,6 +30,9 @@ export default {
         ...columnDefinitions,
         ...issueDefinitions,
         ...userDefinitions,
+    },
+    parameters: {
+        ...authParams,
     },
     responses: {
         ...sharedResponses,

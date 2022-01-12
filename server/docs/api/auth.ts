@@ -5,18 +5,7 @@ export const authPaths = {
             tags: ["authorization"],
             produces: ["application/json"],
             consumes: ["application/json"],
-            parameters: [
-                {
-                    in: "body",
-                    name: "body",
-                    description: "New user object",
-                    required: true,
-                    schema: {
-                        type: "object",
-                        $ref: "#/definitions/registerUserBody",
-                    },
-                },
-            ],
+            parameters: [{ $ref: "#/parameters/RegisterParameter" }],
             responses: {
                 200: {
                     $ref: "#/responses/JwtResponse",
@@ -37,18 +26,7 @@ export const authPaths = {
             tags: ["authorization"],
             produces: ["application/json"],
             consumes: ["application/json"],
-            parameters: [
-                {
-                    in: "body",
-                    name: "body",
-                    description: "Login object",
-                    required: true,
-                    schema: {
-                        type: "object",
-                        $ref: "#/definitions/loginUserBody",
-                    },
-                },
-            ],
+            parameters: [{ $ref: "#/parameters/LoginParameter" }],
             responses: {
                 200: {
                     $ref: "#/responses/JwtResponse",
@@ -64,35 +42,49 @@ export const authPaths = {
     },
 };
 
-export const authDefinitions = {
-    registerUserBody: {
-        type: "object",
-        required: ["username", "email", "password"],
-        properties: {
-            username: {
-                type: "string",
-            },
-            email: {
-                type: "string",
-            },
-            password: {
-                type: "string",
+export const authParams = {
+    RegisterParameter: {
+        in: "body",
+        name: "body",
+        description: "New user object",
+        required: true,
+        schema: {
+            type: "object",
+            required: ["username", "email", "password"],
+            properties: {
+                username: {
+                    type: "string",
+                },
+                email: {
+                    type: "string",
+                },
+                password: {
+                    type: "string",
+                },
             },
         },
     },
-    loginUserBody: {
-        type: "object",
-        required: ["username", "password"],
-        properties: {
-            username: {
-                type: "string",
-            },
-            password: {
-                type: "string",
+    LoginParameter: {
+        in: "body",
+        name: "body",
+        description: "Login object",
+        required: true,
+        schema: {
+            type: "object",
+            required: ["username", "password"],
+            properties: {
+                username: {
+                    type: "string",
+                },
+                password: {
+                    type: "string",
+                },
             },
         },
     },
 };
+
+export const authDefinitions = {};
 
 export const authResponses = {
     JwtResponse: {
