@@ -273,6 +273,15 @@
                 "consumes": ["application/json"],
                 "parameters": [
                     {
+                        "in": "header",
+                        "name": "token",
+                        "description": "The JWT containing information about the user.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "id",
                         "in": "path",
                         "description": "The id of the project to associate with the new column",
@@ -634,6 +643,7 @@
         }
     },
     "definitions": {
+        "jwtHeader": {},
         "registerUserBody": {
             "type": "object",
             "required": ["username", "email", "password"],
@@ -663,23 +673,19 @@
         },
         "projectBody": {
             "type": "object",
-            "required": ["name", "createdAt"],
+            "required": ["name"],
             "properties": {
                 "name": {
                     "type": "string"
                 },
                 "description": {
                     "type": "string"
-                },
-                "createdAt": {
-                    "type": "string",
-                    "format": "date-time"
                 }
             }
         },
         "createColumnBody": {
             "type": "object",
-            "required": ["columnIndex", "name", "createdAt"],
+            "required": ["columnIndex", "name"],
             "properties": {
                 "columnIndex": {
                     "type": "number",
@@ -692,16 +698,12 @@
                 "description": {
                     "type": "string",
                     "description": " The name of the new column"
-                },
-                "createdAt": {
-                    "type": "string",
-                    "format": "date-time"
                 }
             }
         },
         "createIssueBody": {
             "type": "object",
-            "required": ["issueIndex", "name", "createdAt"],
+            "required": ["issueIndex", "name"],
             "properties": {
                 "issueIndex": {
                     "type": "number",
@@ -714,10 +716,6 @@
                 "description": {
                     "type": "string",
                     "description": " The name of the new issue"
-                },
-                "createdAt": {
-                    "type": "string",
-                    "format": "date-time"
                 }
             }
         },

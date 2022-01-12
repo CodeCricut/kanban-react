@@ -1,4 +1,5 @@
 import { Column } from "./column";
+import { InvalidColumnIndexError } from "./errors";
 import { User } from "./user";
 
 export type Project = {
@@ -32,4 +33,22 @@ export function editProject(
     description?: string
 ) {
     return { ...project, name, description };
+}
+
+/**
+ * Pure function for inserting column to project at the given index.
+ */
+export function addColumnToProject(
+    project: Project,
+    column: Column,
+    columnIndex: number
+) {
+    if (project.columns.length < columnIndex || columnIndex < 0) {
+        throw new InvalidColumnIndexError();
+    }
+
+    // Copy proj to keep func pure
+    const newProj = { ...project };
+    newProj.columns.splice(columnIndex, 0, column);
+    return project;
 }

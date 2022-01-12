@@ -4,3 +4,10 @@ export class EntityNotInParentError extends Error {
         this.name = "EntityNotInParentError";
     }
 }
+
+export class InvalidColumnIndexError extends Error {
+    constructor(msg: string = "Invalid column index.") {
+        super(msg);
+        this.name = "InvalidColumnIndexError";
+    }
+}
