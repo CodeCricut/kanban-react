@@ -18,7 +18,7 @@ const UserSchema = new Schema<User>({
         type: String,
         required: true,
     },
-    ownedProjects: [
+    projects: [
         {
             type: Schema.Types.ObjectId,
             ref: "Project",
