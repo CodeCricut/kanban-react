@@ -126,7 +126,35 @@
                 }
             }
         },
-
+        "/users/me/projects": {
+            "get": {
+                "summary": "Get all your projects",
+                "description": "Get the projects of the user associated with the query.",
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "token",
+                        "description": "The JWT containing information about the user.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/projectResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/projects/create": {
             "post": {
                 "summary": "Create a new project",
