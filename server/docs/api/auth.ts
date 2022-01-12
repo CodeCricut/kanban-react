@@ -32,11 +32,11 @@ export const authPaths = {
                         },
                     },
                 },
+                400: {
+                    $ref: "#/responses/ValidationErrorResponse",
+                },
                 500: {
-                    description: "Server error",
-                    schema: {
-                        $ref: "#/definitions/ServerErrorResponse",
-                    },
+                    $ref: "#/responses/ServerErrorResponse",
                 },
             },
         },
@@ -75,11 +75,11 @@ export const authPaths = {
                         },
                     },
                 },
+                400: {
+                    $ref: "#/responses/ValidationErrorResponse",
+                },
                 500: {
-                    description: "Server error",
-                    schema: {
-                        $ref: "#/definitions/ServerErrorResponse",
-                    },
+                    $ref: "#/responses/ServerErrorResponse",
                 },
             },
         },

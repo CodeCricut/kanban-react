@@ -2,6 +2,7 @@ import { authDefinitions, authPaths } from "./auth";
 import { columnDefinitions, columnsPaths } from "./columns";
 import { issueDefinitions, issuesPaths } from "./issues";
 import { projectDefinitions, projectsPaths } from "./projects";
+import { sharedResponses } from "./shared";
 import { userDefinitions, userPaths } from "./users";
 export default {
     swagger: "2.0",
@@ -29,16 +30,8 @@ export default {
         ...columnDefinitions,
         ...issueDefinitions,
         ...userDefinitions,
-        ServerErrorResponse: {
-            type: "object",
-            properties: {
-                statusCode: {
-                    type: "string",
-                },
-                message: {
-                    type: "string",
-                },
-            },
-        },
+    },
+    responses: {
+        ...sharedResponses,
     },
 };

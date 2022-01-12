@@ -25,10 +25,7 @@ export const userPaths = {
                     },
                 },
                 500: {
-                    description: "Server error",
-                    schema: {
-                        $ref: "#/definitions/ServerErrorResponse",
-                    },
+                    $ref: "#/responses/ServerErrorResponse",
                 },
             },
         },
@@ -63,10 +60,7 @@ export const userPaths = {
                     },
                 },
                 500: {
-                    description: "Server error",
-                    schema: {
-                        $ref: "#/definitions/ServerErrorResponse",
-                    },
+                    $ref: "#/responses/ServerErrorResponse",
                 },
             },
         },

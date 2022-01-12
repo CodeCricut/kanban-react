@@ -37,10 +37,7 @@ export const projectsPaths = {
                     },
                 },
                 500: {
-                    description: "Server error",
-                    schema: {
-                        $ref: "#/definitions/ServerErrorResponse",
-                    },
+                    $ref: "#/responses/ServerErrorResponse",
                 },
             },
         },
@@ -79,10 +76,7 @@ export const projectsPaths = {
                     },
                 },
                 500: {
-                    description: "Server error",
-                    schema: {
-                        $ref: "#/definitions/ServerErrorResponse",
-                    },
+                    $ref: "#/responses/ServerErrorResponse",
                 },
             },
         },
@@ -106,10 +100,7 @@ export const projectsPaths = {
                     description: "Successful operation",
                 },
                 500: {
-                    description: "Server error",
-                    schema: {
-                        $ref: "#/definitions/ServerErrorResponse",
-                    },
+                    $ref: "#/responses/ServerErrorResponse",
                 },
             },
         },
@@ -160,10 +151,7 @@ export const projectsPaths = {
                     },
                 },
                 500: {
-                    description: "Server error",
-                    schema: {
-                        $ref: "#/definitions/ServerErrorResponse",
-                    },
+                    $ref: "#/responses/ServerErrorResponse",
                 },
             },
         },
