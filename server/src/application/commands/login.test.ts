@@ -1,82 +1,61 @@
-import * as UserRepository from "../../persistence/repository/UserRepository";
+import * as userRepository from "../../persistence/repository/UserRepository";
 import * as jwt from "../../services/jwt";
 import * as bcrypt from "../../services/bcrypt";
 
-import { createValidGetPrivateUserDto } from "../../test-helpers/userFixtures";
+import { createUserFixture } from "../../test-helpers/userFixtures";
 import { handleLoginCommand } from "./login";
+import { User } from "../../domain/user";
+import { InvalidCredentialsError } from "../errors";
 
+// =================== Test setup ===================
+let userFixture: User;
+let jwtFixture = "my.json.web.token";
+
+const getUserByUsername = jest.spyOn(userRepository, "getUserByUsername");
+const isCorrectPasswordSpy = jest.spyOn(bcrypt, "isCorrectPassword");
+const createUserJwtSpy = jest.spyOn(jwt, "createUserJwt");
+
+beforeEach(() => {
+    userFixture = createUserFixture("pwdhash");
+    getUserByUsername.mockResolvedValue(userFixture);
+    isCorrectPasswordSpy.mockResolvedValue(true);
+    createUserJwtSpy.mockReturnValue(jwtFixture);
+});
+
+// =================== Test cases ===================
 test("should throw if user not found", async () => {
     // User should not exist
-    jest.spyOn(UserRepository, "readPrivateUser").mockRejectedValue(
-        new Error()
-    );
+    getUserByUsername.mockResolvedValue(null);
 
-    // Spy on pwd validation
-    const bcryptSpy = jest
-        .spyOn(bcrypt, "isCorrectPassword")
-        .mockResolvedValue(true);
-
-    // Spy on jwt creation
-    const expectedJwt = "Expected.jwt";
-    jest.spyOn(jwt, "createUserJwt").mockReturnValue(expectedJwt);
-
+    // Act
     await expect(async () => {
         await handleLoginCommand({
             username: "username",
             password: "password",
         });
-    }).rejects.toThrow(Error);
+    }).rejects.toThrow(InvalidCredentialsError);
 });
 
 test("should throw if password invalid", async () => {
-    // Mock existing user
-    const existingUser = createValidGetPrivateUserDto("PWD_HASH");
-    jest.spyOn(UserRepository, "readPrivateUser").mockResolvedValue(
-        existingUser
-    );
+    // Password is invalid
+    isCorrectPasswordSpy.mockResolvedValue(false);
 
-    // Pwd should not be valid
-    const bcryptSpy = jest
-        .spyOn(bcrypt, "isCorrectPassword")
-        .mockResolvedValue(false);
-
-    // Spy on jwt creation
-    const expectedJwt = "Expected.jwt";
-    jest.spyOn(jwt, "createUserJwt").mockReturnValue(expectedJwt);
-
+    // Act
     await expect(async () => {
         await handleLoginCommand({
             username: "username",
             password: "password",
         });
-    }).rejects.toThrow(Error);
+    }).rejects.toThrow(InvalidCredentialsError);
 });
 
 test("should return jwt for user", async () => {
-    // Mock existing user
-    const existingUser = createValidGetPrivateUserDto("PWD_HASH");
-    jest.spyOn(UserRepository, "readPrivateUser").mockResolvedValue(
-        existingUser
-    );
-
-    // Spy on pwd validation
-    const bcryptSpy = jest
-        .spyOn(bcrypt, "isCorrectPassword")
-        .mockResolvedValue(true);
-
-    // Spy on jwt creation
-    const expectedJwt = "Expected.jwt";
-    jest.spyOn(jwt, "createUserJwt").mockReturnValue(expectedJwt);
-
+    const expected = jwtFixture;
     // Act
-    const actualJwt = await handleLoginCommand({
+    const actual = await handleLoginCommand({
         username: "username",
         password: "password",
     });
 
-    // Expect pwd to be validated
-    expect(bcryptSpy).toHaveBeenCalled();
-
-    // Expect jwt returned
-    expect(actualJwt).toEqual(expectedJwt);
+    expect(actual).toEqual(expected);
 });

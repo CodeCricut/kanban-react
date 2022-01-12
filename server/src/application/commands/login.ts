@@ -1,7 +1,8 @@
-import { getPrivateUserByUsername } from "../../persistence/repository/UserRepository";
+import { getUserByUsername } from "../../persistence/repository/UserRepository";
 import { isCorrectPassword } from "../../services/bcrypt";
 import { createUserJwt } from "../../services/jwt";
 import { GetPrivateUserDto, LoginUserDto } from "../contracts/user";
+import { InvalidCredentialsError } from "../errors";
 
 type LoginCommand = LoginUserDto;
 
@@ -12,15 +13,17 @@ export async function handleLoginCommand(
     command: LoginCommand
 ): Promise<string> {
     const loginDto: LoginUserDto = command;
-    const privateUser: GetPrivateUserDto = await getPrivateUserByUsername(
-        loginDto
-    );
+    const user = await getUserByUsername(loginDto.username);
+    if (!user) {
+        throw new InvalidCredentialsError("Username invalid.");
+    }
 
     const passwordsMatch = await isCorrectPassword(
         loginDto.password,
-        privateUser.passwordHash
+        user.passwordHash
     );
-    if (!passwordsMatch) throw new Error("Incorrect password.");
+    if (!passwordsMatch)
+        throw new InvalidCredentialsError("Incorrect password.");
 
-    return createUserJwt(privateUser.id, command.password);
+    return createUserJwt(user.id, command.password);
 }

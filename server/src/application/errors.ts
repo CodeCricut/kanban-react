@@ -23,11 +23,18 @@ export class NotFoundError extends Error {
  * Invalid backing state errors indicate an inconsistency in
  * the database, such as references to deleted entities.
  */
-export class InvalidBackingState extends Error {
+export class InvalidBackingStateError extends Error {
     constructor(
         msg: string = "Invalid backing state. This typically indicates there is an inconsistency in the database, such as references to deleted entities."
     ) {
         super(msg);
-        this.name = "InvalidBackingState";
+        this.name = "InvalidBackingStateError";
+    }
+}
+
+export class InvalidCredentialsError extends Error {
+    constructor(msg: string = "Invalid credentials.") {
+        super(msg);
+        this.name = "InvalidCredentialsError";
     }
 }
