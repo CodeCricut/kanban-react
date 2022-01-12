@@ -3,7 +3,7 @@ import { columnDefinitions, columnsPaths } from "./columns";
 import { issueDefinitions, issuesPaths } from "./issues";
 import { projectDefinitions, projectsPaths } from "./projects";
 import { sharedParameters, sharedResponses } from "./shared";
-import { userDefinitions, userPaths } from "./users";
+import { userDefinitions, userPaths, userResponses } from "./users";
 export default {
     swagger: "2.0",
     info: {
@@ -38,5 +38,6 @@ export default {
     responses: {
         ...sharedResponses,
         ...authResponses,
+        ...userResponses,
     },
 };

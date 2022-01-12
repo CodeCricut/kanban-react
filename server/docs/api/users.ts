@@ -7,11 +7,7 @@ export const userPaths = {
             parameters: [{ $ref: "#/parameters/JwtParameter" }],
             responses: {
                 200: {
-                    description: "Successful operation",
-                    schema: {
-                        type: "object",
-                        $ref: "#/definitions/PrivateUserResponse",
-                    },
+                    $ref: "#/responses/PrivateUserResponse",
                 },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
@@ -29,13 +25,7 @@ export const userPaths = {
             parameters: [{ $ref: "#/parameters/JwtParameter" }],
             responses: {
                 200: {
-                    description: "Successful operation",
-                    schema: {
-                        type: "array",
-                        items: {
-                            $ref: "#/definitions/projectResponse",
-                        },
-                    },
+                    $ref: "#/responses/UserProjectsResponse",
                 },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
@@ -46,7 +36,7 @@ export const userPaths = {
 };
 
 export const userDefinitions = {
-    PrivateUserResponse: {
+    PrivateUser: {
         type: "object",
         required: ["id", "username", "email", "createdAt"],
         properties: {
@@ -69,6 +59,25 @@ export const userDefinitions = {
                 items: {
                     type: "string",
                 },
+            },
+        },
+    },
+};
+
+export const userResponses = {
+    PrivateUserResponse: {
+        description: "Successfully retrieved user.",
+        schema: {
+            type: "object",
+            $ref: "#/definitions/PrivateUser",
+        },
+    },
+    UserProjectsResponse: {
+        description: "Successfully retrieved user's projects.",
+        schema: {
+            type: "array",
+            items: {
+                $ref: "#/definitions/Project",
             },
         },
     },

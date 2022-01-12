@@ -24,7 +24,7 @@ export const projectsPaths = {
                 200: {
                     description: "Successful operation",
                     schema: {
-                        $ref: "#/definitions/projectResponse",
+                        $ref: "#/definitions/Project",
                     },
                 },
                 500: {
@@ -64,7 +64,7 @@ export const projectsPaths = {
                 200: {
                     description: "Successful operation",
                     schema: {
-                        $ref: "#/definitions/projectResponse",
+                        $ref: "#/definitions/Project",
                     },
                 },
                 500: {
@@ -131,7 +131,7 @@ export const projectsPaths = {
                 200: {
                     description: "Successful operation",
                     schema: {
-                        $ref: "#/definitions/projectResponse",
+                        $ref: "#/definitions/Project",
                     },
                 },
                 500: {
@@ -167,9 +167,9 @@ export const projectDefinitions = {
             },
         },
     },
-    projectResponse: {
+    Project: {
         type: "object",
-        required: ["id", "name", "createdAt", "columns"],
+        required: ["id", "name", "createdAt"],
         properties: {
             id: {
                 type: "string",
@@ -187,7 +187,7 @@ export const projectDefinitions = {
             columns: {
                 type: "array",
                 items: {
-                    type: "string",
+                    $ref: "#/definitions/Column",
                 },
             },
         },
