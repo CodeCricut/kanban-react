@@ -24,6 +24,18 @@ export async function getProjectById(id: string): Promise<Project | null> {
     return await ProjectModel.findById(id);
 }
 
+export async function getProjectsByIds(
+    ids: string[]
+): Promise<(Project | null)[]> {
+    const projects: (Project | null)[] = [];
+    // TODO: optimize by querying in parallel
+    for (let i = 0; i < ids.length; i++) {
+        const proj = await getProjectById(ids[i]);
+        projects.push(proj);
+    }
+    return projects;
+}
+
 type UpdateProjectProps = {
     name: string;
     description?: string;
