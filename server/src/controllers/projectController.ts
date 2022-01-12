@@ -85,21 +85,6 @@ export async function addColumn(
     }
 }
 
-export async function getProjectColumns(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) {
-    return handleGetProjectsColumnsQuery({
-        projectId: req.params.id,
-    })
-        .then((columns) => {
-            res.status(200);
-            return res.json(columns);
-        })
-        .catch(next);
-}
-
 export async function reorderColumn(
     req: Request,
     res: Response,
