@@ -21,13 +21,13 @@ export const userPaths = {
                     description: "Successful operation",
                     schema: {
                         type: "object",
-                        $ref: "#/definitions/privateUserResponse",
+                        $ref: "#/definitions/PrivateUserResponse",
                     },
-                    400: {
-                        description: "Invalid request",
-                        schema: {
-                            $ref: "#/definitions/InvalidResponse",
-                        },
+                },
+                400: {
+                    description: "Invalid request",
+                    schema: {
+                        $ref: "#/definitions/InvalidResponse",
                     },
                 },
             },
@@ -68,18 +68,9 @@ export const userPaths = {
 };
 
 export const userDefinitions = {
-    privateUserResponse: {
+    PrivateUserResponse: {
         type: "object",
-        required: [
-            "id",
-            "username",
-            "email",
-            "passwordHash",
-            "createdAt",
-            "ownedProjects",
-            "ownedColumns",
-            "ownedIssues",
-        ],
+        required: ["id", "username", "email", "createdAt"],
         properties: {
             id: {
                 type: "string",
@@ -91,26 +82,11 @@ export const userDefinitions = {
                 type: "string",
                 format: "email",
             },
-            passwordHash: {
-                type: "string",
-            },
             createdAt: {
                 type: "string",
                 format: "date-time",
             },
-            ownedProjects: {
-                type: "array",
-                items: {
-                    type: "string",
-                },
-            },
-            ownedColumns: {
-                type: "array",
-                items: {
-                    type: "string",
-                },
-            },
-            ownedIssues: {
+            projects: {
                 type: "array",
                 items: {
                     type: "string",
