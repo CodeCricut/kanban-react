@@ -19,18 +19,7 @@ export const authPaths = {
             ],
             responses: {
                 200: {
-                    description: "Successful operation",
-                    schema: {
-                        type: "object",
-                        required: ["jwt"],
-                        properties: {
-                            jwt: {
-                                type: "string",
-                                description:
-                                    "The JWT token for future authenticated requests for the new user.",
-                            },
-                        },
-                    },
+                    $ref: "#/responses/JwtResponse",
                 },
                 400: {
                     $ref: "#/responses/ValidationErrorResponse",
@@ -62,18 +51,7 @@ export const authPaths = {
             ],
             responses: {
                 200: {
-                    description: "Successful operation",
-                    schema: {
-                        type: "object",
-                        required: ["jwt"],
-                        properties: {
-                            jwt: {
-                                type: "string",
-                                description:
-                                    "The JWT token for future authenticated requests for the new user.",
-                            },
-                        },
-                    },
+                    $ref: "#/responses/JwtResponse",
                 },
                 400: {
                     $ref: "#/responses/ValidationErrorResponse",
@@ -111,6 +89,23 @@ export const authDefinitions = {
             },
             password: {
                 type: "string",
+            },
+        },
+    },
+};
+
+export const authResponses = {
+    JwtResponse: {
+        description: "JWT response",
+        schema: {
+            type: "object",
+            required: ["jwt"],
+            properties: {
+                jwt: {
+                    type: "string",
+                    description:
+                        "The JWT token for future authenticated requests for the new user.",
+                },
             },
         },
     },
