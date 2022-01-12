@@ -38,3 +38,38 @@ export class InvalidCredentialsError extends Error {
         this.name = "InvalidCredentialsError";
     }
 }
+
+export class UsernameTakenError extends Error {
+    constructor(msg: string = "Username taken.") {
+        super(msg);
+        this.name = "UsernameTakenError";
+    }
+}
+
+export class EmailTakenError extends Error {
+    constructor(msg: string = "Email taken.") {
+        super(msg);
+        this.name = "EmailTakenError";
+    }
+}
+
+export class InvalidUsernameError extends Error {
+    constructor(msg: string = "Invalid username.") {
+        super(msg);
+        this.name = "InvalidUsernameError";
+    }
+}
+
+export class InvalidEmailError extends Error {
+    constructor(msg: string = "Invalid email.") {
+        super(msg);
+        this.name = "InvalidEmailError";
+    }
+}
+
+export class InvalidPasswordError extends Error {
+    constructor(msg: string = "Invalid password.") {
+        super(msg);
+        this.name = "InvalidPasswordError";
+    }
+}

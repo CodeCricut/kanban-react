@@ -1,169 +1,139 @@
-import * as validator from "validator";
-import * as UserRepository from "../../persistence/repository/UserRepository";
+import * as userRepository from "../../persistence/repository/UserRepository";
 import * as jwt from "../../services/jwt";
-import { RegisterUserDto } from "../contracts/user";
+import * as bcrypt from "../../services/bcrypt";
+import * as dates from "../../library/dates";
+
+import { createUserFixture } from "../../test-helpers/userFixtures";
+import { handleLoginCommand } from "./login";
+import { User } from "../../domain/user";
+import {
+    EmailTakenError,
+    InvalidCredentialsError,
+    InvalidEmailError,
+    InvalidPasswordError,
+    InvalidUsernameError,
+    UsernameTakenError,
+} from "../errors";
+import { dateStringFixture } from "../../test-helpers/dateFixtures";
 import { handleRegisterUserCommand } from "./registerUser";
-import { getCurrentDateTimeString } from "../../library/dates";
-import { createValidGetPublicUserDto } from "../../test-helpers/userFixtures";
 
-test("should throw if username empty", async () => {
-    // Username should not be taken
-    jest.spyOn(UserRepository, "getUserByUsername").mockRejectedValue(
-        new Error()
-    );
-    // Email should not be taken
-    jest.spyOn(UserRepository, "getUserByEmail").mockRejectedValue(new Error());
+// =================== Test setup ===================
+const currTimeFixture = dateStringFixture;
+let userFixture: User;
+const jwtFixture = "my.json.web.token";
 
-    const command: RegisterUserDto = {
-        username: "",
-        email: "validEmail@email.com",
-        createdAt: getCurrentDateTimeString(),
-        password: "validpwd123",
-    };
-    await expect(async () => {
-        await handleRegisterUserCommand(command);
-    }).rejects.toThrow(Error);
+const currDateTimeSpy = jest
+    .spyOn(dates, "getCurrentDateTimeString")
+    .mockReturnValue(currTimeFixture);
+const getUserByUsernameSpy = jest.spyOn(userRepository, "getUserByUsername");
+const getUserByEmailSpy = jest.spyOn(userRepository, "getUserByEmail");
+const registerUserSpy = jest.spyOn(userRepository, "registerUser");
+const createUserJwtSpy = jest.spyOn(jwt, "createUserJwt");
+
+beforeEach(() => {
+    userFixture = createUserFixture("pwdhash");
+
+    getUserByUsernameSpy.mockResolvedValue(null);
+    getUserByEmailSpy.mockResolvedValue(null);
+    registerUserSpy.mockResolvedValue(userFixture);
+    createUserJwtSpy.mockReturnValue(jwtFixture);
 });
 
-test("should throw if email invalid format", async () => {
-    // Username should not be taken
-    jest.spyOn(UserRepository, "getUserByUsername").mockRejectedValue(
-        new Error()
-    );
-    // Email should not be taken
-    jest.spyOn(UserRepository, "getUserByEmail").mockRejectedValue(new Error());
+// =================== Test cases ===================
+test("should throw if invalid username", async () => {
+    // Empty username is invalid
+    const username = "";
 
-    const command: RegisterUserDto = {
-        username: "valid_username",
-        email: "invalidemail@",
-        createdAt: getCurrentDateTimeString(),
-        password: "validpwd123",
-    };
+    // Act
     await expect(async () => {
-        await handleRegisterUserCommand(command);
-    }).rejects.toThrow(Error);
+        await handleRegisterUserCommand({
+            username,
+            email: userFixture.email,
+            password: userFixture.passwordHash,
+        });
+    }).rejects.toThrow(InvalidUsernameError);
 });
 
-test("should throw if password less than 6 characters", async () => {
-    // Username should not be taken
-    jest.spyOn(UserRepository, "getUserByUsername").mockRejectedValue(
-        new Error()
-    );
-    // Email should not be taken
-    jest.spyOn(UserRepository, "getUserByEmail").mockRejectedValue(new Error());
+test("should throw if invalid email", async () => {
+    const email = "invalidemail@";
 
-    const command: RegisterUserDto = {
-        username: "valid_username",
-        email: "validEmail@email.com",
-        createdAt: getCurrentDateTimeString(),
-        password: "pwd1",
-    };
+    // Act
     await expect(async () => {
-        await handleRegisterUserCommand(command);
-    }).rejects.toThrow(Error);
+        await handleRegisterUserCommand({
+            username: userFixture.username,
+            email,
+            password: userFixture.passwordHash,
+        });
+    }).rejects.toThrow(InvalidEmailError);
+});
+
+test("should throw if invalid password", async () => {
+    // Passwords must be >= 6 chars
+    const password = "12345";
+
+    // Act
+    await expect(async () => {
+        await handleRegisterUserCommand({
+            username: userFixture.username,
+            email: userFixture.email,
+            password,
+        });
+    }).rejects.toThrow(InvalidPasswordError);
 });
 
 test("should throw if username taken", async () => {
-    // Username should be taken
-    const existingUserWithUsername = createValidGetPublicUserDto();
-    jest.spyOn(UserRepository, "getUserByUsername").mockResolvedValueOnce(
-        existingUserWithUsername
-    );
-    // Email should not be taken
-    jest.spyOn(UserRepository, "getUserByEmail").mockRejectedValue(new Error());
+    // Username taken
+    getUserByUsernameSpy.mockResolvedValue(userFixture);
 
-    const command: RegisterUserDto = {
-        username: "valid_username",
-        email: "validEmail@email.com",
-        createdAt: getCurrentDateTimeString(),
-        password: "validpwd",
-    };
+    // Act
     await expect(async () => {
-        await handleRegisterUserCommand(command);
-    }).rejects.toThrow(Error);
+        await handleRegisterUserCommand({
+            username: userFixture.username,
+            email: userFixture.email,
+            password: userFixture.passwordHash,
+        });
+    }).rejects.toThrow(UsernameTakenError);
 });
 
 test("should throw if email taken", async () => {
-    // Username should not be taken
-    jest.spyOn(UserRepository, "getUserByUsername").mockRejectedValue(
-        new Error()
-    );
-    // Email should be taken
-    const existingUserWithEmail = createValidGetPublicUserDto();
-    jest.spyOn(UserRepository, "getUserByEmail").mockResolvedValueOnce(
-        existingUserWithEmail
-    );
+    // Email taken
+    getUserByEmailSpy.mockResolvedValue(userFixture);
 
-    const command: RegisterUserDto = {
-        username: "valid_username",
-        email: "validEmail@email.com",
-        createdAt: getCurrentDateTimeString(),
-        password: "validpwd",
-    };
+    // Act
     await expect(async () => {
-        await handleRegisterUserCommand(command);
-    }).rejects.toThrow(Error);
+        await handleRegisterUserCommand({
+            username: userFixture.username,
+            email: userFixture.email,
+            password: userFixture.passwordHash,
+        });
+    }).rejects.toThrow(EmailTakenError);
 });
 
 test("should register user", async () => {
-    // Username should not be taken
-    jest.spyOn(UserRepository, "getUserByUsername").mockRejectedValue(
-        new Error()
-    );
-    // Email should not be taken
-    jest.spyOn(UserRepository, "getUserByEmail").mockRejectedValue(new Error());
-
-    // Spy on register function
-    const registeredUser = createValidGetPublicUserDto();
-    const registerUserSpy = jest
-        .spyOn(UserRepository, "registerUser")
-        .mockResolvedValueOnce(registeredUser);
-
-    // Spy on jwt creation
-    const expectedJwt = "RETURNED.JWT";
-    jest.spyOn(jwt, "createUserJwt").mockReturnValueOnce(expectedJwt);
-
-    const command: RegisterUserDto = {
-        username: "valid_username",
-        email: "validEmail@email.com",
-        createdAt: getCurrentDateTimeString(),
-        password: "validpassword",
+    const command = {
+        username: userFixture.username,
+        email: userFixture.email,
+        password: userFixture.passwordHash,
     };
 
     // Act
     await handleRegisterUserCommand(command);
 
-    // Expect register function called
-    expect(registerUserSpy).toHaveBeenCalled();
+    expect(registerUserSpy).toHaveBeenCalledWith({
+        ...command,
+        createdAt: dateStringFixture,
+    });
 });
 
 test("should return jwt for user", async () => {
-    // Username should not be taken
-    jest.spyOn(UserRepository, "getUserByUsername").mockRejectedValue(
-        new Error()
-    );
-    // Email should not be taken
-    jest.spyOn(UserRepository, "getUserByEmail").mockRejectedValue(new Error());
-
-    // Spy on register function
-    jest.spyOn(UserRepository, "registerUser").mockResolvedValueOnce(
-        createValidGetPublicUserDto()
-    );
-
-    // Spy on jwt creation
-    const expectedJwt = "RETURNED.JWT";
-    jest.spyOn(jwt, "createUserJwt").mockReturnValueOnce(expectedJwt);
-
-    const command: RegisterUserDto = {
-        username: "valid_username",
-        email: "validEmail@email.com",
-        createdAt: getCurrentDateTimeString(),
-        password: "validpassword",
-    };
+    const expected = jwtFixture;
 
     // Act
-    const returnedJwt = await handleRegisterUserCommand(command);
+    const actual = await handleRegisterUserCommand({
+        username: userFixture.username,
+        email: userFixture.email,
+        password: userFixture.passwordHash,
+    });
 
-    // Expect jwt returned
-    expect(returnedJwt).toEqual(expectedJwt);
+    expect(actual).toEqual(expected);
 });

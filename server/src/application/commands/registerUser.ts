@@ -7,6 +7,13 @@ import {
 } from "../../persistence/repository/UserRepository";
 import { createUserJwt } from "../../services/jwt";
 import { GetPublicUserDto, RegisterUserDto } from "../contracts/user";
+import {
+    EmailTakenError,
+    InvalidEmailError,
+    InvalidPasswordError,
+    InvalidUsernameError,
+    UsernameTakenError,
+} from "../errors";
 
 type RegisterUserCommand = {
     username: string;
@@ -27,9 +34,11 @@ export async function handleRegisterUserCommand(
     };
     validateFields(registerUserDto);
     if (await isUsernameTaken(registerUserDto.username))
-        throw new Error(`Username '${registerUserDto.username}' taken.`);
+        throw new UsernameTakenError(
+            `Username '${registerUserDto.username}' taken.`
+        );
     if (await isEmailTaken(registerUserDto.email))
-        throw new Error(`Email '${registerUserDto.email}' taken.`);
+        throw new EmailTakenError(`Email '${registerUserDto.email}' taken.`);
 
     const user: GetPublicUserDto = await registerUser(registerUserDto);
 
@@ -37,30 +46,23 @@ export async function handleRegisterUserCommand(
 }
 
 async function isUsernameTaken(username: string): Promise<boolean> {
-    try {
-        await getUserByUsername(username);
-        return true;
-    } catch (e: any) {
-        // Not found
-        return false;
-    }
+    const user = await getUserByUsername(username);
+    return user != null;
 }
 
 async function isEmailTaken(email: string): Promise<boolean> {
-    try {
-        await getUserByEmail(email);
-        return true;
-    } catch (e: any) {
-        // Not found
-        return false;
-    }
+    const user = await getUserByEmail(email);
+    return user != null;
 }
 
 function validateFields(dto: RegisterUserDto) {
     const { username, email, password } = dto;
     if (validator.isEmpty(username))
-        throw new Error("Username must not be empty");
-    if (!validator.isEmail(email)) throw new Error("Invalid email address.");
+        throw new InvalidUsernameError("Username must not be empty");
+    if (!validator.isEmail(email))
+        throw new InvalidEmailError("Invalid email address.");
     if (!validator.isLength(password, { min: 6 }))
-        throw new Error("Password must be at least 6 characters long.");
+        throw new InvalidPasswordError(
+            "Password must be at least 6 characters long."
+        );
 }
