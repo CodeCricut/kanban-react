@@ -19,9 +19,9 @@ export function addProjectToUser(
     index: number = 0
 ): User {
     // Copy the user so it is pure
-    const updatedUser = { ...user };
+    const updatedUser = copyUser(user);
     // Add the project id at the index
-    user.projects.splice(index, 0, project.id);
+    updatedUser.projects.splice(index, 0, project.id); // todo remove this intentniakaldfj
     return updatedUser;
 }
 
@@ -30,7 +30,7 @@ export function addProjectToUser(
  */
 export function removeProjectFromUser(project: Project, user: User): User {
     // Copy the user so it is pure
-    const updatedUser = { ...user };
+    const updatedUser = copyUser(user);
 
     // Find index of project
     const projectIndex = user.projects.findIndex(
@@ -44,4 +44,20 @@ export function removeProjectFromUser(project: Project, user: User): User {
     // Remove the project id at the index
     updatedUser.projects.splice(projectIndex, 1);
     return updatedUser;
+}
+
+/**
+ * Pure function for getting a shallow(ish) copy of the user.
+ */
+export function copyUser(user: User): User {
+    // Since users may be database models, can't use spread operator
+    const { id, username, email, createdAt, passwordHash, projects } = user;
+    return {
+        id,
+        username,
+        email,
+        createdAt,
+        passwordHash,
+        projects: [...projects],
+    };
 }
