@@ -4,7 +4,6 @@ import { handleCreateProjectCommand } from "../application/commands/createProjec
 import { handleDeleteProjectCommand } from "../application/commands/deleteProject";
 import { handleEditProjectCommand } from "../application/commands/editProject";
 import { handleReorderColumnsCommand } from "../application/commands/reorderColumn";
-import { handleGetAllProjectsQuery } from "../application/queries/getAllProjects";
 import { handleGetProjectsColumnsQuery } from "../application/queries/getProjectsColumns";
 
 export async function createProject(
@@ -27,19 +26,6 @@ export async function createProject(
     } catch (e: any) {
         next(e);
     }
-}
-
-export async function getAllProjects(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) {
-    return handleGetAllProjectsQuery()
-        .then((allProjects) => {
-            res.status(200);
-            return res.json(allProjects);
-        })
-        .catch(next);
 }
 
 export async function editProject(

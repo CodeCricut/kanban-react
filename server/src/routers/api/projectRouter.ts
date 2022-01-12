@@ -4,7 +4,6 @@ import {
     createProject,
     deleteProject,
     editProject,
-    getAllProjects,
     getProjectColumns,
     reorderColumn,
 } from "../../controllers/projectController";
@@ -12,7 +11,6 @@ import { auth } from "../middleware/auth";
 
 const projectRouter = Router();
 
-projectRouter.get("/", getAllProjects);
 projectRouter.post("/create", auth, createProject);
 projectRouter.put("/edit/:id", editProject);
 projectRouter.delete("/delete/:id", deleteProject);
