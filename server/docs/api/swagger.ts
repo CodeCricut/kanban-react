@@ -2,7 +2,7 @@ import { authDefinitions, authParams, authPaths, authResponses } from "./auth";
 import { columnDefinitions, columnsPaths } from "./columns";
 import { issueDefinitions, issuesPaths } from "./issues";
 import { projectDefinitions, projectsPaths } from "./projects";
-import { sharedResponses } from "./shared";
+import { sharedParameters, sharedResponses } from "./shared";
 import { userDefinitions, userPaths } from "./users";
 export default {
     swagger: "2.0",
@@ -32,6 +32,7 @@ export default {
         ...userDefinitions,
     },
     parameters: {
+        ...sharedParameters,
         ...authParams,
     },
     responses: {

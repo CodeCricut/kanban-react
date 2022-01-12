@@ -4,18 +4,7 @@ export const userPaths = {
             summary: "Get the current user using a JWT",
             tags: ["users"],
             produces: ["application/json"],
-            parameters: [
-                {
-                    in: "header",
-                    name: "token",
-                    description:
-                        "The JWT containing information about the user.",
-                    required: true,
-                    schema: {
-                        type: "string",
-                    },
-                },
-            ],
+            parameters: [{ $ref: "#/parameters/JwtParameter" }],
             responses: {
                 200: {
                     description: "Successful operation",
@@ -37,18 +26,7 @@ export const userPaths = {
             description:
                 "Get the projects of the user associated with the query.",
             produces: ["application/json"],
-            parameters: [
-                {
-                    in: "header",
-                    name: "token",
-                    description:
-                        "The JWT containing information about the user.",
-                    required: true,
-                    schema: {
-                        type: "string",
-                    },
-                },
-            ],
+            parameters: [{ $ref: "#/parameters/JwtParameter" }],
             responses: {
                 200: {
                     description: "Successful operation",

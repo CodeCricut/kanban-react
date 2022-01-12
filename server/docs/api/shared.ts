@@ -1,3 +1,15 @@
+export const sharedParameters = {
+    JwtParameter: {
+        in: "header",
+        name: "token",
+        description:
+            "The JWT which is used to authenticate and authorize the user to perform the operation.",
+        required: true,
+        schema: {
+            type: "string",
+        },
+    },
+};
 export const sharedResponses = {
     ServerErrorResponse: {
         description: "Server error",

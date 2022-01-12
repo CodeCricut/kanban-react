@@ -8,16 +8,7 @@ export const projectsPaths = {
             produces: ["application/json"],
             consumes: ["application/json"],
             parameters: [
-                {
-                    in: "header",
-                    name: "token",
-                    description:
-                        "The JWT containing information about the user.",
-                    required: true,
-                    schema: {
-                        type: "string",
-                    },
-                },
+                { $ref: "#/parameters/JwtParameter" },
                 {
                     in: "body",
                     name: "body",
@@ -50,6 +41,7 @@ export const projectsPaths = {
             produces: ["application/json"],
             consumes: ["application/json"],
             parameters: [
+                { $ref: "#/parameters/JwtParameter" },
                 {
                     name: "id",
                     in: "path",
@@ -87,6 +79,7 @@ export const projectsPaths = {
             description: "Remove a project from the database",
             tags: ["projects"],
             parameters: [
+                { $ref: "#/parameters/JwtParameter" },
                 {
                     name: "id",
                     in: "path",
@@ -114,16 +107,7 @@ export const projectsPaths = {
             produces: ["application/json"],
             consumes: ["application/json"],
             parameters: [
-                {
-                    in: "header",
-                    name: "token",
-                    description:
-                        "The JWT containing information about the user.",
-                    required: true,
-                    schema: {
-                        type: "string",
-                    },
-                },
+                { $ref: "#/parameters/JwtParameter" },
                 {
                     name: "id",
                     in: "path",
