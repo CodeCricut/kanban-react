@@ -58,18 +58,3 @@ export async function addIssue(
         next(e);
     }
 }
-
-export async function getColumnIssues(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) {
-    return handleGetColumnsIssuesQuery({
-        columnId: req.params.id,
-    })
-        .then((issues) => {
-            res.status(200);
-            return res.json(issues);
-        })
-        .catch(next);
-}

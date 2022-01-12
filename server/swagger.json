@@ -499,32 +499,6 @@
                 }
             }
         },
-        "/columns/issues/{id}": {
-            "get": {
-                "summary": "Get all issues for a column",
-                "produces": ["application/json"],
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "The id of the column to retrieve the issues of",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/issueResponse"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/issues/delete/{id}": {
             "delete": {
                 "summary": "Delete a issue",
