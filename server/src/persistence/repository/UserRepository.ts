@@ -42,7 +42,11 @@ export async function updateUser(
     updateProps: UpdateUserProps
 ): Promise<User> {
     let userModel = await UserModel.findById(id);
-    if (!userModel) throw new NotFoundError();
+    if (!userModel) {
+        throw new NotFoundError(
+            `User not found; tried to update user with id ${id}.`
+        );
+    }
 
     userModel.projects = updateProps.projects;
     return await userModel.save();
