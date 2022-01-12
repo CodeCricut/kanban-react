@@ -4,7 +4,7 @@ import * as userRepository from "../../persistence/repository/UserRepository";
 import { createUserFixture } from "../../test-helpers/userFixtures";
 import { createProjectFixture } from "../../test-helpers/projectFixtures";
 import { User } from "../../domain/user";
-import { InvalidBackingState, NotAuthenticatedError } from "../errors";
+import { InvalidBackingStateError, NotAuthenticatedError } from "../errors";
 import { Project } from "../../domain/project";
 import { handleGetUserProjects } from "./getUsersProjects";
 
@@ -52,7 +52,7 @@ test("should throw if user contains ref to deleted project", async () => {
     // Act
     await expect(async () => {
         await handleGetUserProjects({ userId: userFixture.id });
-    }).rejects.toThrow(InvalidBackingState);
+    }).rejects.toThrow(InvalidBackingStateError);
 });
 
 test("should throw if not authenticated", async () => {

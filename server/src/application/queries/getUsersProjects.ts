@@ -3,7 +3,7 @@ import { User } from "../../domain/user";
 import { getProjectsByIds } from "../../persistence/repository/ProjectRepository";
 import { getUserById } from "../../persistence/repository/UserRepository";
 import { GetProjectDto, mapToGetProjectDto } from "../contracts/project";
-import { InvalidBackingState, NotAuthenticatedError } from "../errors";
+import { InvalidBackingStateError, NotAuthenticatedError } from "../errors";
 
 type GetUsersProjectsQuery = {
     userId: string;
@@ -24,7 +24,7 @@ export async function handleGetUserProjects(
 
     return projects.map((proj, index) => {
         if (proj) return mapToGetProjectDto(proj);
-        throw new InvalidBackingState(
+        throw new InvalidBackingStateError(
             `User has reference to deleted project. (user ${user?.id} at index ${index}))`
         );
     });

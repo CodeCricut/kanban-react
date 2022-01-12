@@ -1,5 +1,6 @@
 import { getUserById } from "../../persistence/repository/UserRepository";
-import { GetPrivateUserDto } from "../contracts/user";
+import { GetPrivateUserDto, mapToPrivateUserDto } from "../contracts/user";
+import { InvalidBackingStateError } from "../errors";
 
 type GetLoggedInUserQuery = {
     id: string;
@@ -7,5 +8,11 @@ type GetLoggedInUserQuery = {
 export async function handleGetLoggedInUserQuery(
     query: GetLoggedInUserQuery
 ): Promise<GetPrivateUserDto> {
-    return await getUserById(query.id);
+    const user = await getUserById(query.id);
+    if (!user)
+        throw new InvalidBackingStateError(
+            "Tried to get a logged in user using an id of a user which does not exist."
+        );
+
+    return mapToPrivateUserDto(user);
 }
