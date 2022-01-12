@@ -20,9 +20,9 @@ export function addUserToProject(
     index: number = 0
 ): Project {
     // Copy the project so it is pure
-    const updatedProject = { ...project };
+    const updatedProject = copyProject(project);
     // Add the user id at the index
-    project.users.splice(index, 0, user.id);
+    updatedProject.users.splice(index, 0, user.id);
     return updatedProject;
 }
 
@@ -32,7 +32,13 @@ export function editProject(
     name: string,
     description?: string
 ) {
-    return { ...project, name, description };
+    // Copy the project so it is pure
+    const updatedProject = copyProject(project);
+    return {
+        ...updatedProject,
+        name,
+        description,
+    };
 }
 
 /**
@@ -48,7 +54,20 @@ export function addColumnToProject(
     }
 
     // Copy proj to keep func pure
-    const newProj = { ...project };
-    newProj.columns.splice(columnIndex, 0, column);
-    return project;
+    const updatedProject = copyProject(project);
+    updatedProject.columns.splice(columnIndex, 0, column);
+    return updatedProject;
+}
+
+export function copyProject(project: Project): Project {
+    // Since projects may be database models, can't use spread operator
+    const { id, name, description, createdAt, columns, users } = project;
+    return {
+        id,
+        name,
+        description,
+        createdAt,
+        columns: [...columns],
+        users: [...users],
+    };
 }

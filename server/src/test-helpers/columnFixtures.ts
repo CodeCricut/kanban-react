@@ -1,39 +1,16 @@
 import { v4 as uuid } from "uuid";
 
-import {
-    GetColumnDto,
-    PostColumnDto,
-    UpdateColumnDto,
-} from "../application/contracts/column";
+import { GetColumnDto, PostColumnDto } from "../application/contracts/column";
+import { Column } from "../domain/column";
 import { dateStringFixture } from "./dateFixtures";
 
-type createValidPostColumnDtoFunction = {
-    (): PostColumnDto;
+type CreateColumnFixtureFunction = {
+    (): Column;
 };
-export const createValidPostColumnDto: createValidPostColumnDtoFunction =
-    () => ({
-        name: "VALID NAME",
-        description: "DESCRIPTION",
-        createdAt: dateStringFixture,
-    });
-
-type createValidUpdateColumnDtoFunction = {
-    (): UpdateColumnDto;
-};
-export const createValidUpdateColumnDto: createValidUpdateColumnDtoFunction =
-    () => ({
-        name: `VALID NAME (ID=${uuid()})`,
-        description: `DESCRIPTION(ID=${uuid()})`,
-        issues: [],
-    });
-
-type createValidGetColumnDtoFunctin = {
-    (): GetColumnDto;
-};
-export const createValidGetColumnDto: createValidGetColumnDtoFunctin = () => ({
+export const createColumnFixture: CreateColumnFixtureFunction = () => ({
     id: uuid(),
-    name: `VALID NAME (ID=${uuid()})`,
-    description: `DESCRIPTION(ID=${uuid()})`,
-    issues: [],
+    name: `NAME ${uuid()}`,
+    description: `DESCRIPTION ${uuid()}`,
     createdAt: dateStringFixture,
+    issues: [],
 });
