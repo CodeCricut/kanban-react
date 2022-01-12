@@ -24,10 +24,10 @@ export const userPaths = {
                         $ref: "#/definitions/PrivateUserResponse",
                     },
                 },
-                400: {
-                    description: "Invalid request",
+                500: {
+                    description: "Server error",
                     schema: {
-                        $ref: "#/definitions/InvalidResponse",
+                        $ref: "#/definitions/ServerErrorResponse",
                     },
                 },
             },
@@ -60,6 +60,12 @@ export const userPaths = {
                         items: {
                             $ref: "#/definitions/projectResponse",
                         },
+                    },
+                },
+                500: {
+                    description: "Server error",
+                    schema: {
+                        $ref: "#/definitions/ServerErrorResponse",
                     },
                 },
             },

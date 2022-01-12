@@ -29,7 +29,7 @@ export default {
         ...columnDefinitions,
         ...issueDefinitions,
         ...userDefinitions,
-        InvalidResponse: {
+        ServerErrorResponse: {
             type: "object",
             properties: {
                 statusCode: {

@@ -36,10 +36,10 @@ export const projectsPaths = {
                         $ref: "#/definitions/projectResponse",
                     },
                 },
-                400: {
-                    description: "Invalid request",
+                500: {
+                    description: "Server error",
                     schema: {
-                        $ref: "#/definitions/InvalidResponse",
+                        $ref: "#/definitions/ServerErrorResponse",
                     },
                 },
             },
@@ -78,10 +78,10 @@ export const projectsPaths = {
                         $ref: "#/definitions/projectResponse",
                     },
                 },
-                400: {
-                    description: "Invalid request",
+                500: {
+                    description: "Server error",
                     schema: {
-                        $ref: "#/definitions/InvalidResponse",
+                        $ref: "#/definitions/ServerErrorResponse",
                     },
                 },
             },
@@ -105,10 +105,10 @@ export const projectsPaths = {
                 200: {
                     description: "Successful operation",
                 },
-                400: {
-                    description: "Invalid request",
+                500: {
+                    description: "Server error",
                     schema: {
-                        $ref: "#/definitions/InvalidResponse",
+                        $ref: "#/definitions/ServerErrorResponse",
                     },
                 },
             },
@@ -159,10 +159,10 @@ export const projectsPaths = {
                         $ref: "#/definitions/projectResponse",
                     },
                 },
-                400: {
-                    description: "Invalid request",
+                500: {
+                    description: "Server error",
                     schema: {
-                        $ref: "#/definitions/InvalidResponse",
+                        $ref: "#/definitions/ServerErrorResponse",
                     },
                 },
             },

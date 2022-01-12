@@ -12,7 +12,7 @@ export function errorHandler(
     next: NextFunction
 ) {
     if (e instanceof Error) {
-        res.status(400);
+        res.status(500);
         const response: InvalidResponse = {
             statusCode: e.name,
             message: e.message,

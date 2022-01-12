@@ -31,11 +31,11 @@ export const authPaths = {
                             },
                         },
                     },
-                    400: {
-                        description: "Invalid request",
-                        schema: {
-                            $ref: "#/definitions/InvalidResponse",
-                        },
+                },
+                500: {
+                    description: "Server error",
+                    schema: {
+                        $ref: "#/definitions/ServerErrorResponse",
                     },
                 },
             },
@@ -74,11 +74,11 @@ export const authPaths = {
                             },
                         },
                     },
-                    400: {
-                        description: "Invalid request",
-                        schema: {
-                            $ref: "#/definitions/InvalidResponse",
-                        },
+                },
+                500: {
+                    description: "Server error",
+                    schema: {
+                        $ref: "#/definitions/ServerErrorResponse",
                     },
                 },
             },

@@ -2,7 +2,7 @@ import { Router } from "express";
 import morgan from "morgan";
 import { authRouter } from "./authRouter";
 import { columnRouter } from "./columnRouter";
-import { errorHandler } from "./errorHandler";
+import { errorHandler } from "../middleware/errorHandler";
 import { issueRouter } from "./issueRouter";
 import { projectRouter } from "./projectRouter";
 import { userRouter } from "./userRouter";
