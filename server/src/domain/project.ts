@@ -1,5 +1,7 @@
+import { NotFoundError } from "../application/errors";
 import { Column } from "./column";
 import { EntityNotInParentError, IndexOutOfBoundsError } from "./errors";
+import { Issue } from "./issue";
 import { User } from "./user";
 
 export type Project = {
@@ -68,6 +70,19 @@ export function findColumnInProject(
     return project.columns.find((col) => col.columnId == columnId);
 }
 
+export function findIssueInProject(
+    project: Project,
+    issueId: string
+): Issue | undefined {
+    for (let i = 0; i < project.columns.length; i++) {
+        const issueInCol = project.columns[i].issues.find(
+            (iss) => iss.issueId == issueId
+        );
+        if (issueInCol) return issueInCol;
+    }
+    return undefined;
+}
+
 /**
  * Pure function for updating a column to project (where the column is found with the id).
  */
@@ -89,6 +104,41 @@ export function updateProjectColumn(project: Project, column: Column) {
 
     // Insert new column
     updatedProject.columns.splice(colIndex, 0, column);
+
+    return updatedProject;
+}
+
+/**
+ * Pure function for updating an issue in a project.
+ */
+export function updateProjectIssue(project: Project, issue: Issue) {
+    // Copy proj to keep func pure
+    const updatedProject = copyProject(project);
+
+    let column: Column | undefined;
+    for (let i = 0; i < updatedProject.columns.length; i++) {
+        const issueInColumn = updatedProject.columns[i].issues.find(
+            (iss) => iss.issueId == issue.issueId
+        );
+        if (issueInColumn) {
+            column = updatedProject.columns[i];
+        }
+    }
+    if (!column) {
+        throw new NotFoundError(
+            `Couldn't find parent column for issue with id ${issue.issueId} in project with id ${project.id}`
+        );
+    }
+
+    // Update issue in column
+    const issueIndex = column.issues.findIndex(
+        (iss) => iss.issueId == issue.issueId
+    );
+    if (issueIndex < 0)
+        throw new EntityNotInParentError(
+            `Fatal error; thought issue with id ${issue.issueId} was in column with id ${column.columnId}, but was not.`
+        );
+    column.issues[issueIndex] = issue;
 
     return updatedProject;
 }

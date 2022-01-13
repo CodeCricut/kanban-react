@@ -5,6 +5,7 @@ import {
     createProject,
     deleteProject,
     editColumn,
+    editissue,
     editProject,
 } from "../../controllers/projectController";
 import { auth } from "../middleware/auth";
@@ -19,5 +20,6 @@ projectRouter.post("/add-column/:id", auth, addColumn);
 projectRouter.put("/edit-column/:id", auth, editColumn);
 
 projectRouter.post("/add-issue/:id", auth, addIssue);
+projectRouter.put("/edit-issue/:id", auth, editissue);
 
 export { projectRouter };

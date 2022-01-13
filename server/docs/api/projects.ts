@@ -184,6 +184,39 @@ export const projectsPaths = {
             },
         },
     },
+
+    "/projects/edit-issue/{id}": {
+        put: {
+            summary: "Update an issue's info",
+            description:
+                "Edit an issue's name and description which belongs to the project.",
+            tags: ["projects", "issues"],
+            produces: ["application/json"],
+            consumes: ["application/json"],
+            parameters: [
+                { $ref: "#/parameters/JwtParameter" },
+                { $ref: "#/parameters/ProjectIdParameter" },
+                { $ref: "#/parameters/EditIssueParameter" },
+            ],
+            responses: {
+                200: {
+                    $ref: "#/responses/ProjectResponse",
+                },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
+                },
+                403: {
+                    $ref: "#/responses/NotAuthorizedErrorResponse",
+                },
+                404: {
+                    $ref: "#/responses/NotFoundErrorResponse",
+                },
+                500: {
+                    $ref: "#/responses/ServerErrorResponse",
+                },
+            },
+        },
+    },
 };
 
 export const projectParameters = {
@@ -303,6 +336,28 @@ export const projectParameters = {
                 description: {
                     type: "string",
                     description: " The name of the new issue.",
+                },
+            },
+        },
+    },
+    EditIssueParameter: {
+        in: "body",
+        name: "body",
+        description: "Update object",
+        required: true,
+        schema: {
+            type: "object",
+            required: ["issueId", "name", "description"],
+            properties: {
+                issueId: {
+                    type: "string",
+                    description: "The id of the issue to update.",
+                },
+                name: {
+                    type: "string",
+                },
+                description: {
+                    type: "string",
                 },
             },
         },

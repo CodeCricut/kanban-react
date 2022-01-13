@@ -19,3 +19,25 @@ export function createIssue(
         createdAt,
     };
 }
+
+/** Pure function for editing an issue. */
+export function editIssue(issue: Issue, name: string, description?: string) {
+    // Copy the issue so it is pure
+    const updatedIssue = copyIssue(issue);
+    return {
+        ...updatedIssue,
+        name,
+        description,
+    };
+}
+
+export function copyIssue(issue: Issue): Issue {
+    // Since issue may be database models, can't use spread operator
+    const { issueId, name, description, createdAt } = issue;
+    return {
+        issueId,
+        name,
+        description,
+        createdAt,
+    };
+}
