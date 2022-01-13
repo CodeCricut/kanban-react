@@ -26,16 +26,4 @@ export const columnDefinitions = {
             },
         },
     },
-    // editColumnBody: {
-    //     type: "object",
-    //     required: ["name", "description"],
-    //     properties: {
-    //         name: {
-    //             type: "string",
-    //         },
-    //         description: {
-    //             type: "string",
-    //         },
-    //     },
-    // },
 };
