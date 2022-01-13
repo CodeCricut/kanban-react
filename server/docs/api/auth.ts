@@ -13,6 +13,9 @@ export const authPaths = {
                 400: {
                     $ref: "#/responses/ValidationErrorResponse",
                 },
+                409: {
+                    $ref: "#/responses/UserFieldTakenErrorResponse",
+                },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
                 },
@@ -89,6 +92,12 @@ export const authDefinitions = {};
 export const authResponses = {
     InvalidCredentialsErrorResponse: {
         description: "Invalid credentials.",
+        schema: {
+            $ref: "#/definitions/ErrorObject",
+        },
+    },
+    UserFieldTakenErrorResponse: {
+        description: "The username or email was taken.",
         schema: {
             $ref: "#/definitions/ErrorObject",
         },

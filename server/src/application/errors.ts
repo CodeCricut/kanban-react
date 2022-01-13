@@ -54,7 +54,7 @@ export class UsernameTakenError extends ApplicationError {
     constructor(msg: string = "Username taken.") {
         super(msg);
         this.name = "UsernameTakenError";
-        this.statusCode = 400;
+        this.statusCode = 409;
     }
 }
 
@@ -62,7 +62,7 @@ export class EmailTakenError extends ApplicationError {
     constructor(msg: string = "Email taken.") {
         super(msg);
         this.name = "EmailTakenError";
-        this.statusCode = 400;
+        this.statusCode = 409;
     }
 }
 
