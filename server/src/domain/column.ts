@@ -44,6 +44,17 @@ export function addIssueToColumn(
     return updatedColumn;
 }
 
+/** Pure function for editing a column. */
+export function editColumn(column: Column, name: string, description?: string) {
+    // Copy the project so it is pure
+    const updatedColumn = copyColumn(column);
+    return {
+        ...updatedColumn,
+        name,
+        description,
+    };
+}
+
 export function copyColumn(column: Column): Column {
     // Since columns may be database models, can't use spread operator
     const { columnId, name, description, createdAt, issues } = column;

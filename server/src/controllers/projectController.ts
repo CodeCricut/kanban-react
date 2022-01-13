@@ -3,6 +3,7 @@ import { handleAddColumnToProjectCommand } from "../application/commands/addColu
 import { handleAddIssueToColumnCommand } from "../application/commands/addIssueToColumn";
 import { handleCreateProjectCommand } from "../application/commands/createProject";
 import { handleDeleteProjectCommand } from "../application/commands/deleteProject";
+import { handleEditColumnCommand } from "../application/commands/editColumn";
 import { handleEditProjectCommand } from "../application/commands/editProject";
 import { NotAuthenticatedError } from "../application/errors";
 
@@ -90,6 +91,30 @@ export async function editProject(
             name,
             description,
             userId: req.user.id,
+        });
+
+        res.status(200);
+        return res.json(updated);
+    } catch (e: any) {
+        next(e);
+    }
+}
+
+export async function editColumn(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
+        if (!req.user) throw new NotAuthenticatedError();
+
+        const { columnId, name, description } = req.body;
+        const updated = await handleEditColumnCommand({
+            userId: req.user.id,
+            projectId: req.params.id,
+            columnId: columnId,
+            name,
+            description,
         });
 
         res.status(200);

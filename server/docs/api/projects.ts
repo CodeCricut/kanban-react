@@ -118,6 +118,40 @@ export const projectsPaths = {
             },
         },
     },
+
+    "/projects/edit-column/{id}": {
+        put: {
+            summary: "Update a column's info",
+            description:
+                "Edit a column's name and description which belongs to the project.",
+            tags: ["projects", "columns"],
+            produces: ["application/json"],
+            consumes: ["application/json"],
+            parameters: [
+                { $ref: "#/parameters/JwtParameter" },
+                { $ref: "#/parameters/ProjectIdParameter" },
+                { $ref: "#/parameters/EditColumnParameter" },
+            ],
+            responses: {
+                200: {
+                    $ref: "#/responses/ProjectResponse",
+                },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
+                },
+                403: {
+                    $ref: "#/responses/NotAuthorizedErrorResponse",
+                },
+                404: {
+                    $ref: "#/responses/NotFoundErrorResponse",
+                },
+                500: {
+                    $ref: "#/responses/ServerErrorResponse",
+                },
+            },
+        },
+    },
+
     "/projects/add-issue/{id}": {
         post: {
             summary: "Add an issue to the project",
@@ -217,6 +251,28 @@ export const projectParameters = {
                 description: {
                     type: "string",
                     description: " The name of the new column",
+                },
+            },
+        },
+    },
+    EditColumnParameter: {
+        in: "body",
+        name: "body",
+        description: "Update object",
+        required: true,
+        schema: {
+            type: "object",
+            required: ["columnId", "name", "description"],
+            properties: {
+                columnId: {
+                    type: "string",
+                    description: "The id of the column to update.",
+                },
+                name: {
+                    type: "string",
+                },
+                description: {
+                    type: "string",
                 },
             },
         },
