@@ -97,6 +97,6 @@ export class InvalidTokenError extends ApplicationError {
     constructor(msg: string = "Invalid token.") {
         super(msg);
         this.name = "InvalidTokenError";
-        this.statusCode = 400;
+        this.statusCode = 401;
     }
 }

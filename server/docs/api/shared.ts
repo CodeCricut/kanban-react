@@ -5,9 +5,7 @@ export const sharedParameters = {
         description:
             "The JWT which is used to authenticate and authorize the user to perform the operation.",
         required: true,
-        schema: {
-            type: "string",
-        },
+        type: "string",
     },
 };
 
