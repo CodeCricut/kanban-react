@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { handleAddColumnToProjectCommand } from "../application/commands/addColumnToProject";
 import { handleAddIssueToColumnCommand } from "../application/commands/addIssueToColumn";
 import { handleCreateProjectCommand } from "../application/commands/createProject";
+import { handleDeleteIssueCommand } from "../application/commands/deleteIssue";
 import { handleDeleteProjectCommand } from "../application/commands/deleteProject";
 import { handleEditColumnCommand } from "../application/commands/editColumn";
 import { handleEditIssueCommand } from "../application/commands/editIssue";
@@ -140,6 +141,27 @@ export async function editissue(
             issueId,
             name,
             description,
+        });
+
+        res.status(200);
+        return res.json(updated);
+    } catch (e: any) {
+        next(e);
+    }
+}
+
+export async function deleteIssue(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
+        if (!req.user) throw new NotAuthenticatedError();
+
+        const updated = await handleDeleteIssueCommand({
+            userId: req.user.id,
+            projectId: req.params.id,
+            issueId: req.body.issueId,
         });
 
         res.status(200);

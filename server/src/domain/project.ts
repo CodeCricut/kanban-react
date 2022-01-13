@@ -115,15 +115,7 @@ export function updateProjectIssue(project: Project, issue: Issue) {
     // Copy proj to keep func pure
     const updatedProject = copyProject(project);
 
-    let column: Column | undefined;
-    for (let i = 0; i < updatedProject.columns.length; i++) {
-        const issueInColumn = updatedProject.columns[i].issues.find(
-            (iss) => iss.issueId == issue.issueId
-        );
-        if (issueInColumn) {
-            column = updatedProject.columns[i];
-        }
-    }
+    let column = getColumnOfIssue(updatedProject, issue.issueId);
     if (!column) {
         throw new NotFoundError(
             `Couldn't find parent column for issue with id ${issue.issueId} in project with id ${project.id}`
@@ -143,6 +135,33 @@ export function updateProjectIssue(project: Project, issue: Issue) {
     return updatedProject;
 }
 
+/**
+ * Pure function for updating an issue in a project.
+ */
+export function deleteProjectIssue(project: Project, issue: Issue) {
+    // Copy proj to keep func pure
+    const updatedProject = copyProject(project);
+
+    let column = getColumnOfIssue(updatedProject, issue.issueId);
+    if (!column) {
+        throw new NotFoundError(
+            `Couldn't find parent column for issue with id ${issue.issueId} in project with id ${project.id}`
+        );
+    }
+
+    // Ddelete issue in column
+    const issueIndex = column.issues.findIndex(
+        (iss) => iss.issueId == issue.issueId
+    );
+    if (issueIndex < 0)
+        throw new EntityNotInParentError(
+            `Fatal error; thought issue with id ${issue.issueId} was in column with id ${column.columnId}, but was not.`
+        );
+    column.issues.splice(issueIndex, 1);
+
+    return updatedProject;
+}
+
 export function copyProject(project: Project): Project {
     // Since projects may be database models, can't use spread operator
     const { id, name, description, createdAt, columns, users } = project;
@@ -154,4 +173,19 @@ export function copyProject(project: Project): Project {
         columns: [...columns],
         users: [...users],
     };
+}
+
+function getColumnOfIssue(
+    project: Project,
+    issueId: string
+): Column | undefined {
+    for (let i = 0; i < project.columns.length; i++) {
+        const issueInColumn = project.columns[i].issues.find(
+            (iss) => iss.issueId == issueId
+        );
+        if (issueInColumn) {
+            return project.columns[i];
+        }
+    }
+    return undefined;
 }

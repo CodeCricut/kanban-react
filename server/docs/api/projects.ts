@@ -217,6 +217,35 @@ export const projectsPaths = {
             },
         },
     },
+    "/projects/delete-issue/{id}": {
+        delete: {
+            summary: "Delete an issue",
+            description: "Remove an issue from the project permanently.",
+            tags: ["projects", "issues"],
+            parameters: [
+                { $ref: "#/parameters/JwtParameter" },
+                { $ref: "#/parameters/ProjectIdParameter" },
+                { $ref: "#/parameters/DeleteIssueParameter" },
+            ],
+            responses: {
+                200: {
+                    $ref: "#/responses/ProjectResponse",
+                },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
+                },
+                403: {
+                    $ref: "#/responses/NotAuthorizedErrorResponse",
+                },
+                404: {
+                    $ref: "#/responses/NotFoundErrorResponse",
+                },
+                500: {
+                    $ref: "#/responses/ServerErrorResponse",
+                },
+            },
+        },
+    },
 };
 
 export const projectParameters = {
@@ -258,6 +287,21 @@ export const projectParameters = {
                     type: "string",
                 },
                 description: {
+                    type: "string",
+                },
+            },
+        },
+    },
+    DeleteIssueParameter: {
+        in: "body",
+        name: "body",
+        description: "Update object",
+        required: true,
+        schema: {
+            type: "object",
+            required: ["issueId"],
+            properties: {
+                issueId: {
                     type: "string",
                 },
             },
