@@ -118,6 +118,38 @@ export const projectsPaths = {
             },
         },
     },
+    "/projects/add-issue/{id}": {
+        post: {
+            summary: "Add an issue to the project",
+            description:
+                "Add a new issue and associate it with the given project",
+            tags: ["projects", "issues"],
+            produces: ["application/json"],
+            consumes: ["application/json"],
+            parameters: [
+                { $ref: "#/parameters/JwtParameter" },
+                { $ref: "#/parameters/ProjectIdParameter" },
+                { $ref: "#/parameters/AddIssueParameter" },
+            ],
+            responses: {
+                200: {
+                    $ref: "#/responses/ProjectResponse",
+                },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
+                },
+                403: {
+                    $ref: "#/responses/NotAuthorizedErrorResponse",
+                },
+                404: {
+                    $ref: "#/responses/NotFoundErrorResponse",
+                },
+                500: {
+                    $ref: "#/responses/ServerErrorResponse",
+                },
+            },
+        },
+    },
 };
 
 export const projectParameters = {
@@ -185,6 +217,36 @@ export const projectParameters = {
                 description: {
                     type: "string",
                     description: " The name of the new column",
+                },
+            },
+        },
+    },
+    AddIssueParameter: {
+        in: "body",
+        name: "body",
+        description: "The issue to add.",
+        required: true,
+        schema: {
+            type: "object",
+            required: ["columnId", "issueIndex", "name"],
+            properties: {
+                columnId: {
+                    type: "string",
+                    description:
+                        "The id of the parent column to the new issue.",
+                },
+                issueIndex: {
+                    type: "number",
+                    description:
+                        "The index to insert the new issue into the column.",
+                },
+                name: {
+                    type: "string",
+                    description: " The name of the new issue.",
+                },
+                description: {
+                    type: "string",
+                    description: " The name of the new issue.",
                 },
             },
         },

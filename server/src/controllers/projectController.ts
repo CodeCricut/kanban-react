@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { handleAddColumnToProjectCommand } from "../application/commands/addColumnToProject";
+import { handleAddIssueToColumnCommand } from "../application/commands/addIssueToColumn";
 import { handleCreateProjectCommand } from "../application/commands/createProject";
 import { handleDeleteProjectCommand } from "../application/commands/deleteProject";
 import { handleEditProjectCommand } from "../application/commands/editProject";
@@ -39,6 +40,31 @@ export async function addColumn(
             userId: req.user.id,
             projectId: req.params.id,
             columnIndex,
+            name,
+            description,
+        });
+
+        res.status(200);
+        return res.json(updatedProject);
+    } catch (e: any) {
+        next(e);
+    }
+}
+
+export async function addIssue(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
+        if (!req.user) throw new NotAuthenticatedError();
+
+        const { columnId, issueIndex, name, description } = req.body;
+        const updatedProject = await handleAddIssueToColumnCommand({
+            userId: req.user.id,
+            projectId: req.params.id,
+            columnId,
+            issueIndex,
             name,
             description,
         });

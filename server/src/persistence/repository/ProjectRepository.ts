@@ -1,6 +1,6 @@
+import { NotFoundError } from "../../application/errors";
 import { Column } from "../../domain/column";
 import { Project } from "../../domain/project";
-import { NotFoundError } from "../errors";
 import { ProjectModel, ProjectModelType } from "../models/project";
 
 type CreateProjectProps = {

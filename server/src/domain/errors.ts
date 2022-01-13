@@ -5,9 +5,9 @@ export class EntityNotInParentError extends Error {
     }
 }
 
-export class InvalidColumnIndexError extends Error {
-    constructor(msg: string = "Invalid column index.") {
+export class IndexOutOfBoundsError extends Error {
+    constructor(msg: string = "Index out of bounds.") {
         super(msg);
-        this.name = "InvalidColumnIndexError";
+        this.name = "IndexOutOfBoundsError";
     }
 }

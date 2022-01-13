@@ -8,7 +8,7 @@ type CreateColumnFixtureFunction = {
     (): Column;
 };
 export const createColumnFixture: CreateColumnFixtureFunction = () => ({
-    id: uuid(),
+    columnId: uuid(),
     name: `NAME ${uuid()}`,
     description: `DESCRIPTION ${uuid()}`,
     createdAt: dateStringFixture,

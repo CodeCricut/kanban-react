@@ -1,5 +1,5 @@
 import { Column } from "./column";
-import { InvalidColumnIndexError } from "./errors";
+import { EntityNotInParentError, IndexOutOfBoundsError } from "./errors";
 import { User } from "./user";
 
 export type Project = {
@@ -50,12 +50,46 @@ export function addColumnToProject(
     columnIndex: number
 ) {
     if (project.columns.length < columnIndex || columnIndex < 0) {
-        throw new InvalidColumnIndexError();
+        throw new IndexOutOfBoundsError(
+            `Column index ${columnIndex} out of bounds.`
+        );
     }
 
     // Copy proj to keep func pure
     const updatedProject = copyProject(project);
     updatedProject.columns.splice(columnIndex, 0, column);
+    return updatedProject;
+}
+
+export function findColumnInProject(
+    project: Project,
+    columnId: string
+): Column | undefined {
+    return project.columns.find((col) => col.columnId == columnId);
+}
+
+/**
+ * Pure function for updating a column to project (where the column is found with the id).
+ */
+export function updateProjectColumn(project: Project, column: Column) {
+    const colIndex = project.columns.findIndex(
+        (col) => col.columnId == column.columnId
+    );
+    if (colIndex < 0) {
+        throw new EntityNotInParentError(
+            `Couldn't find column with id ${column.columnId} to update in project.`
+        );
+    }
+
+    // Copy proj to keep func pure
+    const updatedProject = copyProject(project);
+
+    // Delete old column
+    updatedProject.columns.splice(colIndex, 1);
+
+    // Insert new column
+    updatedProject.columns.splice(colIndex, 0, column);
+
     return updatedProject;
 }
 

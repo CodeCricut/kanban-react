@@ -1,6 +1,6 @@
+import { NotFoundError } from "../../application/errors";
 import { User } from "../../domain/user";
 import { hashUserPassword } from "../../services/bcrypt";
-import { NotFoundError } from "../errors";
 import { UserModel, UserModelType } from "../models/user";
 
 type RegisterUserProps = {
