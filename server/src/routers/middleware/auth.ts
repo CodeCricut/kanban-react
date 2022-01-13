@@ -1,5 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import { NotAuthenticatedError } from "../../application/errors";
+import {
+    InvalidTokenError,
+    NotAuthenticatedError,
+} from "../../application/errors";
 import { decodeUserJwt } from "../../services/jwt";
 
 /**
@@ -19,7 +22,6 @@ export function auth(req: Request, res: Response, next: NextFunction) {
         req.user = decodeUserJwt(token);
         next();
     } catch (e) {
-        console.error(e);
-        res.status(500).send({ message: "Invalid authentication Token" });
+        return next(new InvalidTokenError());
     }
 }

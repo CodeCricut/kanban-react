@@ -89,3 +89,14 @@ export class InvalidPasswordError extends ApplicationError {
         this.statusCode = 400;
     }
 }
+
+/**
+ * Error thrown when an invalid JWT is provided with the request.
+ */
+export class InvalidTokenError extends ApplicationError {
+    constructor(msg: string = "Invalid token.") {
+        super(msg);
+        this.name = "InvalidTokenError";
+        this.statusCode = 400;
+    }
+}
