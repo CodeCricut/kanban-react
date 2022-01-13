@@ -118,6 +118,36 @@ export const projectsPaths = {
             },
         },
     },
+    "/projects/relocate-column/{id}": {
+        put: {
+            summary: "Relocate a column within the project",
+            tags: ["projects", "columns"],
+            produces: ["application/json"],
+            consumes: ["application/json"],
+            parameters: [
+                { $ref: "#/parameters/JwtParameter" },
+                { $ref: "#/parameters/ProjectIdParameter" },
+                { $ref: "#/parameters/RelocateColumnParameter" },
+            ],
+            responses: {
+                200: {
+                    $ref: "#/responses/ProjectResponse",
+                },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
+                },
+                403: {
+                    $ref: "#/responses/NotAuthorizedErrorResponse",
+                },
+                404: {
+                    $ref: "#/responses/NotFoundErrorResponse",
+                },
+                500: {
+                    $ref: "#/responses/ServerErrorResponse",
+                },
+            },
+        },
+    },
 
     "/projects/edit-column/{id}": {
         put: {
@@ -293,6 +323,23 @@ export const projectParameters = {
                 },
                 description: {
                     type: "string",
+                },
+            },
+        },
+    },
+    RelocateColumnParameter: {
+        in: "body",
+        name: "body",
+        required: true,
+        schema: {
+            type: "object",
+            required: ["columnId", "newIndex"],
+            properties: {
+                columnId: {
+                    type: "string",
+                },
+                newIndex: {
+                    type: "number",
                 },
             },
         },

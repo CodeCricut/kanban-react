@@ -8,6 +8,7 @@ import { handleDeleteProjectCommand } from "../application/commands/deleteProjec
 import { handleEditColumnCommand } from "../application/commands/editColumn";
 import { handleEditIssueCommand } from "../application/commands/editIssue";
 import { handleEditProjectCommand } from "../application/commands/editProject";
+import { handleRelocateColumnCommand } from "../application/commands/relocateColumn";
 import { NotAuthenticatedError } from "../application/errors";
 
 export async function createProject(
@@ -184,6 +185,28 @@ export async function deleteColumn(
             userId: req.user.id,
             projectId: req.params.id,
             columnId: req.body.columnId,
+        });
+
+        res.status(200);
+        return res.json(updated);
+    } catch (e: any) {
+        next(e);
+    }
+}
+
+export async function relocateColumn(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
+        if (!req.user) throw new NotAuthenticatedError();
+
+        const updated = await handleRelocateColumnCommand({
+            userId: req.user.id,
+            projectId: req.params.id,
+            columnId: req.body.columnId,
+            newIndex: req.body.newIndex,
         });
 
         res.status(200);

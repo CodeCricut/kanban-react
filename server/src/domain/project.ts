@@ -109,6 +109,42 @@ export function updateProjectColumn(project: Project, column: Column) {
 }
 
 /**
+ * Pure function for relocating a column within the project.
+ */
+export function relocateProjectColumn(
+    project: Project,
+    column: Column,
+    newIndex: number
+) {
+    if (newIndex < 0 || newIndex >= project.columns.length) {
+        throw new IndexOutOfBoundsError(
+            `Could not relocate column to ${newIndex} index.`
+        );
+    }
+
+    // Find column
+    const colIndex = project.columns.findIndex(
+        (col) => col.columnId == column.columnId
+    );
+    if (colIndex < 0) {
+        throw new EntityNotInParentError(
+            `Couldn't find column with id ${column.columnId} to update in project.`
+        );
+    }
+
+    // Copy proj to keep func pure
+    const updatedProject = copyProject(project);
+
+    // Remove column at the index
+    updatedProject.columns.splice(colIndex, 1);
+
+    // Insert the column at the new index
+    updatedProject.columns.splice(newIndex, 0, column);
+
+    return updatedProject;
+}
+
+/**
  * Pure function for deleting an issue in a project.
  */
 export function deleteProjectColumn(project: Project, column: Column) {
