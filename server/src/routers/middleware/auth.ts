@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { NotAuthenticatedError } from "../../application/errors";
 import { decodeUserJwt } from "../../services/jwt";
 
 /**
@@ -7,7 +8,12 @@ import { decodeUserJwt } from "../../services/jwt";
  */
 export function auth(req: Request, res: Response, next: NextFunction) {
     const token = req.header("token");
-    if (!token) return res.status(401).json({ message: "Auth Error" });
+    if (!token) {
+        const error = new NotAuthenticatedError(
+            "Missing jwt in 'token' header."
+        );
+        return next(error);
+    }
 
     try {
         req.user = decodeUserJwt(token);
