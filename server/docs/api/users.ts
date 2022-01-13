@@ -9,6 +9,9 @@ export const userPaths = {
                 200: {
                     $ref: "#/responses/PrivateUserResponse",
                 },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
+                },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
                 },
@@ -26,6 +29,9 @@ export const userPaths = {
             responses: {
                 200: {
                     $ref: "#/responses/UserProjectsResponse",
+                },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
                 },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",

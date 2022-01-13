@@ -15,6 +15,9 @@ export const projectsPaths = {
                 200: {
                     $ref: "#/responses/ProjectResponse",
                 },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
+                },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
                 },
@@ -37,6 +40,9 @@ export const projectsPaths = {
                 200: {
                     $ref: "#/responses/ProjectResponse",
                 },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
+                },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
                 },
@@ -55,6 +61,9 @@ export const projectsPaths = {
             responses: {
                 200: {
                     $ref: "#/responses/DeletedProjectResponse",
+                },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
                 },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
@@ -78,6 +87,9 @@ export const projectsPaths = {
             responses: {
                 200: {
                     $ref: "#/responses/ProjectResponse",
+                },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
                 },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
