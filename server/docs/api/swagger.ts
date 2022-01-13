@@ -7,7 +7,7 @@ import {
     projectResponses,
     projectsPaths,
 } from "./projects";
-import { sharedParameters, sharedResponses } from "./shared";
+import { sharedDefinitions, sharedParameters, sharedResponses } from "./shared";
 import { userDefinitions, userPaths, userResponses } from "./users";
 export default {
     swagger: "2.0",
@@ -35,6 +35,7 @@ export default {
         ...columnDefinitions,
         ...issueDefinitions,
         ...userDefinitions,
+        ...sharedDefinitions,
     },
     parameters: {
         ...sharedParameters,

@@ -10,19 +10,36 @@ export const sharedParameters = {
         },
     },
 };
+
 export const sharedResponses = {
+    NotAuthenticatedErrorResponse: {
+        description: "Not authenticated.",
+        schema: {
+            $ref: "#/definitions/ErrorObject",
+        },
+    },
+    NotAuthorizedErrorResponse: {
+        description: "Not authorized.",
+        schema: {
+            $ref: "#/definitions/ErrorObject",
+        },
+    },
+    NotFoundErrorResponse: {
+        description: "Not found.",
+        schema: {
+            $ref: "#/definitions/ErrorObject",
+        },
+    },
+    InvalidTokenErrorResponse: {
+        description: "Invalid JWT in header.",
+        schema: {
+            $ref: "#/definitions/ErrorObject",
+        },
+    },
     ServerErrorResponse: {
         description: "Server error",
         schema: {
-            type: "object",
-            properties: {
-                statusCode: {
-                    type: "string",
-                },
-                message: {
-                    type: "string",
-                },
-            },
+            $ref: "#/definitions/ErrorObject",
         },
     },
     ValidationErrorResponse: {
@@ -51,6 +68,20 @@ export const sharedResponses = {
                         },
                     },
                 },
+            },
+        },
+    },
+};
+
+export const sharedDefinitions = {
+    ErrorObject: {
+        type: "object",
+        properties: {
+            statusCode: {
+                type: "string",
+            },
+            message: {
+                type: "string",
             },
         },
     },
