@@ -16,15 +16,6 @@ authRouter.post(
     registerUser
 );
 
-authRouter.post(
-    "/login",
-    [
-        check("username", "Please enter a valid username.").not().isEmpty(),
-        check("password", "Please enter a valid password.").isLength({
-            min: 6,
-        }),
-    ],
-    login
-);
+authRouter.post("/login", login);
 
 export { authRouter };

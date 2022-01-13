@@ -32,7 +32,7 @@ export const authPaths = {
                     $ref: "#/responses/JwtResponse",
                 },
                 400: {
-                    $ref: "#/responses/ValidationErrorResponse",
+                    $ref: "#/responses/InvalidCredentialsErrorResponse",
                 },
                 500: {
                     $ref: "#/responses/ServerErrorResponse",
@@ -87,6 +87,12 @@ export const authParams = {
 export const authDefinitions = {};
 
 export const authResponses = {
+    InvalidCredentialsErrorResponse: {
+        description: "Invalid credentials.",
+        schema: {
+            $ref: "#/definitions/ErrorObject",
+        },
+    },
     JwtResponse: {
         description: "JWT response",
         schema: {
