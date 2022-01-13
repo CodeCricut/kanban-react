@@ -16,7 +16,7 @@ export type PostColumnDto = {
 };
 
 export function mapToGetColumnDto(column: Column): GetColumnDto {
-    const { id, name, description, createdAt, issues } = column;
+    const { columnId: id, name, description, createdAt, issues } = column;
     return {
         id,
         name,

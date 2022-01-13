@@ -19,7 +19,7 @@ export type UpdateIssueDto = {
 };
 
 export function mapToGetIssueDto(issue: Issue): GetIssueDto {
-    const { id, name, description, createdAt } = issue;
+    const { issueId: id, name, description, createdAt } = issue;
     return {
         id,
         name,

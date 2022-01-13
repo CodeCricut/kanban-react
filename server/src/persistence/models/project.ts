@@ -4,12 +4,14 @@ import { Issue } from "../../domain/issue";
 import { Project } from "../../domain/project";
 
 const IssueSchema = new mongoose.Schema<Issue>({
+    issueId: { type: String, required: true },
     name: { type: String, required: true },
     description: { type: String, required: false },
     createdAt: { type: String, required: true },
 });
 
 const ColumnSchema = new mongoose.Schema<Column>({
+    columnId: { type: String, required: true },
     name: { type: String, required: true },
     description: { type: String, required: false },
     issues: [IssueSchema],
