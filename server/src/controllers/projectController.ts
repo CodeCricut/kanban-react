@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { handleAddColumnToProjectCommand } from "../application/commands/addColumnToProject";
 import { handleAddIssueToColumnCommand } from "../application/commands/addIssueToColumn";
 import { handleCreateProjectCommand } from "../application/commands/createProject";
+import { handleDeleteColumnCommand } from "../application/commands/deleteColumn";
 import { handleDeleteIssueCommand } from "../application/commands/deleteIssue";
 import { handleDeleteProjectCommand } from "../application/commands/deleteProject";
 import { handleEditColumnCommand } from "../application/commands/editColumn";
@@ -162,6 +163,27 @@ export async function deleteIssue(
             userId: req.user.id,
             projectId: req.params.id,
             issueId: req.body.issueId,
+        });
+
+        res.status(200);
+        return res.json(updated);
+    } catch (e: any) {
+        next(e);
+    }
+}
+
+export async function deleteColumn(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    try {
+        if (!req.user) throw new NotAuthenticatedError();
+
+        const updated = await handleDeleteColumnCommand({
+            userId: req.user.id,
+            projectId: req.params.id,
+            columnId: req.body.columnId,
         });
 
         res.status(200);

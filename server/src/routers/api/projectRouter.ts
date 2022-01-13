@@ -3,6 +3,7 @@ import {
     addColumn,
     addIssue,
     createProject,
+    deleteColumn,
     deleteIssue,
     deleteProject,
     editColumn,
@@ -19,6 +20,7 @@ projectRouter.delete("/delete/:id", auth, deleteProject);
 
 projectRouter.post("/add-column/:id", auth, addColumn);
 projectRouter.put("/edit-column/:id", auth, editColumn);
+projectRouter.delete("/delete-column/:id", auth, deleteColumn);
 
 projectRouter.post("/add-issue/:id", auth, addIssue);
 projectRouter.put("/edit-issue/:id", auth, editissue);

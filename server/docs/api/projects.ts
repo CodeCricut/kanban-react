@@ -151,6 +151,36 @@ export const projectsPaths = {
             },
         },
     },
+    "/projects/delete-column/{id}": {
+        delete: {
+            summary: "Delete a column",
+            description:
+                "Remove a column (and its issues) from the project permanently.",
+            tags: ["projects", "columns"],
+            parameters: [
+                { $ref: "#/parameters/JwtParameter" },
+                { $ref: "#/parameters/ProjectIdParameter" },
+                { $ref: "#/parameters/DeleteColumnParameter" },
+            ],
+            responses: {
+                200: {
+                    $ref: "#/responses/ProjectResponse",
+                },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
+                },
+                403: {
+                    $ref: "#/responses/NotAuthorizedErrorResponse",
+                },
+                404: {
+                    $ref: "#/responses/NotFoundErrorResponse",
+                },
+                500: {
+                    $ref: "#/responses/ServerErrorResponse",
+                },
+            },
+        },
+    },
 
     "/projects/add-issue/{id}": {
         post: {
@@ -295,7 +325,6 @@ export const projectParameters = {
     DeleteIssueParameter: {
         in: "body",
         name: "body",
-        description: "Update object",
         required: true,
         schema: {
             type: "object",
@@ -328,6 +357,20 @@ export const projectParameters = {
                 description: {
                     type: "string",
                     description: " The name of the new column",
+                },
+            },
+        },
+    },
+    DeleteColumnParameter: {
+        in: "body",
+        name: "body",
+        required: true,
+        schema: {
+            type: "object",
+            required: ["columnId"],
+            properties: {
+                columnId: {
+                    type: "string",
                 },
             },
         },

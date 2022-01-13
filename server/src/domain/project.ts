@@ -109,6 +109,27 @@ export function updateProjectColumn(project: Project, column: Column) {
 }
 
 /**
+ * Pure function for deleting an issue in a project.
+ */
+export function deleteProjectColumn(project: Project, column: Column) {
+    // Copy proj to keep func pure
+    const updatedProject = copyProject(project);
+
+    // Delete column in project
+    const columnIndex = updatedProject.columns.findIndex(
+        (col) => col.columnId === column.columnId
+    );
+    if (columnIndex < 0) {
+        throw new EntityNotInParentError(
+            `Column with id ${column.columnId} not found in project with id ${updatedProject.id}`
+        );
+    }
+    updatedProject.columns.splice(columnIndex, 1);
+
+    return updatedProject;
+}
+
+/**
  * Pure function for updating an issue in a project.
  */
 export function updateProjectIssue(project: Project, issue: Issue) {
@@ -136,7 +157,7 @@ export function updateProjectIssue(project: Project, issue: Issue) {
 }
 
 /**
- * Pure function for updating an issue in a project.
+ * Pure function for deleting an issue in a project.
  */
 export function deleteProjectIssue(project: Project, issue: Issue) {
     // Copy proj to keep func pure

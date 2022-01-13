@@ -1,5 +1,4 @@
-import { editIssue } from "../../domain/issue";
-import { findIssueInProject, updateProjectIssue } from "../../domain/project";
+import { deleteProjectColumn, findColumnInProject } from "../../domain/project";
 import { User } from "../../domain/user";
 import {
     getProjectById,
@@ -13,28 +12,25 @@ import {
     NotFoundError,
 } from "../errors";
 
-type EditIssueCommand = {
+type DeleteColumnCommand = {
     userId: string;
     projectId: string;
-    issueId: string;
-    name: string;
-    description?: string;
+    columnId: string;
 };
-export async function handleEditIssueCommand(command: EditIssueCommand) {
-    const { userId, projectId, issueId, name, description } = command;
-
+export async function handleDeleteColumnCommand(command: DeleteColumnCommand) {
+    const { userId, projectId, columnId } = command;
     // Get user
     let user: User | null = await getUserById(userId);
     if (!user) {
         throw new NotAuthenticatedError(
-            "User could not be authenticated. Must be authenticated before editing issue."
+            "User could not be authenticated. Must be authenticated before deleting issue."
         );
     }
 
-    // Ensure user is authorized to edit project
+    // Ensure is is authorized to edit project
     if (!user.projects.includes(projectId)) {
         throw new NotAuthorizedError(
-            "Not authorized to edit issue of project you do not own."
+            "Not authorized to delete issue of project you do not own."
         );
     }
 
@@ -42,19 +38,18 @@ export async function handleEditIssueCommand(command: EditIssueCommand) {
     let project = await getProjectById(projectId);
     if (!project) throw new NotFoundError("Project not found.");
 
-    // Get issue
-    let issue = findIssueInProject(project, issueId);
-    if (!issue) {
+    // Get column
+    let column = findColumnInProject(project, columnId);
+    if (!column) {
         throw new NotFoundError(
-            `Issue with id ${issueId} not found in project.`
+            `Column with id ${columnId} not found in project.`
         );
     }
 
-    // Update issue
-    issue = editIssue(issue, name, description);
+    // Delete column
+    project = deleteProjectColumn(project, column);
 
-    // Update column + project
-    project = updateProjectIssue(project, issue);
+    // Update project
     project = await updateProject(projectId, project);
 
     // Return updated project
