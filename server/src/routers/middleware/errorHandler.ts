@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { ApplicationError } from "../../application/errors";
 
 export type InvalidResponse = {
     statusCode: string;
@@ -6,25 +7,25 @@ export type InvalidResponse = {
 };
 
 export function errorHandler(
-    e: Error,
+    error: Error,
     req: Request,
     res: Response,
     next: NextFunction
 ) {
-    if (e instanceof Error) {
-        console.error(e);
-        res.status(500);
+    if (error instanceof ApplicationError) {
+        console.warn(error.message);
+        res.status(error.statusCode);
         const response: InvalidResponse = {
-            statusCode: e.name,
-            message: e.message,
+            message: error.message,
+            statusCode: error.name,
         };
         return res.json(response);
     } else {
+        console.error(error.message);
+        res.status(500);
         const response: InvalidResponse = {
-            statusCode: "UH_OH",
-            message: `Fatal error; expected error to be handled, got ${JSON.stringify(
-                e
-            )}`,
+            statusCode: error.name,
+            message: error.message,
         };
         return res.json(response);
     }

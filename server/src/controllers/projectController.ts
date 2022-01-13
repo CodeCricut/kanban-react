@@ -3,7 +3,7 @@ import { handleAddColumnToProjectCommand } from "../application/commands/addColu
 import { handleCreateProjectCommand } from "../application/commands/createProject";
 import { handleDeleteProjectCommand } from "../application/commands/deleteProject";
 import { handleEditProjectCommand } from "../application/commands/editProject";
-import { NotAuthenticatedError } from "./errors";
+import { NotAuthenticatedError } from "../application/errors";
 
 export async function createProject(
     req: Request,

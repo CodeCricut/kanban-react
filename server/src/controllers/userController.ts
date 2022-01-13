@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
+import { NotAuthenticatedError } from "../application/errors";
 import { handleGetLoggedInUserQuery } from "../application/queries/getLoggedInUser";
 import { handleGetUserProjects } from "../application/queries/getUsersProjects";
-import { NotAuthenticatedError } from "./errors";
 
 export async function getLoggedInUser(
     req: Request,
