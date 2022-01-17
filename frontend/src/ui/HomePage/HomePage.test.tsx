@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { Dashboard } from "./Dashboard";
+import { HomePage } from "./HomePage";
 
 test("TODO", () => {
-    render(<Dashboard />);
+    render(<HomePage />);
     expect(true).toBe(false);
 });

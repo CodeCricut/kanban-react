@@ -1,5 +1,5 @@
 import { Route } from "react-router-dom";
-import { Dashboard } from "../Dashboard/Dashboard";
+import { HomePage } from "../HomePage/HomePage";
 import { AppRouter } from "../shared/AppRouter";
 import { RootProvider } from "../shared/RootProvider";
 import { CssBaseline } from "@mui/material";
@@ -16,7 +16,7 @@ export const App = () => {
             <RootProvider>
                 <AppRouter>
                     <Route path="/" element={<Layout />}>
-                        <Route path="" element={<Dashboard />} />
+                        <Route path="" element={<HomePage />} />
                         <Route path="me" element={<MePage />} />
                         <Route path="register" element={<RegisterPage />} />
                         <Route path="login" element={<LoginPage />} />
