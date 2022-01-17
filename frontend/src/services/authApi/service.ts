@@ -13,4 +13,14 @@ export class AuthApiService implements IAuthApiService {
         const returnedJwt: string= response.data?.jwt;
         return returnedJwt
     }
+
+    login = async (username: string, password: string): Promise<string | undefined> => {
+        const requestBody = {
+            username,
+            password
+        }
+        const response = await axios.post(appConfig.loginRoute, requestBody);
+        const returnedJwt: string = response.data?.jwt;
+        return returnedJwt
+    }
 }

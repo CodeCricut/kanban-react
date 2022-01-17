@@ -30,6 +30,7 @@ export type AppConfig = {
     relocateIssueRoute: (id: string) => string;
 
     registerRoute: string;
+    loginRoute: string;
 
     getMeRoute: string;
 };
@@ -62,7 +63,7 @@ const deleteIssueRoute = (id: string, columnId: string) =>
 const relocateIssueRoute = (id: string) => `/issues/relocate/${id}`;
 
 const registerRoute = "/auth/register"
-
+const loginRoute = "/auth/login";
 const getMeRoute = "/users/me"
 
 export const appConfig: AppConfig = {
@@ -82,5 +83,6 @@ export const appConfig: AppConfig = {
     deleteIssueRoute,
     relocateIssueRoute,
     registerRoute,
+    loginRoute,
     getMeRoute
 };
