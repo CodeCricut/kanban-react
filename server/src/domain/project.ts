@@ -83,6 +83,19 @@ export function findIssueInProject(
     return undefined;
 }
 
+export function findIssuesColumnInProject(
+    project: Project,
+    issueId: string
+): Column | undefined {
+    for (let i = 0; i < project.columns.length; i++) {
+        const issueInCol = project.columns[i].issues.find(
+            (iss) => iss.issueId == issueId
+        );
+        return project.columns[i]
+    }
+    return undefined;
+}
+
 /**
  * Pure function for updating a column to project (where the column is found with the id).
  */
@@ -142,6 +155,51 @@ export function relocateProjectColumn(
     updatedProject.columns.splice(newIndex, 0, column);
 
     return updatedProject;
+}
+
+
+/**
+ * Pure function for relocating an issue within the project
+ * @param project The current project
+ * @param issue The id of the issue to relocate
+ * @param newColumnId The id of the column to move the issue to
+ * @param newIndex The index to move the issue to within the new column
+ */
+export function relocateProjectIssue(project: Project, issueId: string, newColumnId: string, newIndex: number): Project {
+    // Copy proj to keep func pure
+    const updatedProject = copyProject(project);
+
+    // Find issue
+    const newIssue = findIssueInProject(updatedProject, issueId)
+    if (!newIssue) {
+        throw new EntityNotInParentError(`Couldn't find isuse with id ${issueId} in project with id ${updatedProject.id}`)
+    }
+
+    // Find old column
+    const oldColumn = findIssuesColumnInProject(updatedProject, newIssue.issueId)
+    if (!oldColumn){
+        throw new EntityNotInParentError(`Couldn't find old column for issue with id ${newIssue.issueId} in project with id ${updatedProject.id}`)
+    }
+
+    // Find new column
+    const newColumn = findColumnInProject(updatedProject, newColumnId)
+    if (!newColumn){
+        throw new NotFoundError(`Couldn't find new column with id ${newColumnId} to relocate issue to.`)
+    }
+
+    // Make sure can relocate
+    if (newIndex < 0 || newIndex > newColumn.issues.length){
+        throw new IndexOutOfBoundsError(`Couldn't relocate issue to ${newIndex} index. Must be on [0, ${newColumn.issues.length}]`)
+    }
+
+    // Remove issue from old column
+    const indexInOld = oldColumn.issues.findIndex(oldIssue => oldIssue.issueId == issueId)
+    oldColumn.issues.splice(indexInOld, 1)
+
+    // Add issue to new
+    newColumn.issues.splice(newIndex, 0, newIssue)
+
+    return updatedProject
 }
 
 /**

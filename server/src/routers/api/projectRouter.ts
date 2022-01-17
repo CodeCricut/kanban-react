@@ -10,6 +10,7 @@ import {
     editissue,
     editProject,
     relocateColumn,
+    relocateIssue,
 } from "../../controllers/projectController";
 import { auth } from "../middleware/auth";
 
@@ -27,5 +28,7 @@ projectRouter.put("/relocate-column/:id", auth, relocateColumn);
 projectRouter.post("/add-issue/:id", auth, addIssue);
 projectRouter.put("/edit-issue/:id", auth, editissue);
 projectRouter.delete("/delete-issue/:id", auth, deleteIssue);
+projectRouter.put("/relocate-issue/:id", auth, relocateIssue);
+
 
 export { projectRouter };

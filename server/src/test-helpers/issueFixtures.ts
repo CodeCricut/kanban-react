@@ -1,22 +1,14 @@
+import { Issue } from "src/domain/issue";
 import { v4 as uuid } from "uuid";
 import { PostIssueDto, UpdateIssueDto } from "../application/contracts/issue";
 import { dateStringFixture } from "./dateFixtures";
 
-type createValidPostIssueDtoFunction = {
-    (): PostIssueDto;
+type CreateIssueFixtureFunction = {
+    (): Issue;
 };
-export const createValidPostIssueDto: createValidPostIssueDtoFunction = () => ({
+export const createIssueFixture: CreateIssueFixtureFunction = () => ({
+    issueId: uuid(),
     name: "VALID NAME",
     description: "DESCRIPTION",
     createdAt: dateStringFixture,
 });
-
-type createValidUpdateIssueDtoFunction = {
-    (): UpdateIssueDto;
-};
-export const createValidUpdateIssueDto: createValidUpdateIssueDtoFunction =
-    () => ({
-        name: `VALID NAME (ID=${uuid()})`,
-        description: `DESCRIPTION(ID=${uuid()})`,
-        issues: [],
-    });

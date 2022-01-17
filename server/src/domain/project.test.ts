@@ -1,6 +1,7 @@
 import { createColumnFixture } from "../test-helpers/columnFixtures";
 import { createProjectFixture } from "../test-helpers/projectFixtures";
 import { createUserFixture } from "../test-helpers/userFixtures";
+import { createIssueFixture } from "../test-helpers/issueFixtures";
 import { Column } from "./column";
 import {
     addColumnToProject,
@@ -8,6 +9,7 @@ import {
     copyProject,
     editProject,
     Project,
+    relocateProjectIssue,
 } from "./project";
 import { User } from "./user";
 
@@ -94,6 +96,31 @@ describe("copyProject", () => {
         expectProjectsEqual(originalReference, project);
     });
 });
+
+describe("relocateProjectIssue", () => {
+    it("relocates issue to new column", () => {
+        const issue = createIssueFixture()
+
+        const oldColumn = createColumnFixture()
+        oldColumn.issues.push(issue)
+
+        const newColumn = createColumnFixture()
+
+        const oldProject = createProjectFixture()
+        oldProject.columns.push(oldColumn)
+        oldProject.columns.push(newColumn)
+        
+        const newProject = relocateProjectIssue(oldProject, issue.issueId, newColumn.columnId, 0)
+
+        // Expect new column to have issue
+        const newColumnInProj = newProject.columns.find(col => col.columnId == newColumn.columnId)
+        expect(newColumnInProj?.issues[0].issueId).toBe(issue.issueId)
+
+        // Expect old column not to have issue
+        const oldColumnInProj = newProject.columns.find(col => col.columnId == oldColumn.columnId)
+        expect(oldColumnInProj?.issues.length).toBe(0)
+    })
+})
 
 // =================== Test helpers ===================
 function expectProjectsEqual(expected: Project, actual: Project) {

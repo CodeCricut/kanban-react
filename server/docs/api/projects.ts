@@ -306,6 +306,37 @@ export const projectsPaths = {
             },
         },
     },
+
+    "/projects/relocate-issue/{id}": {
+        put: {
+            summary: "Relocate an issue within the project",
+            tags: ["projects", "issues"],
+            produces: ["application/json"],
+            consumes: ["application/json"],
+            parameters: [
+                { $ref: "#/parameters/JwtParameter" },
+                { $ref: "#/parameters/ProjectIdParameter" },
+                { $ref: "#/parameters/RelocateIssueParameter" },
+            ],
+            responses: {
+                200: {
+                    $ref: "#/responses/ProjectResponse",
+                },
+                401: {
+                    $ref: "#/responses/NotAuthenticatedErrorResponse",
+                },
+                403: {
+                    $ref: "#/responses/NotAuthorizedErrorResponse",
+                },
+                404: {
+                    $ref: "#/responses/NotFoundErrorResponse",
+                },
+                500: {
+                    $ref: "#/responses/ServerErrorResponse",
+                },
+            },
+        },
+    }
 };
 
 export const projectParameters = {
@@ -492,6 +523,26 @@ export const projectParameters = {
                 },
                 description: {
                     type: "string",
+                },
+            },
+        },
+    },
+     RelocateIssueParameter: {
+        in: "body",
+        name: "body",
+        required: true,
+        schema: {
+            type: "object",
+            required: ["issueId", "newColumnId", "newIndex"],
+            properties: {
+                issueId: {
+                    type: "string",
+                },
+                 newColumnId: {
+                    type: "string",
+                },
+                newIndex: {
+                    type: "number",
                 },
             },
         },
