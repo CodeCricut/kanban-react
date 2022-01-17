@@ -28,6 +28,8 @@ export type AppConfig = {
     editIssueRoute: (issueId: string) => string;
     deleteIssueRoute: (id: string, columnId: string) => string;
     relocateIssueRoute: (id: string) => string;
+
+    registerRoute: string;
 };
 
 const projectsRoute = "/projects";
@@ -57,6 +59,8 @@ const deleteIssueRoute = (id: string, columnId: string) =>
     `/issues/delete/${id}?columnId=${columnId}`;
 const relocateIssueRoute = (id: string) => `/issues/relocate/${id}`;
 
+const registerRoute = "/auth/register"
+
 export const appConfig: AppConfig = {
     projectsRoute,
     createProjectRoute,
@@ -73,4 +77,5 @@ export const appConfig: AppConfig = {
     editIssueRoute,
     deleteIssueRoute,
     relocateIssueRoute,
+    registerRoute
 };
