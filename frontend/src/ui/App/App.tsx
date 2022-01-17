@@ -8,6 +8,7 @@ import { RegisterPage } from "../Register/Page";
 import { MePage } from "../Me/Page";
 import { LoginPage } from "../Login/Page";
 import { Layout } from "../Layout/Layout";
+import { NotFoundPage } from "../NotFoundPage/NotFoundPage";
 
 export const App = () => {
     return (
@@ -20,6 +21,7 @@ export const App = () => {
                         <Route path="me" element={<MePage />} />
                         <Route path="register" element={<RegisterPage />} />
                         <Route path="login" element={<LoginPage />} />
+                        <Route path="*" element={<NotFoundPage />} />
                     </Route>
                 </AppRouter>
             </RootProvider>
