@@ -3,11 +3,12 @@ import React from "react";
 import { IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { SxProps } from "@mui/system";
+import { Link, useNavigate } from "react-router-dom";
 
-type StylesType ={
+type StylesType = {
     menuButton: SxProps;
     title: SxProps;
-}
+};
 const styles: StylesType = {
     menuButton: {
         marginRight: 2,
@@ -21,9 +22,12 @@ const styles: StylesType = {
 };
 type AppBarHeaderProps = {
     handleOpenDrawer: () => void;
-    title: string
-}
-export const AppBarHeader = ({ handleOpenDrawer, title }: AppBarHeaderProps) => {
+    title: string;
+};
+export const AppBarHeader = ({
+    handleOpenDrawer,
+    title,
+}: AppBarHeaderProps) => {
     return (
         <React.Fragment>
             <IconButton
@@ -36,7 +40,9 @@ export const AppBarHeader = ({ handleOpenDrawer, title }: AppBarHeaderProps) => 
                 <MenuIcon />
             </IconButton>
             <Typography sx={styles.title} variant="h6" noWrap>
-                {title}
+                <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+                    {title}
+                </Link>
             </Typography>
         </React.Fragment>
     );
