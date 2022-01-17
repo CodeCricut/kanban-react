@@ -3,10 +3,12 @@ import { Box, Button, Container } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { CreateNewProject } from "../CreateNewProject";
 import { useModalService } from "../../services/modalService";
-import { MainPanel } from "../MainPanel/MainPanel";
 import { UsersProjectList } from "../ProjectsList/UsersProjectList";
 import { useIsLoggedIn } from "../../application/isLoggedIn/hook";
 import { useNavigate } from "react-router-dom";
+import { useSelectedProjectService } from "../../services/selectedProject";
+import { ProjectDashboard } from "../ProjectDashboard/ProjectDashboard";
+import { WelcomeCard } from "../WelcomeCard/WelcomeCard";
 
 type StylesType = {
     container: SxProps;
@@ -41,24 +43,28 @@ export const HomePage = () => {
         }
     }, [isLoggedIn]);
 
+    const { selectedProject } = useSelectedProjectService();
+
     const handleCreateNewProject = (e: React.MouseEvent) => {
         e.preventDefault();
         modalService.setModal(<CreateNewProject />);
     };
 
-    return (
-        isLoggedIn ? (
-            <Box sx={styles.container}>
-                <Button onClick={handleCreateNewProject}>
-                    Create new project
-                </Button>
-                <Box sx={styles.projectList}>
-                    <UsersProjectList />
-                </Box>
-                <Box sx={styles.mainContent}>
-                    <MainPanel />
-                </Box>
+    return isLoggedIn ? (
+        <Box sx={styles.container}>
+            <Button onClick={handleCreateNewProject}>Create new project</Button>
+            <Box sx={styles.projectList}>
+                <UsersProjectList />
             </Box>
-        ) : <>Not logged in. Redirecting...</>
+            <Box sx={styles.mainContent}>
+                {selectedProject ? (
+                    <ProjectDashboard project={selectedProject} />
+                ) : (
+                    <WelcomeCard />
+                )}
+            </Box>
+        </Box>
+    ) : (
+        <>Not logged in. Redirecting...</>
     );
 };
