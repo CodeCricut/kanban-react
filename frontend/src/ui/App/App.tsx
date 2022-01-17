@@ -4,6 +4,7 @@ import { AppRouter } from "../shared/AppRouter";
 import { RootProvider } from "../shared/RootProvider";
 import { CssBaseline } from "@mui/material";
 import { KanbanAppBar } from "../AppBar/KanbanAppBar";
+import { RegisterPage } from "../Register/Page";
 
 export const App = () => {
     return (
@@ -13,6 +14,7 @@ export const App = () => {
                 <KanbanAppBar/>
                 <AppRouter>
                     <Route path="/" element={<Dashboard />} />
+                    <Route path="/register" element={<RegisterPage />} />
                 </AppRouter>
             </RootProvider>
         </>
