@@ -8,6 +8,8 @@ if (process.env.NODE_ENV === "development") {
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
+// TODO: Remove the AppConfig type and just have a global config object
+
 export type AppConfig = {
     projectsRoute: string;
     createProjectRoute: string;
@@ -33,6 +35,8 @@ export type AppConfig = {
     loginRoute: string;
 
     getMeRoute: string;
+
+    getMyProjectsRoute: string;
 };
 
 const projectsRoute = "/projects";
@@ -66,6 +70,8 @@ const registerRoute = "/auth/register"
 const loginRoute = "/auth/login";
 const getMeRoute = "/users/me"
 
+const getMyProjectsRoute = "/users/me/projects"
+
 export const appConfig: AppConfig = {
     projectsRoute,
     createProjectRoute,
@@ -84,5 +90,6 @@ export const appConfig: AppConfig = {
     relocateIssueRoute,
     registerRoute,
     loginRoute,
-    getMeRoute
+    getMeRoute,
+    getMyProjectsRoute
 };

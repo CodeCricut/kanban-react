@@ -4,6 +4,7 @@ import { SxProps } from "@mui/system";
 import { CreateNewProject } from "../CreateNewProject";
 import { useModalService } from "../../services/modalService";
 import { MainPanel } from "../MainPanel/MainPanel";
+import { UsersProjectList } from "../ProjectsList/UsersProjectList";
 
 type StylesType = {
     container: SxProps;
@@ -38,6 +39,7 @@ export const Dashboard = () => {
         <Box sx={styles.container}>
             <Button onClick={handleCreateNewProject}>Create new project</Button>
             <Box sx={styles.projectList}>
+                <UsersProjectList/>
             </Box>
             <Box sx={styles.mainContent}>
                 <MainPanel />
