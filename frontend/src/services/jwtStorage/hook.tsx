@@ -7,9 +7,12 @@ export function useJwtStorageService(): IJwtStorageService {
 
     const jwt = useMemo(() => cookies.jwt, [cookies])
     const setJwt = useCallback((jwt?: string) => setCookie('jwt', jwt), [setCookie])
-    return {
+
+    const service = useMemo(() => ({
         jwt,
         setJwt,
         removeJwt: () => setJwt()
-    }
+    }), [jwt, setJwt])
+
+    return service
 }
