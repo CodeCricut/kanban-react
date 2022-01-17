@@ -9,19 +9,15 @@ export const ProjectsContext = React.createContext<IProjectsStorageService>(
 
 type ProviderProps = { children: React.ReactNode };
 export const ProjectsProvider = ({ children }: ProviderProps) => {
-    const { getAllProjects } = useProjectsApiService();
-    const [projects, setProjects] = useState<Project[]>([]); // TODO: I think the projects should be loaded from the api at first
-
+    const [projects, setProjects] = useState<Project[]>([]);
+    
     const value: IProjectsStorageService = {
         projects,
         updateProjects: setProjects,
     };
-
+    
     useEffect(() => {
-        const loadInitialProjects = async () => {
-            return await getAllProjects();
-        };
-        loadInitialProjects().then((projs) => setProjects(projs));
+        // TODO: populate with user's projects if logged in 
     }, []);
 
     return (
