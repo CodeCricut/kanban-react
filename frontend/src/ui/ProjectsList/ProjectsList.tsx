@@ -1,30 +1,73 @@
 import React from "react";
-import { List, ListItem, Divider } from "@mui/material";
+import {
+    List,
+    ListItem,
+    Divider,
+    Box,
+    Typography,
+    IconButton,
+} from "@mui/material";
 import { Project } from "../../domain/project";
 import { ProjectItem } from "./ProjectItem";
+import { SxProps } from "@mui/system";
+import AddIcon from "@mui/icons-material/Add";
+
+type StylesType = {
+    container: SxProps,
+    header: SxProps & {
+        heading: SxProps;
+    };
+};
+const styles: StylesType = {
+    container: {
+        margin: 2
+    },
+    header: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignContent: "center",
+        alignItems: "center",
+        heading: {
+            fontSize: "1rem",
+            color: "text.secondary",
+            padding: 1
+        },
+    },
+};
 
 type ProjectListProperties = {
     projects: Project[];
-    handleSelect?: (project: Project) => void;
+    handleSelect: (project: Project) => void;
+    handleAdd: () => void;
 };
 export const ProjectsList = ({
     projects,
     handleSelect,
+    handleAdd,
 }: ProjectListProperties) => {
     return (
-        <List>
-            {projects.map((project) => (
-                <React.Fragment key={project.id}>
-                    <ListItem
-                        onClick={() =>
-                            handleSelect ? handleSelect(project) : {}
-                        }
-                    >
-                        <ProjectItem project={project} />
-                    </ListItem>
-                    <Divider />
-                </React.Fragment>
-            ))}
-        </List>
+        <Box sx={styles.container}>
+            <Box sx={styles.header}>
+                <Typography variant="h4" sx={styles.header.heading}>
+                    Projects
+                </Typography>
+                <IconButton onClick={handleAdd}>
+                    <AddIcon />
+                </IconButton>
+            </Box>
+            <List>
+                <Divider />
+                {projects.map((project) => (
+                    <React.Fragment key={project.id}>
+                        <ProjectItem
+                            key={project.id}
+                            project={project}
+                            handleSelect={() => handleSelect(project)}
+                        />
+                    </React.Fragment>
+                ))}
+            </List>
+        </Box>
     );
 };

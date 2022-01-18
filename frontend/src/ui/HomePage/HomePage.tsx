@@ -17,15 +17,18 @@ type StylesType = {
 };
 const styles: StylesType = {
     container: {
+        marginTop: 5,
         display: "grid",
         maxWidth: 1,
-        gridTemplateColumns: "minmax(0, 1fr) minmax(0, 4fr)",
+        gridTemplateColumns: {
+            "xs": "1fr",
+            "sm": "minmax(0, 1fr) minmax(0, 2fr)",
+            "md": "minmax(0, 1fr) minmax(0, 3fr)",
+        }
     },
     projectList: {
-        gridColumn: "1",
     },
     mainContent: {
-        gridColumn: "2",
         maxWidth: 1,
         minWidth: 0,
     },
@@ -50,9 +53,9 @@ export const HomePage = () => {
         modalService.setModal(<CreateNewProject />);
     };
 
-    return isLoggedIn ? (
+    if (!isLoggedIn) return <>Not logged in. Redirecting...</>
+    return (
         <Box sx={styles.container}>
-            <Button onClick={handleCreateNewProject}>Create new project</Button>
             <Box sx={styles.projectList}>
                 <UsersProjectList />
             </Box>
@@ -64,7 +67,5 @@ export const HomePage = () => {
                 )}
             </Box>
         </Box>
-    ) : (
-        <>Not logged in. Redirecting...</>
-    );
+    ) 
 };
