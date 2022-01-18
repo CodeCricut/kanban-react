@@ -18,6 +18,7 @@ export const App = () => {
                 <AppRouter>
                     <Route path="/" element={<Layout />}>
                         <Route path="" element={<HomePage />} />
+                        <Route path="project/:projectId" element={<HomePage />}/>
                         <Route path="me" element={<MePage />} />
                         <Route path="register" element={<RegisterPage />} />
                         <Route path="login" element={<LoginPage />} />

@@ -3,12 +3,15 @@ import { Box, Button, Container } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { CreateNewProject } from "../CreateNewProject";
 import { useModalService } from "../../services/modalService";
-import { UsersProjectList } from "../ProjectsList/UsersProjectList";
 import { useIsLoggedIn } from "../../application/isLoggedIn/hook";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelectedProjectService } from "../../services/selectedProject";
 import { ProjectDashboard } from "../ProjectDashboard/ProjectDashboard";
 import { WelcomeCard } from "../WelcomeCard/WelcomeCard";
+import { useUsersProjects } from "../../application/getUsersProjects/hook";
+import { useFindProjectInList } from "../../application/findProjectInList/hook";
+import { Project } from "../../domain/project";
+import { ProjectsList } from "../ProjectsList/ProjectsList";
 
 type StylesType = {
     container: SxProps;
@@ -21,13 +24,12 @@ const styles: StylesType = {
         display: "grid",
         maxWidth: 1,
         gridTemplateColumns: {
-            "xs": "1fr",
-            "sm": "minmax(0, 1fr) minmax(0, 2fr)",
-            "md": "minmax(0, 1fr) minmax(0, 3fr)",
-        }
+            xs: "1fr",
+            sm: "minmax(0, 1fr) minmax(0, 2fr)",
+            md: "minmax(0, 1fr) minmax(0, 3fr)",
+        },
     },
-    projectList: {
-    },
+    projectList: {},
     mainContent: {
         maxWidth: 1,
         minWidth: 0,
@@ -35,10 +37,29 @@ const styles: StylesType = {
 };
 
 export const HomePage = () => {
+    const navigate = useNavigate();
+    const selectedProjectService = useSelectedProjectService();
+    const usersProjects = useUsersProjects();
+
+    const params = useParams();
+    const { projectId } = params;
+    const findProjectInList = useFindProjectInList(usersProjects);
+    useEffect(() => {
+        if (!projectId) {
+            selectedProjectService.unselectProject();
+            return;
+        }
+        const project = findProjectInList(projectId);
+        if (project) {
+            selectedProjectService.setSelectedProject(project);
+        } else {
+            selectedProjectService.unselectProject();
+        }
+    }, [projectId, findProjectInList, usersProjects]);
+
     const modalService = useModalService();
 
     const isLoggedIn = useIsLoggedIn();
-    const navigate = useNavigate();
     useEffect(() => {
         if (!isLoggedIn) {
             console.log("not logged in, redirecting to login...");
@@ -46,26 +67,29 @@ export const HomePage = () => {
         }
     }, [isLoggedIn]);
 
-    const { selectedProject } = useSelectedProjectService();
-
-    const handleCreateNewProject = (e: React.MouseEvent) => {
-        e.preventDefault();
+    const handleCreateNewProject = () => {
         modalService.setModal(<CreateNewProject />);
     };
 
-    if (!isLoggedIn) return <>Not logged in. Redirecting...</>
+    const handleSelectProject = (project: Project) => {
+        navigate(`/project/${project.id}`)
+    }
+
+    if (!isLoggedIn) return <>Not logged in. Redirecting...</>;
     return (
         <Box sx={styles.container}>
             <Box sx={styles.projectList}>
-                <UsersProjectList />
+             <ProjectsList projects={usersProjects} handleSelect={handleSelectProject} handleAdd={handleCreateNewProject}/>
             </Box>
             <Box sx={styles.mainContent}>
-                {selectedProject ? (
-                    <ProjectDashboard project={selectedProject} />
+                {selectedProjectService.selectedProject ? (
+                    <ProjectDashboard
+                        project={selectedProjectService.selectedProject}
+                    />
                 ) : (
                     <WelcomeCard />
                 )}
             </Box>
         </Box>
-    ) 
+    );
 };
