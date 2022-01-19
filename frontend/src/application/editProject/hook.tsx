@@ -5,7 +5,10 @@ import { useProjectsStorage } from "../../services/projectsStorage";
 import { editProject } from "./editProject";
 
 type EditProjectFunction = {
-    (id: string, name: string, description: string): Promise<Project>;
+    (
+        id: string,
+        project: { name: string; description?: string }
+    ): Promise<Project>;
 };
 
 export function useEditProject(): EditProjectFunction {
@@ -13,12 +16,12 @@ export function useEditProject(): EditProjectFunction {
     const projectsApiService = useProjectsApiService();
 
     const func = useCallback(
-        (id: string, name: string, description: string) =>
-            editProject(id, name, description, {
+        (id: string, project: { name: string; description?: string }) =>
+            editProject(id, project, {
                 projectStorageService,
                 projectsApiService,
             }),
-        []
+        [projectStorageService, projectsApiService]
     );
 
     return func;

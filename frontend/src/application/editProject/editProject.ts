@@ -9,18 +9,16 @@ type Dependencies = {
 
 export async function editProject(
     id: string,
-    name: string,
-    description: string,
+    project: {
+        name: string;
+        description?: string;
+    },
     dependencies: Dependencies
 ): Promise<Project> {
     const { projectStorageService, projectsApiService } = dependencies;
 
     // Update project with api
-    const updatedProject = await projectsApiService.editProject(
-        id,
-        name,
-        description
-    );
+    const updatedProject = await projectsApiService.editProject(id, project);
 
     // Update project in local state
     const currProjects = projectStorageService.projects;
