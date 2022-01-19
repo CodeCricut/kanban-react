@@ -1,6 +1,4 @@
-import { Column, createColumnObject } from "../../domain/column";
 import { Project, updateProject } from "../../domain/project";
-import { convertDateToString } from "../../library/dates";
 import { IDateTimeService } from "../contracts/dateTimeService";
 import { IProjectsApiService } from "../contracts/projectsApiService";
 import { IProjectsStorageService } from "../contracts/projectsStorage";
@@ -8,34 +6,26 @@ import { IProjectsStorageService } from "../contracts/projectsStorage";
 type Dependencies = {
     projectsApiService: IProjectsApiService;
     projectStorageService: IProjectsStorageService;
-    dateTimeService: IDateTimeService;
 };
 
-// TODO: update to just make project stale instead of manually updating project state
-export async function addColumnToProject(
+export async function addColumn(
     project: Project,
-    name: string,
-    description: string,
+    column: { name: string; description?: string },
     dependencies: Dependencies
 ) {
-    const { projectStorageService, projectsApiService, dateTimeService } =
-        dependencies;
+    const { projectStorageService, projectsApiService } = dependencies;
+
+    if (!project.id)
+        throw new Error("Tried to add column to project without id.");
 
     // Add column to last index
     const columnIndex = project.columns?.length ?? 0;
 
-    // Create column object
-    const currTime = dateTimeService.getCurrentDateTime();
-    const currTimeStr = convertDateToString(currTime);
-
-    const column = createColumnObject(name, description, currTimeStr);
-
     // Update project with api
-    const updatedProject = await projectsApiService.addColumn(
-        project.id ?? "",
+    const updatedProject = await projectsApiService.addColumn(project.id, {
         columnIndex,
-        column
-    );
+        ...column,
+    });
 
     // Update project in local state
     const currProjects = projectStorageService.projects;

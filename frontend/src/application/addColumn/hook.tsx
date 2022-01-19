@@ -3,25 +3,23 @@ import { Project } from "../../domain/project";
 import { useDateTimeService } from "../../services/dateTime/hook";
 import { useProjectsApiService } from "../../services/projectsApi/hook";
 import { useProjectsStorage } from "../../services/projectsStorage";
-import { addColumnToProject } from "./addColumnToProject";
+import { addColumn } from "./addColumn";
 
-type AddColumnToProjectFunction = {
-    (project: Project, name: string, description: string): Promise<Project>;
+type AddColumnFunction = {
+    (project: Project, column: {name: string, description?: string}): Promise<Project>;
 };
 
-export function useAddColumnToProject(): AddColumnToProjectFunction {
-    const dateTimeService = useDateTimeService();
+export function useAddColumn(): AddColumnFunction {
     const projectsApiService = useProjectsApiService();
     const projectStorageService = useProjectsStorage();
 
     const func = useCallback(
-        (project: Project, name: string, description: string) =>
-            addColumnToProject(project, name, description, {
-                dateTimeService,
+        (project: Project, column: {name: string, description?: string}) =>
+            addColumn(project,column, {
                 projectStorageService,
                 projectsApiService,
             }),
-        []
+        [projectsApiService, projectStorageService]
     );
 
     return func;
