@@ -1,34 +1,34 @@
 import { useCallback } from "react";
 import { Column } from "../../domain/column";
-import { useIssuesApiService } from "../../services/issuesApi/hook";
-import { useStaleColumnsService } from "../../services/staleColumns/hook";
+import { useProjectsApiService } from "../../services/projectsApi/hook";
+import { useProjectsStorage } from "../../services/projectsStorage";
 import { relocateIssue } from "./relocateIssue";
 
 type RelocateIssueFunction = {
     (
         issueId: string,
-        oldColumnId: string,
+        projectId: string,
         newColumnId: string,
         newIndex: number
     ): Promise<Column>;
 };
 
 export function useRelocateIssue(): RelocateIssueFunction {
-    const issuesApiService = useIssuesApiService();
-    const staleColumnService = useStaleColumnsService();
+    const projectsApiService = useProjectsApiService();
+    const projectsStorageService = useProjectsStorage();
 
     const func = useCallback(
         (
             issueId: string,
-            oldColumnId: string,
+            projectId: string,
             newColumnId: string,
             newIndex: number
         ) =>
-            relocateIssue(issueId, oldColumnId, newColumnId, newIndex, {
-                issuesApiService,
-                staleColumnService,
+            relocateIssue(issueId, projectId, newColumnId, newIndex, {
+                projectsApiService,
+                projectsStorageService,
             }),
-        []
+        [projectsApiService, projectsStorageService]
     );
 
     return func;
