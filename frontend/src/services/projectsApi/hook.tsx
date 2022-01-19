@@ -1,10 +1,11 @@
 import { ProjectsApiService } from "./service";
-import { appConfig } from "../../config";
 import { IProjectsApiService } from "../../application/contracts/projectsApiService";
+import { useJwtStorageService } from "../jwtStorage/hook";
+import { useMemo } from "react";
 
-// TODO: this isn't the cleanest; shouldn't instantiate/access global deps
-const service = new ProjectsApiService(appConfig);
 
 export function useProjectsApiService(): IProjectsApiService {
+    const jwtService = useJwtStorageService();
+    const service = useMemo(() => new ProjectsApiService(jwtService), [jwtService])
     return service;
 }

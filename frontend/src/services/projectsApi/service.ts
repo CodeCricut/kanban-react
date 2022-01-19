@@ -1,78 +1,174 @@
-import { IProjectsApiService } from "../../application/contracts/projectsApiService";
+import {
+    AddColumnBody,
+    AddIssueBody,
+    CreateProjectBody,
+    EditColumnBody,
+    EditIssueBody,
+    EditProjectBody,
+    IProjectsApiService,
+    RelocateColumnBody,
+    RelocateIssuetype,
+} from "../../application/contracts/projectsApiService";
 import { Project } from "../../domain/project";
 import axios from "axios";
-import { AppConfig } from "../../config";
-import { Column } from "../../domain/column";
+import { appConfig } from "../../config";
+import { IJwtStorageService } from "../../application/contracts/jwtStorageService";
 
 export class ProjectsApiService implements IProjectsApiService {
-    private _config: AppConfig;
+    constructor(private jwtService: IJwtStorageService) {}
 
-    constructor(config: AppConfig) {
-        this._config = config;
+    getAuthorizedHeaders() {
+        const jwt = this.jwtService.jwt;
+        if (!jwt)
+            throw new Error(
+                `Tried to make authorized request without jwt set.`
+            );
+        return {
+            token: jwt,
+        };
     }
 
-    getAllProjects = async (): Promise<Project[]> => {
-        const response = await axios.get(this._config.getAllProjectsRoute);
-        let returnedProjects: Project[] = response.data;
-        return returnedProjects;
-    };
-
-    createProject = async (project: Project) => {
-        const response = await axios.post(
-            this._config.createProjectRoute,
-            project
+    // Projects
+    createProject = async (body: CreateProjectBody): Promise<Project> => {
+        const { data: project } = await axios.post(
+            appConfig.createProjectRoute,
+            body,
+            {
+                headers: this.getAuthorizedHeaders(),
+            }
         );
-        let returnedProject: Project = response.data;
-        return returnedProject;
+        return project;
     };
 
     editProject = async (
         id: string,
-        name: string,
-        description: string
+        body: EditProjectBody
     ): Promise<Project> => {
-        const response = await axios.put(this._config.editProjectRoute(id), {
-            name,
-            description,
-        });
-        let returnedProject: Project = response.data;
-        return returnedProject;
+        const { data: project } = await axios.put(
+            appConfig.editProjectRoute(id),
+            body,
+            {
+                headers: this.getAuthorizedHeaders(),
+            }
+        );
+        return project;
     };
 
     deleteProject = async (id: string): Promise<void> => {
-        await axios.delete(this._config.deleteProjectRoute(id));
+        await axios.delete(appConfig.deleteProjectRoute(id), {
+            headers: this.getAuthorizedHeaders(),
+        });
     };
 
+    // Columns
     addColumn = async (
         projectId: string,
-        columnIndex: number,
-        column: Column
+        body: AddColumnBody
     ): Promise<Project> => {
-        const requestBody = {
-            columnIndex,
-            name: column.name,
-            description: column.description,
-            createdAt: column.createdAt,
-        };
-
-        const response = await axios.post(
-            this._config.addColumnToProjectRoute(projectId),
-            requestBody
+        const { data: project } = await axios.post(
+            appConfig.addColumnRoute(projectId),
+            body,
+            {
+                headers: this.getAuthorizedHeaders(),
+            }
         );
-
-        let returnedProject: Project = response.data;
-        return returnedProject;
+        return project;
     };
 
-    reorderColumns = async (
+    relocateColumn = async (
         projectId: string,
-        columnId: string,
-        newIndex: number
+        body: RelocateColumnBody
     ): Promise<Project> => {
-        const response = await axios.put(
-            this._config.reorderColumnRoute(projectId, columnId, newIndex)
+        const { data: project } = await axios.put(
+            appConfig.relocateColumnRoute(projectId),
+            body,
+            {
+                headers: this.getAuthorizedHeaders(),
+            }
         );
-        let returnedProject: Project = response.data;
-        return returnedProject;
+        return project;
+    };
+
+    editColumn = async (
+        projectId: string,
+        body: EditColumnBody
+    ): Promise<Project> => {
+        const { data: project } = await axios.put(
+            appConfig.editColumnRoute(projectId),
+            body,
+            {
+                headers: this.getAuthorizedHeaders(),
+            }
+        );
+        return project;
+    };
+
+    deleteColumn = async (
+        projectId: string,
+        columnId: string
+    ): Promise<Project> => {
+        const { data: project } = await axios.delete(
+            appConfig.deleteColumnRoute(projectId, columnId),
+            {
+                headers: this.getAuthorizedHeaders(),
+            }
+        );
+        return project;
+    };
+
+    // Issues
+    addIssue = async (
+        projectId: string,
+        body: AddIssueBody
+    ): Promise<Project> => {
+        const { data: project } = await axios.post(
+            appConfig.addIssueRoute(projectId),
+            body,
+            {
+                headers: this.getAuthorizedHeaders(),
+            }
+        );
+        return project;
+    };
+
+    editIssue = async (
+        projectId: string,
+        body: EditIssueBody
+    ): Promise<Project> => {
+        const { data: project } = await axios.put(
+            appConfig.editIssueRoute(projectId),
+            body,
+            {
+                headers: this.getAuthorizedHeaders(),
+            }
+        );
+        return project;
+    };
+
+    deleteIssue = async (
+        projectId: string,
+        issueId: string
+    ): Promise<Project> => {
+        const { data: project } = await axios.delete(
+            appConfig.deleteIssueRoute(projectId, issueId),
+            {
+                headers: this.getAuthorizedHeaders(),
+            }
+        );
+        return project;
+    };
+
+    relocateIssue = async (
+        projectId: string,
+        body: RelocateIssuetype
+    ): Promise<Project> => {
+        const { data: project } = await axios.put(
+            appConfig.relocateIssueRoute(projectId),
+            body,
+            {
+                headers: this.getAuthorizedHeaders(),
+            }
+        );
+        return project;
     };
 }
