@@ -17,7 +17,7 @@ export function useDeleteProject(): DeleteProjectFunction {
                 projectStorageService,
                 projectsApiService,
             }),
-        []
+        [projectStorageService, projectsApiService]
     );
 
     return func;
