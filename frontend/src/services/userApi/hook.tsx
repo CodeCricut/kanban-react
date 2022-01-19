@@ -1,8 +1,10 @@
+import { useMemo } from "react";
 import { IUserApiService } from "../../application/contracts/userApiService";
+import { useJwtStorageService } from "../jwtStorage/hook";
 import {UserApiService} from "./service"
 
-const service = new UserApiService();
-
 export function useUserApiService(): IUserApiService {
-    return service;    
+    const jwtService = useJwtStorageService();
+    const service = useMemo(() => new UserApiService(jwtService), [jwtService]);
+    return service;
 }

@@ -1,29 +1,35 @@
 import axios from "axios";
+import { IJwtStorageService } from "../../application/contracts/jwtStorageService";
 import { IUserApiService } from "../../application/contracts/userApiService";
 import { appConfig } from "../../config";
 import { PrivateUser } from "../../domain/privateUser";
 import { Project } from "../../domain/project";
 
 export class UserApiService implements IUserApiService {
-    getMe = async (jwt: string): Promise<PrivateUser | undefined> => {
-        const requestHeaders = {
-            'token': jwt
-        }
-        const response = await axios.get(appConfig.getMeRoute, {
-            headers: requestHeaders
+    constructor(private jwtService: IJwtStorageService) {}
+
+    getAuthorizedHeaders() {
+        const jwt = this.jwtService.jwt;
+        if (!jwt)
+            throw new Error(
+                `Tried to make authorized request without jwt set.`
+            );
+        return {
+            token: jwt,
+        };
+    }
+    
+    getMe = async (): Promise<PrivateUser | undefined> => {
+        const {data: user} = await axios.get(appConfig.getMeRoute, {
+            headers: this.getAuthorizedHeaders()
         })
-        const returnedUser: PrivateUser|undefined = response.data
-        return returnedUser
+        return user;
     }
 
-    getMyProjects = async (jwt: string): Promise<Project[] | undefined> => {
-         const requestHeaders = {
-            'token': jwt
-        }
-        const response = await axios.get(appConfig.getMyProjectsRoute, {
-            headers: requestHeaders
+    getMyProjects = async (): Promise<Project[] | undefined> => {
+        const {data: projects} = await axios.get(appConfig.getMyProjectsRoute, {
+            headers: this.getAuthorizedHeaders()
         })
-        const projects: Project[]|undefined = response.data
-        return projects
+        return projects;
     }
 }
