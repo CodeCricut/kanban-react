@@ -8,10 +8,9 @@ type GetLoggedInUserFunction = {
     (): Promise<PrivateUser|undefined>
 }
 export function useGetLoggedInUser(): GetLoggedInUserFunction {
-    const jwtStorageService = useJwtStorageService();
     const userApiService = useUserApiService();
 
-    const func = useCallback(() => getLoggedInUser({jwtStorageService, userApiService}), [jwtStorageService, userApiService])
+    const func = useCallback(() => getLoggedInUser({userApiService}), [userApiService])
     return func;
 }
 

@@ -3,13 +3,9 @@ import { IJwtStorageService } from "../contracts/jwtStorageService"
 import { IUserApiService } from "../contracts/userApiService";
 
 export type Dependencies = {
-    jwtStorageService: IJwtStorageService;
     userApiService: IUserApiService;
 }
-export async function getLoggedInUser({jwtStorageService, userApiService}: Dependencies)
+export async function getLoggedInUser({ userApiService}: Dependencies)
     :Promise<PrivateUser|undefined> {
-    const jwt = jwtStorageService.jwt;
-    if (!jwt) return undefined;
-
-    return await userApiService.getMe(jwt)
+    return userApiService.getMe()
 }

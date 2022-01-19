@@ -18,18 +18,29 @@ export class UserApiService implements IUserApiService {
             token: jwt,
         };
     }
-    
+
     getMe = async (): Promise<PrivateUser | undefined> => {
-        const {data: user} = await axios.get(appConfig.getMeRoute, {
-            headers: this.getAuthorizedHeaders()
-        })
-        return user;
-    }
+        try {
+            const { data: user } = await axios.get(appConfig.getMeRoute, {
+                headers: this.getAuthorizedHeaders(),
+            });
+            return user;
+        } catch (e: any) {
+            return undefined;
+        }
+    };
 
     getMyProjects = async (): Promise<Project[] | undefined> => {
-        const {data: projects} = await axios.get(appConfig.getMyProjectsRoute, {
-            headers: this.getAuthorizedHeaders()
-        })
-        return projects;
-    }
+        try {
+            const { data: projects } = await axios.get(
+                appConfig.getMyProjectsRoute,
+                {
+                    headers: this.getAuthorizedHeaders(),
+                }
+            );
+            return projects;
+        } catch (e: any) {
+            return undefined;
+        }
+    };
 }
