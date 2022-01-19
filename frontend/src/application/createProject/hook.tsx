@@ -6,22 +6,20 @@ import { useProjectsStorage } from "../../services/projectsStorage";
 import { Project } from "../../domain/project";
 
 type CreateProjectFunction = {
-    (name: string, description: string): Promise<Project>;
+    (project: {name: string, description: string}): Promise<Project>;
 };
 
 export function useCreateProject(): CreateProjectFunction {
-    const dateTimeService = useDateTimeService();
     const projectsApiService = useProjectsApiService();
     const projectStorageService = useProjectsStorage();
 
     const func = useCallback(
-        (name: string, description: string) =>
-            createProject(name, description, {
-                dateTimeService,
+        (project: {name: string, description: string}) =>
+            createProject(project, {
                 projectsApiService,
                 projectStorageService,
             }),
-        []
+        [projectsApiService, projectStorageService]
     );
     return func;
 }

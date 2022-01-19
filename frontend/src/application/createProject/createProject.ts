@@ -9,27 +9,21 @@ import { IProjectsApiService } from "../contracts/projectsApiService";
 import { IProjectsStorageService } from "../contracts/projectsStorage";
 
 type Dependencies = {
-    dateTimeService: IDateTimeService;
     projectsApiService: IProjectsApiService;
     projectStorageService: IProjectsStorageService;
 };
 
 export async function createProject(
-    name: string,
-    description: string,
+    project: {
+        name: string,
+        description?: string,
+    },
     dependencies: Dependencies
 ): Promise<Project> {
     const {
-        dateTimeService,
         projectsApiService: projectsApi,
         projectStorageService: projectsStorage,
     } = dependencies;
-
-    // Create project object
-    const currTime = dateTimeService.getCurrentDateTime();
-    const currTimeStr = convertDateToString(currTime);
-
-    const project = createProjectObject(name, description, currTimeStr);
 
     // Create project with api
     const addedProject = await projectsApi.createProject(project);
