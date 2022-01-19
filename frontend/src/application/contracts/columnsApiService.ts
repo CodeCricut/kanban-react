@@ -9,5 +9,4 @@ export interface IColumnsApiService {
         issueIndex: number,
         issue: Issue
     ): Promise<Column>;
-    getColumnIssues(columnId: string): Promise<Issue[]>;
 }

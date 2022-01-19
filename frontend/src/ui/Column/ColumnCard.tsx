@@ -9,8 +9,6 @@ import { useModalService } from "../../services/modalService";
 import { EditColumnModal } from "../EditColumn";
 import { Project } from "../../domain/project";
 import { AddIssueModal } from "../AddIssue";
-import { useColumnIssues } from "../../application/getColumnIssues/hook";
-import { IssueCard } from "../Issue/IssueCard";
 import { Issue } from "../../domain/issue";
 import { DraggableIssue } from "../Issue/DraggableIssue";
 
@@ -66,8 +64,6 @@ type ColumnProps = {
 export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
     const modalService = useModalService();
 
-    const issues = useColumnIssues(column.id ?? "");
-
     const handleAddIssue = () => {
         modalService.setModal(<AddIssueModal column={column} />);
     };
@@ -102,7 +98,7 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
                 </Box>
             </Box>
             <Box sx={styles.content}>
-                {issues.map((issue, index) => renderIssue(issue, index))}
+                {column.issues?.map((issue, index) => renderIssue(issue, index))}
                 <AddIssueCard handleAdd={handleAddIssue} />
             </Box>
         </Card>

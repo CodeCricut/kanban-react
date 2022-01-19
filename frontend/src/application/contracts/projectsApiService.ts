@@ -14,7 +14,6 @@ export interface IProjectsApiService {
         columnIndex: number,
         column: Column
     ): Promise<Project>;
-    getProjectColumns(projectId: string): Promise<Column[]>;
     reorderColumns: (
         projectId: string,
         columnId: string,

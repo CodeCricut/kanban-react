@@ -64,14 +64,6 @@ export class ProjectsApiService implements IProjectsApiService {
         return returnedProject;
     };
 
-    getProjectColumns = async (projectId: string): Promise<Column[]> => {
-        const response = await axios.get(
-            this._config.getProjectColumnsRoute(projectId)
-        );
-        let returnedColumns: Column[] = response.data;
-        return returnedColumns;
-    };
-
     reorderColumns = async (
         projectId: string,
         columnId: string,
