@@ -1,23 +1,23 @@
 import { useCallback } from "react";
-import { useColumnsApiService } from "../../services/columnsApi/hook";
-import { useStaleProjectService } from "../../services/staleProjects/hook";
+import { Project } from "../../domain/project";
+import { useProjectsApiService } from "../../services/projectsApi/hook";
+import { useProjectsStorage } from "../../services/projectsStorage";
 import { deleteColumn } from "./deleteColumn";
 
 type DeleteColumnFunction = {
-    (columnId: string, projectId: string): Promise<void>;
+    (columnId: string, projectId: string): Promise<Project>;
 };
 
 export function useDeleteColumn(): DeleteColumnFunction {
-    const columnApiService = useColumnsApiService();
-    const staleProjectService = useStaleProjectService();
+    const projectsApiService = useProjectsApiService();
+    const projectsStorageService = useProjectsStorage();
 
     const func = useCallback(
         (columnId: string, projectId: string) =>
             deleteColumn(columnId, projectId, {
-                columnApiService,
-                staleProjectService,
+                projectsApiService, projectsStorageService
             }),
-        []
+        [projectsApiService, projectsStorageService]
     );
 
     return func;

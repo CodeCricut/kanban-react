@@ -1,23 +1,24 @@
 import { useCallback } from "react";
-import { useIssuesApiService } from "../../services/issuesApi/hook";
-import { useStaleColumnsService } from "../../services/staleColumns/hook";
+import { Project } from "../../domain/project";
+import { useProjectsApiService } from "../../services/projectsApi/hook";
+import { useProjectsStorage } from "../../services/projectsStorage";
 import { deleteIssue } from "./deleteIssue";
 
 type DeleteIssueFunction = {
-    (issueId: string, columnId: string): Promise<void>;
+    (issueId: string, columnId: string): Promise<Project>;
 };
 
 export function useDeleteIssue(): DeleteIssueFunction {
-    const issuesApiService = useIssuesApiService();
-    const staleColumnsService = useStaleColumnsService();
+    const projectsApiService = useProjectsApiService();
+    const projectsStorageService = useProjectsStorage()
 
     const func = useCallback(
         (issueId: string, columnId: string) =>
             deleteIssue(issueId, columnId, {
-                issuesApiService,
-                staleColumnsService,
+                projectsApiService,
+                projectsStorageService
             }),
-        []
+        [projectsApiService, projectsStorageService]
     );
 
     return func;

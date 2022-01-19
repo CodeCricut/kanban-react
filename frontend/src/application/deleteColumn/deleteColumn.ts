@@ -1,9 +1,10 @@
-import { IColumnsApiService } from "../contracts/columnsApiService";
-import { IStaleProjectService } from "../contracts/staleProjectService";
+import { updateProject } from "../../domain/project";
+import { IProjectsApiService } from "../contracts/projectsApiService";
+import { IProjectsStorageService } from "../contracts/projectsStorage";
 
 type Dependencies = {
-    columnApiService: IColumnsApiService;
-    staleProjectService: IStaleProjectService;
+    projectsApiService: IProjectsApiService,
+    projectsStorageService: IProjectsStorageService
 };
 
 export async function deleteColumn(
@@ -11,11 +12,16 @@ export async function deleteColumn(
     projectId: string,
     dependencies: Dependencies
 ) {
-    const { columnApiService, staleProjectService } = dependencies;
+    const { projectsApiService, projectsStorageService } = dependencies;
 
     // Delete project with api
-    await columnApiService.deleteColumn(columnId, projectId);
+    const updatedProject = await projectsApiService.deleteColumn(columnId, projectId);
 
-    // Force refresh of project
-    staleProjectService.addStaleProject(projectId);
+    // Update project in local state
+    const currProjects = projectsStorageService.projects;
+    const updatedProjects = updateProject(updatedProject, currProjects);
+    projectsStorageService.updateProjects(updatedProjects);
+
+    // Return updated project
+    return updatedProject;
 }

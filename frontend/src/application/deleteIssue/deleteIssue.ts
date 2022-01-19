@@ -1,9 +1,10 @@
-import { IIssuesApiService } from "../contracts/issuesApiService";
-import { IStaleColumnService } from "../contracts/staleColumnService";
+import { updateProject } from "../../domain/project";
+import { IProjectsApiService } from "../contracts/projectsApiService";
+import { IProjectsStorageService } from "../contracts/projectsStorage";
 
 type Dependencies = {
-    issuesApiService: IIssuesApiService;
-    staleColumnsService: IStaleColumnService;
+    projectsApiService: IProjectsApiService,
+    projectsStorageService: IProjectsStorageService
 };
 
 export async function deleteIssue(
@@ -11,11 +12,16 @@ export async function deleteIssue(
     columnId: string,
     dependencies: Dependencies
 ) {
-    const { issuesApiService, staleColumnsService } = dependencies;
+    const { projectsApiService, projectsStorageService } = dependencies;
 
     // Delete issue with api
-    await issuesApiService.deleteIssue(issueId, columnId);
+    const updatedProject = await projectsApiService.deleteIssue(issueId, columnId);
 
-    // Force refresh of column
-    staleColumnsService.addStaleColumn(columnId);
+    // Update project in local state
+    const currProjects = projectsStorageService.projects;
+    const updatedProjects = updateProject(updatedProject, currProjects);
+    projectsStorageService.updateProjects(updatedProjects);
+
+    // Return updated project
+    return updatedProject;
 }
