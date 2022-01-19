@@ -7,7 +7,7 @@ type Dependencies = {
     projectStorageService: IProjectsStorageService;
 };
 
-export async function moveColumn(
+export async function relocateColumn(
     columnId: string,
     projectId: string,
     newIndex: number,
@@ -16,10 +16,12 @@ export async function moveColumn(
     const { projectStorageService, projectsApiService } = dependencies;
 
     // Update project with api
-    const updatedProject = await projectsApiService.reorderColumns(
+    const updatedProject = await projectsApiService.relocateColumn(
         projectId,
-        columnId,
-        newIndex
+        {
+            columnId,
+            newIndex
+        }
     );
 
     // Update project in local state
