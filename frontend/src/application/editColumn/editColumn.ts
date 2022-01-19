@@ -1,33 +1,34 @@
-import { Project, updateProject } from "../../domain/project";
-import { IColumnsApiService } from "../contracts/columnsApiService";
+import { updateProject } from "../../domain/project";
+import { IProjectsApiService } from "../contracts/projectsApiService";
 import { IProjectsStorageService } from "../contracts/projectsStorage";
-import { IStaleProjectService } from "../contracts/staleProjectService";
 
 type Dependencies = {
-    columnsApiService: IColumnsApiService;
-    staleProjectService: IStaleProjectService;
+    projectsApiService: IProjectsApiService;
+    projectsStorageService: IProjectsStorageService;
 };
 
 export async function editColumn(
-    id: string,
-    name: string,
-    description: string,
+    columnId: string,
     projectId: string,
+    column: {
+        name: string;
+        description?: string;
+    },
     dependencies: Dependencies
 ) {
-    const { columnsApiService: columnsApiServce, staleProjectService } =
-        dependencies;
+    const { projectsApiService, projectsStorageService } = dependencies;
 
     // Update column with api
-    const updatedColumn = await columnsApiServce.editColumn(
-        id,
-        name,
-        description
-    );
+    const updatedProject = await projectsApiService.editColumn(projectId, {
+        columnId,
+        ...column,
+    });
 
-    // Make project stale so columns are reloaded
-    staleProjectService.addStaleProject(projectId);
+    // Update project in local state
+    const currProjects = projectsStorageService.projects;
+    const updatedProjects = updateProject(updatedProject, currProjects);
+    projectsStorageService.updateProjects(updatedProjects);
 
-    // Return updated column
-    return updatedColumn;
+    // Return updated project
+    return updatedProject;
 }
