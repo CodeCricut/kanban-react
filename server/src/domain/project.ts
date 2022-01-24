@@ -91,7 +91,9 @@ export function findIssuesColumnInProject(
         const issueInCol = project.columns[i].issues.find(
             (iss) => iss.issueId == issueId
         );
-        return project.columns[i]
+        if (issueInCol){
+            return project.columns[i]
+        }
     }
     return undefined;
 }
@@ -194,6 +196,7 @@ export function relocateProjectIssue(project: Project, issueId: string, newColum
 
     // Remove issue from old column
     const indexInOld = oldColumn.issues.findIndex(oldIssue => oldIssue.issueId == issueId)
+    if (indexInOld < 0) throw new EntityNotInParentError(`Couldn't find issue in old column. Old col id=${oldColumn.columnId}; issue id=${issueId}.`)
     oldColumn.issues.splice(indexInOld, 1)
 
     // Add issue to new
