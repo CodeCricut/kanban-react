@@ -9,13 +9,13 @@ type Dependencies = {
 
 export async function deleteIssue(
     issueId: string,
-    columnId: string,
+    projectId: string,
     dependencies: Dependencies
 ) {
     const { projectsApiService, projectsStorageService } = dependencies;
 
     // Delete issue with api
-    const updatedProject = await projectsApiService.deleteIssue(issueId, columnId);
+    const updatedProject = await projectsApiService.deleteIssue(projectId, issueId);
 
     // Update project in local state
     const currProjects = projectsStorageService.projects;

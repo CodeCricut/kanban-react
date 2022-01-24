@@ -5,18 +5,18 @@ import { useProjectsStorage } from "../../services/projectsStorage";
 import { deleteIssue } from "./deleteIssue";
 
 type DeleteIssueFunction = {
-    (issueId: string, columnId: string): Promise<Project>;
+    (issueId: string, projectId: string): Promise<Project>;
 };
 
 export function useDeleteIssue(): DeleteIssueFunction {
     const projectsApiService = useProjectsApiService();
-    const projectsStorageService = useProjectsStorage()
+    const projectsStorageService = useProjectsStorage();
 
     const func = useCallback(
-        (issueId: string, columnId: string) =>
-            deleteIssue(issueId, columnId, {
+        (issueId: string, projectId: string) =>
+            deleteIssue(issueId, projectId, {
                 projectsApiService,
-                projectsStorageService
+                projectsStorageService,
             }),
         [projectsApiService, projectsStorageService]
     );

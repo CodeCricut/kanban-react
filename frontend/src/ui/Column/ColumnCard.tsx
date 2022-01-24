@@ -65,7 +65,7 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
     const modalService = useModalService();
 
     const handleAddIssue = () => {
-        modalService.setModal(<AddIssueModal column={column} />);
+        modalService.setModal(<AddIssueModal column={column} project={project}/>);
     };
 
     const handleEditIssue = () => {
@@ -107,7 +107,7 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
     function renderIssue(issue: Issue, index: number) {
         return (
             <Box key={issue.id} sx={{ marginBottom: 1 }}>
-                <DraggableIssue issue={issue} column={column} index={index} />
+                <DraggableIssue issue={issue} column={column} project={project} index={index} />
             </Box>
         );
     }

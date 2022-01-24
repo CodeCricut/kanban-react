@@ -6,6 +6,7 @@ import { Issue } from "../../domain/issue";
 import { Column } from "../../domain/column";
 import { useModalService } from "../../services/modalService";
 import { EditIssueModal } from "../EditIssue";
+import { Project } from "../../domain/project";
 
 type StylesType = {
     container: SxProps;
@@ -43,15 +44,15 @@ const styles: StylesType = {
 
 type IssueCardProps = {
     issue: Issue;
-    column: Column;
+    project: Project
     cardStyles: SxProps;
 };
 
-export const IssueCard = ({ issue, column, cardStyles }: IssueCardProps) => {
+export const IssueCard = ({ issue, project, cardStyles }: IssueCardProps) => {
     const modalService = useModalService();
     const handleEditIssue = () => {
         modalService.setModal(
-            <EditIssueModal issue={issue} columnId={column.id ?? ""} />
+            <EditIssueModal issue={issue} projectId={project.id ?? ""} />
         );
     };
 

@@ -16,9 +16,9 @@ import { useDeleteIssue } from "../../application/deleteIssue/hook";
 
 type ModalProps = {
     issue: Issue;
-    columnId: string;
+    projectId: string;
 };
-export const Modal = ({ issue, columnId }: ModalProps) => {
+export const Modal = ({ issue, projectId }: ModalProps) => {
     const formState = useFormState(issue);
 
     const modalService = useModalService();
@@ -30,13 +30,12 @@ export const Modal = ({ issue, columnId }: ModalProps) => {
     };
 
     const handleEdit = async () => {
-        const { name, description } = formState.values;
-        await editIssue(issue.id ?? "", name, description, columnId);
+        await editIssue(issue.id ?? "", projectId, formState.values);
         modalService.unsetModal();
     };
 
     const handleDelete = async () => {
-        await deleteIssue(issue.id ?? "", columnId);
+        await deleteIssue(issue.id ?? "", projectId);
         modalService.unsetModal();
     };
 
