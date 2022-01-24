@@ -4,12 +4,14 @@ import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
 import { useRelocateIssue } from "../../application/relocateIssue/hook";
 import { Column } from "../../domain/column";
 import { Issue } from "../../domain/issue";
+import { Project } from "../../domain/project";
 import { ItemTypes } from "../shared/itemTypes";
 import { IssueCard } from "./IssueCard";
 
 type DraggableIssueProps = {
     issue: Issue;
     column: Column;
+    project: Project;
     index: number;
 };
 
@@ -20,7 +22,7 @@ type IssueItemType = {
 };
 
 export const DraggableIssue = (props: DraggableIssueProps) => {
-    const { issue, column, index } = props;
+    const { issue, column, project, index } = props;
     const ref = useRef<HTMLDivElement>(null);
 
     const [, drag] = useDrag(
@@ -87,12 +89,12 @@ export const DraggableIssue = (props: DraggableIssueProps) => {
         newColumnId: string,
         toIndex: number
     ) {
-        await relocateIssue(issueId, oldColumnId, newColumnId, toIndex);
+        await relocateIssue(issueId, project.id ?? "", newColumnId, toIndex);
     }
 
     return (
         <Box ref={ref}>
-            <IssueCard issue={issue} column={column} cardStyles={cardStyles} />
+            <IssueCard issue={issue} project={project} cardStyles={cardStyles} />
         </Box>
     );
 };

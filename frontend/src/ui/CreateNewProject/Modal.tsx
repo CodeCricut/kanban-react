@@ -23,8 +23,7 @@ export const Modal = () => {
     };
 
     const handleCreate = async () => {
-        const { name, description } = formState.values;
-        await createProject(name, description);
+        await createProject(formState.values);
         modalService.unsetModal();
     };
 

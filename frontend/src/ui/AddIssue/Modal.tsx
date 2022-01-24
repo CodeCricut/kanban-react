@@ -7,28 +7,29 @@ import {
     Button,
 } from "@mui/material";
 import { useModalService } from "../../services/modalService";
-import { useAddIssueToColumn } from "../../application/addIssueToColumn/hook";
 import { Column } from "../../domain/column";
 import { CloseDialogTitle } from "../shared/CloseDialogTitle";
 import { Form } from "./Form";
 import { useFormState } from "./formState";
+import { useAddIssue } from "../../application/addIssue/hook";
+import { Project } from "../../domain/project";
 
 type ModalProps = {
+    project: Project;
     column: Column;
 };
-export const Modal = ({ column }: ModalProps) => {
+export const Modal = ({ project, column }: ModalProps) => {
     const formState = useFormState();
 
     const modalService = useModalService();
-    const addIssueToColumn = useAddIssueToColumn();
+    const addIssue = useAddIssue();
 
     const handleCancel = () => {
         modalService.unsetModal();
     };
 
     const handleCreate = async () => {
-        const { name, description } = formState.values;
-        await addIssueToColumn(column, name, description);
+        await addIssue(project, column, formState.values);
         modalService.unsetModal();
     };
 

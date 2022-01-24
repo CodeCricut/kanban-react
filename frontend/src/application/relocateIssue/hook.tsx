@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { Column } from "../../domain/column";
+import { Project } from "../../domain/project";
 import { useProjectsApiService } from "../../services/projectsApi/hook";
 import { useProjectsStorage } from "../../services/projectsStorage";
 import { relocateIssue } from "./relocateIssue";
@@ -10,7 +11,7 @@ type RelocateIssueFunction = {
         projectId: string,
         newColumnId: string,
         newIndex: number
-    ): Promise<Column>;
+    ): Promise<Project>;
 };
 
 export function useRelocateIssue(): RelocateIssueFunction {

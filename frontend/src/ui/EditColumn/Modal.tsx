@@ -36,8 +36,7 @@ export const Modal = ({ column, projectId }: ModalProps) => {
     };
 
     const handleEdit = async () => {
-        const { name, description } = formState.values;
-        await editColumn(column.id ?? "", name, description, projectId);
+        await editColumn(column.id ?? "", projectId, formState.values);
         modalService.unsetModal();
     };
 

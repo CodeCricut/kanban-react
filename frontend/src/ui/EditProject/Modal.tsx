@@ -26,8 +26,7 @@ export const Modal = ({ project }: ModalDependencies) => {
     };
 
     const handleEdit = async () => {
-        const { name, description } = formState.values;
-        await editProject(project.id ?? "", name, description);
+        await editProject(project.id ?? "", formState.values);
         modalService.unsetModal();
     };
 
