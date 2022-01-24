@@ -23,14 +23,14 @@ export async function handleDeleteColumnCommand(command: DeleteColumnCommand) {
     let user: User | null = await getUserById(userId);
     if (!user) {
         throw new NotAuthenticatedError(
-            "User could not be authenticated. Must be authenticated before deleting issue."
+            "User could not be authenticated. Must be authenticated before deleting column."
         );
     }
 
     // Ensure is is authorized to edit project
     if (!user.projects.includes(projectId)) {
         throw new NotAuthorizedError(
-            "Not authorized to delete issue of project you do not own."
+            "Not authorized to delete column of project you do not own."
         );
     }
 

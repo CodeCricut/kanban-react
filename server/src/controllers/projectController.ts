@@ -164,7 +164,7 @@ export async function deleteIssue(
         const updated = await handleDeleteIssueCommand({
             userId: req.user.id,
             projectId: req.params.id,
-            issueId: req.body.issueId,
+            issueId: req.query.issueId as string,
         });
 
         res.status(200);
@@ -185,7 +185,7 @@ export async function deleteColumn(
         const updated = await handleDeleteColumnCommand({
             userId: req.user.id,
             projectId: req.params.id,
-            columnId: req.body.columnId,
+            columnId: req.query.columnId as string
         });
 
         res.status(200);

@@ -401,17 +401,11 @@ export const projectParameters = {
         },
     },
     DeleteIssueParameter: {
-        in: "body",
-        name: "body",
+        in: "path",
+        name: "issueId",
         required: true,
         schema: {
-            type: "object",
-            required: ["issueId"],
-            properties: {
-                issueId: {
-                    type: "string",
-                },
-            },
+            type: "string",
         },
     },
     AddColumnParameter: {
@@ -440,17 +434,11 @@ export const projectParameters = {
         },
     },
     DeleteColumnParameter: {
-        in: "body",
-        name: "body",
+        in: "path",
+        name: "columnId",
         required: true,
         schema: {
-            type: "object",
-            required: ["columnId"],
-            properties: {
-                columnId: {
-                    type: "string",
-                },
-            },
+            type: "string",
         },
     },
     EditColumnParameter: {
