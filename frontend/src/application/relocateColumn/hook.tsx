@@ -8,7 +8,7 @@ type RelocateColumnFunction = {
     (columnId: string, projectId: string, newIndex: number): Promise<Project>;
 };
 
-export function useMoveColumn(): RelocateColumnFunction {
+export function useRelocateColumn(): RelocateColumnFunction {
     const projectStorageService = useProjectsStorage();
     const projectsApiService = useProjectsApiService();
 
