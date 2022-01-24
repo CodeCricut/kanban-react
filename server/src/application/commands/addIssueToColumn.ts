@@ -67,7 +67,6 @@ export async function handleAddIssueToColumnCommand(
 
     // Update project/column with new issue
     project = updateProjectColumn(project, updatedColumn);
-    console.dir(project);
     project = await updateProject(projectId, project);
 
     // Return updated project
