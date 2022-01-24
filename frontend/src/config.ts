@@ -25,7 +25,7 @@ export const appConfig = {
     editColumnRoute: (projectId: string) =>
         `/projects/edit-column/${projectId}`,
     deleteColumnRoute: (projectId: string, columnId: string) =>
-        `/projects/delete/${projectId}?columnId=${columnId}`,
+        `/projects/delete-column/${projectId}?columnId=${columnId}`,
     addIssueRoute: (projectId: string) => `/projects/add-issue/${projectId}`,
     editIssueRoute: (projectId: string) => `/projects/edit-issue/${projectId}`,
     deleteIssueRoute: (projectId: string, issueId: string) =>

@@ -15,7 +15,7 @@ export async function deleteColumn(
     const { projectsApiService, projectsStorageService } = dependencies;
 
     // Delete project with api
-    const updatedProject = await projectsApiService.deleteColumn(columnId, projectId);
+    const updatedProject = await projectsApiService.deleteColumn(projectId, columnId);
 
     // Update project in local state
     const currProjects = projectsStorageService.projects;
