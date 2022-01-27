@@ -8,34 +8,38 @@ import {
     MenuItem,
 } from "@mui/material";
 import { FormState } from "./formState";
+import formStyles from "../shared/formStyles";
 
 export const Form = ({ state }: { state: FormState }) => {
     return (
-        <Box>
-            <FormControl>
-                <Typography>Username</Typography>
+        <Box sx={formStyles.form}>
+            <FormControl sx={formStyles.labeledInput}>
+                <Typography sx={formStyles.label}>Username</Typography>
                 <TextField
+                    sx={formStyles.inputLong}
                     required
-                    error={state.invalidUsername}
+                    error={state.invalidUsername && state.triedInvalid}
                     value={state.values.username}
                     onChange={(e) => state.setUsername(e.target.value)}
                 />
             </FormControl>
-            <FormControl>
-                <Typography>Email</Typography>
+            <FormControl sx={formStyles.labeledInput}>
+                <Typography sx={formStyles.label}>Email</Typography>
                 <TextField
+                    sx={formStyles.inputLong}
                     type="email"
-                    error={state.invalidEmail}
+                    error={state.invalidEmail && state.triedInvalid}
                     required
                     value={state.values.email}
                     onChange={(e) => state.setEmail(e.target.value)}
                 />
             </FormControl>
-            <FormControl>
-                <Typography>Password</Typography>
+            <FormControl sx={formStyles.labeledInput}>
+                <Typography sx={formStyles.label}>Password</Typography>
                 <TextField
+                    sx={formStyles.inputLong}
                     type="password"
-                    error={state.invalidPassword}
+                    error={state.invalidPassword && state.triedInvalid}
                     required
                     value={state.values.password}
                     onChange={(e) => state.setPassword(e.target.value)}
