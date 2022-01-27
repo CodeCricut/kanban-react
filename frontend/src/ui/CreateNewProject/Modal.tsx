@@ -11,6 +11,7 @@ import { CloseDialogTitle } from "../shared/CloseDialogTitle";
 import { useCreateProject } from "../../application/createProject/hook";
 import { useModalService } from "../../services/modalService";
 import { useFormState } from "./formState";
+import modalStyles from "../shared/modalStyles";
 
 export const Modal = () => {
     const formState = useFormState();
@@ -32,7 +33,7 @@ export const Modal = () => {
             <CloseDialogTitle onClose={handleCancel}>
                 Create new project
             </CloseDialogTitle>
-            <DialogContent>
+            <DialogContent sx={modalStyles.modalContent}>
                 <Form state={formState} />
             </DialogContent>
             <DialogActions>
