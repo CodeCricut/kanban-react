@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, Container } from '@mui/material';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../application/login/hook';
@@ -21,10 +21,10 @@ export const LoginPage = () => {
         else setError(true)
     }
     return (
-        <div>
+        <Container>
             <Typography sx={{color: "error.main"}} hidden={!error}>Invalid form values</Typography>
             <Form state={formState}/>
             <Button onClick={handleLogin} disabled={formState.invalid}>Login</Button>
-        </div>
+        </Container>
     )
 }

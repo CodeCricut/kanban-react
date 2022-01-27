@@ -7,10 +7,8 @@ export const Layout = () => {
     return (
         <React.Fragment>
             <KanbanAppBar />
-            <Container>
                 {/* The outlet will display the contents of whatever component is selected as per the route/router */}
                 <Outlet />
-            </Container>
         </React.Fragment>
     );
 };

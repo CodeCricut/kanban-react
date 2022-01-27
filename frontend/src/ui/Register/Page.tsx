@@ -1,4 +1,4 @@
-import { Button, Typography } from '@mui/material';
+import { Button, Container, Typography } from '@mui/material';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useRegister } from '../../application/register/hook';
@@ -21,10 +21,10 @@ export const RegisterPage = () => {
         
     }
     return (
-        <div>
+        <Container>
             <Typography sx={{color: "error.main"}} hidden={!error}>Invalid form values</Typography>
             <Form state={formState}/>
             <Button onClick={handleRegister} disabled={formState.invalid}>Register</Button>
-        </div>
+        </Container>
     )
 }
