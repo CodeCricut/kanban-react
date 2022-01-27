@@ -1,9 +1,29 @@
 import { Button, Container, Typography } from '@mui/material';
+import { SxProps} from '@mui/system';
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useRegister } from '../../application/register/hook';
 import { Form } from './Form'
 import { useFormState } from './formState'
+
+type StylesType = SxProps & {
+    buttons: SxProps
+}
+const styles: StylesType = {
+    width: {
+        xs: 1,
+        sm: "50%"
+    },
+    display: "flex", 
+    flexDirection: "column",
+    alignItems: "start",
+    buttons :{
+        width: 300
+    },
+    "& > *": {
+        marginBottom: 1
+    }
+}
 
 export const RegisterPage = () => {
     const register = useRegister()
@@ -21,10 +41,11 @@ export const RegisterPage = () => {
         
     }
     return (
-        <Container>
+        <Container sx={styles}>
             <Typography sx={{color: "error.main"}} hidden={!error}>Invalid form values</Typography>
             <Form state={formState}/>
-            <Button onClick={handleRegister} disabled={formState.invalid}>Register</Button>
+            <Typography>Already have an account? <Link to="/login">Login</Link> instead.</Typography>
+            <Button sx={styles.buttons} onClick={handleRegister} disabled={formState.invalid} variant="contained">Register</Button>
         </Container>
     )
 }
