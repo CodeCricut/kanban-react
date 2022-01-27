@@ -13,6 +13,7 @@ import { Issue } from "../../domain/issue";
 import { useFormState } from "./formState";
 import { Form } from "./Form";
 import { useDeleteIssue } from "../../application/deleteIssue/hook";
+import modalStyles from "../shared/modalStyles";
 
 type ModalProps = {
     issue: Issue;
@@ -44,7 +45,7 @@ export const Modal = ({ issue, projectId }: ModalProps) => {
             <CloseDialogTitle onClose={handleCancel}>
                 Edit issue
             </CloseDialogTitle>
-            <DialogContent>
+            <DialogContent sx={modalStyles.modalContent}>
                 <Form state={formState} />
             </DialogContent>
             <DialogActions>
