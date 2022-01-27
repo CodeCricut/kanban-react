@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Typography, Box, IconButton } from "@mui/material";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import EditIcon from "@mui/icons-material/Edit";
 import { SxProps } from "@mui/system";
 import { Issue } from "../../domain/issue";
 import { Column } from "../../domain/column";
@@ -44,7 +44,7 @@ const styles: StylesType = {
 
 type IssueCardProps = {
     issue: Issue;
-    project: Project
+    project: Project;
     cardStyles: SxProps;
 };
 
@@ -69,7 +69,7 @@ export const IssueCard = ({ issue, project, cardStyles }: IssueCardProps) => {
                 </Box>
                 <Box>
                     <IconButton onClick={handleEditIssue}>
-                        <MoreHorizIcon />
+                        <EditIcon sx={{ fontSize: "1.2rem" }} />
                     </IconButton>
                 </Box>
             </Box>

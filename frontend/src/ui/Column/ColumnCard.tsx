@@ -1,6 +1,6 @@
 import { Card, Typography, Box, IconButton } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import EditIcon from "@mui/icons-material/Edit";
 import { SxProps } from "@mui/system";
 import { columnStyles } from "../shared/columnStyles";
 import { Column as ColumnModel } from "../../domain/column";
@@ -65,7 +65,9 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
     const modalService = useModalService();
 
     const handleAddIssue = () => {
-        modalService.setModal(<AddIssueModal column={column} project={project}/>);
+        modalService.setModal(
+            <AddIssueModal column={column} project={project} />
+        );
     };
 
     const handleEditIssue = () => {
@@ -93,12 +95,14 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
                         <AddIcon />
                     </IconButton>
                     <IconButton onClick={handleEditIssue}>
-                        <MoreHorizIcon />
+                        <EditIcon />
                     </IconButton>
                 </Box>
             </Box>
             <Box sx={styles.content}>
-                {column.issues?.map((issue, index) => renderIssue(issue, index))}
+                {column.issues?.map((issue, index) =>
+                    renderIssue(issue, index)
+                )}
                 <AddIssueCard handleAdd={handleAddIssue} />
             </Box>
         </Card>
@@ -107,7 +111,12 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
     function renderIssue(issue: Issue, index: number) {
         return (
             <Box key={issue.id} sx={{ marginBottom: 1 }}>
-                <DraggableIssue issue={issue} column={column} project={project} index={index} />
+                <DraggableIssue
+                    issue={issue}
+                    column={column}
+                    project={project}
+                    index={index}
+                />
             </Box>
         );
     }

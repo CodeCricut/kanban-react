@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { Project } from "../../domain/project";
 import { useModalService } from "../../services/modalService";
@@ -6,6 +6,7 @@ import { AddColumnModal } from "../AddColumn";
 import { AddColumnCard } from "../AddColumn/AddColumnCard";
 import { EditProject } from "../EditProject";
 import { DraggableColumn } from "../Column/DraggableColumn";
+import EditIcon from "@mui/icons-material/Edit";
 
 type StylesType = {
     container: SxProps;
@@ -52,13 +53,13 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
                     </Typography>
                 </Box>
                 <Box>
-                    <Button
+                    <IconButton
                         onClick={() =>
                             setModal(<EditProject project={project} />)
                         }
                     >
-                        More info...
-                    </Button>
+                        <EditIcon />
+                    </IconButton>
                 </Box>
             </Box>
             <Box sx={styles.content}>
