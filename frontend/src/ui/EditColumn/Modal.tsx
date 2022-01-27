@@ -14,6 +14,7 @@ import { useFormState } from "./formState";
 import { Form } from "./Form";
 import { useEditColumn } from "../../application/editColumn/hook";
 import { useDeleteColumn } from "../../application/deleteColumn/hook";
+import modalStyles from "../shared/modalStyles";
 
 type ModalProps = {
     column: Column;
@@ -45,7 +46,7 @@ export const Modal = ({ column, projectId }: ModalProps) => {
             <CloseDialogTitle onClose={handleCancel}>
                 Edit column
             </CloseDialogTitle>
-            <DialogContent>
+            <DialogContent sx={modalStyles.modalContent}>
                 <Form state={formState} />
             </DialogContent>
             <DialogActions>
