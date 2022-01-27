@@ -12,6 +12,7 @@ import { Project } from "../../domain/project";
 import { useFormState } from "./formState";
 import { Form } from "./Form";
 import { useAddColumn } from "../../application/addColumn/hook";
+import modalStyles from "../shared/modalStyles";
 
 type ModalProps = {
     project: Project;
@@ -37,7 +38,7 @@ export const Modal = ({ project }: ModalProps) => {
             <CloseDialogTitle onClose={handleCancel}>
                 Create new column
             </CloseDialogTitle>
-            <DialogContent>
+            <DialogContent sx={modalStyles.modalContent}>
                 <Form state={formState} />
             </DialogContent>
             <DialogActions>
