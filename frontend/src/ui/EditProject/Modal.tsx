@@ -7,6 +7,7 @@ import { useFormState } from "./formState";
 import { Form } from "./Form";
 import { useEditProject } from "../../application/editProject/hook";
 import { useDeleteProject } from "../../application/deleteProject/hook";
+import modalStyles from "../shared/modalStyles";
 
 type ModalDependencies = {
     project: Project;
@@ -40,7 +41,7 @@ export const Modal = ({ project }: ModalDependencies) => {
             <CloseDialogTitle onClose={handleCancel}>
                 Edit project
             </CloseDialogTitle>
-            <DialogContent>
+            <DialogContent sx={modalStyles.modalContent}>
                 <Form state={formState} />
             </DialogContent>
             <DialogActions>
