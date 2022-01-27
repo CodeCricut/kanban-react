@@ -13,13 +13,13 @@ type StylesType = SxProps & {
 const styles: StylesType = {
     width: {
         xs: 1,
-        sm: "50%"
+        sm: "40%"
     },
     display: "flex", 
     flexDirection: "column",
     alignItems: "start",
     buttons :{
-        width: 300
+        width: 1
     },
     "& > *": {
         marginBottom: 1
@@ -31,22 +31,29 @@ export const LoginPage = () => {
     const login = useLogin()
     const navigate = useNavigate()
 
+
     const [error, setError] = useState<boolean>(false)
     const formState = useFormState();
     const handleLogin = async () => {
-        setError(false)
-        const {username, password} = formState.values
-        const success: boolean = await login(username, password)
-        if (success)
+        if (formState.invalid){
+            formState.setTriedInvalid(true)
+            setError(true)
+        } else {
+            setError(false)
+            const {username, password} = formState.values
+            const success: boolean = await login(username, password)
+            if (success)
             navigate("/me")
-        else setError(true)
+            else setError(true)
+        }
     }
     return (
         <Container sx={styles}>
-            <Typography sx={{color: "error.main"}} hidden={!error}>Invalid form values</Typography>
+            <Typography variant="h2">Login</Typography>
+            <Typography sx={{color: "error.main"}} hidden={!error }>Invalid form values</Typography>
             <Form state={formState}/>
             <Typography>New here? <Link to="/register">Register</Link> instead.</Typography>
-            <Button sx={styles.buttons} onClick={handleLogin} disabled={formState.invalid} variant="contained">Login</Button>
+            <Button sx={styles.buttons} onClick={handleLogin} disabled={formState.invalid && formState.triedInvalid} variant="contained">Login</Button>
         </Container>
     )
 }

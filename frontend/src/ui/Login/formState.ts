@@ -13,6 +13,8 @@ export type FormState = {
     invalid: boolean;
     setUsername: (username: string) => void;
     setPassword: (password: string) => void;
+    triedInvalid: boolean;
+    setTriedInvalid: (tried: boolean) => void
 };
 
 export function useFormState(): FormState {
@@ -20,6 +22,7 @@ export function useFormState(): FormState {
         username: "",
         password: ""
     });
+    const [triedInvalid, setTriedInvalid] = useState(false)
 
     const setUsername = (username: string) => setValues({ ...values, username });
     const setPassword = (password: string) => setValues({ ...values, password });
@@ -34,5 +37,7 @@ export function useFormState(): FormState {
         invalidUsername,
         invalidPassword,
         invalid,
+        triedInvalid,
+        setTriedInvalid
     };
 }
