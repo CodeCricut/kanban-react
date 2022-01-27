@@ -21,24 +21,13 @@ const styles: StylesType = {
     },
 };
 type AppBarHeaderProps = {
-    handleOpenDrawer: () => void;
     title: string;
 };
 export const AppBarHeader = ({
-    handleOpenDrawer,
     title,
 }: AppBarHeaderProps) => {
     return (
         <React.Fragment>
-            <IconButton
-                edge="start"
-                sx={styles.menuButton}
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleOpenDrawer}
-            >
-                <MenuIcon />
-            </IconButton>
             <Typography sx={styles.title} variant="h6" noWrap>
                 <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
                     {title}

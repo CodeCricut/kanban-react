@@ -51,7 +51,6 @@ export const KanbanAppBar = () => {
                 <Box sx={styles.toolbarHeader}>
                     <AppBarHeader
                         title={"kanban-react"}
-                        handleOpenDrawer={() => {}}
                     />
                 </Box>
                 <Box sx={styles.centerContainer}>
