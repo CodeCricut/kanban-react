@@ -31,6 +31,10 @@ const styles: StylesType = {
     content: {
         minHeight: "70vh",
         display: "flex",
+        flexDirection: {
+            xs: "column",
+            sm: "row",
+        },
         overflow: "auto",
         padding: 1,
     },

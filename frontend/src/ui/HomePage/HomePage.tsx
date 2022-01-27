@@ -25,8 +25,8 @@ const styles: StylesType = {
         maxWidth: 1,
         gridTemplateColumns: {
             xs: "1fr",
-            sm: "minmax(0, 1fr) minmax(0, 2fr)",
-            md: "minmax(0, 1fr) minmax(0, 3fr)",
+            sm: "minmax(0, 1fr) minmax(0, 3fr)",
+            md: "minmax(0, 2fr) minmax(0, 9fr)",
         },
     },
     projectList: {},
@@ -72,14 +72,18 @@ export const HomePage = () => {
     };
 
     const handleSelectProject = (project: Project) => {
-        navigate(`/project/${project.id}`)
-    }
+        navigate(`/project/${project.id}`);
+    };
 
     if (!isLoggedIn) return <>Not logged in. Redirecting...</>;
     return (
         <Box sx={styles.container}>
             <Box sx={styles.projectList}>
-             <ProjectsList projects={usersProjects} handleSelect={handleSelectProject} handleAdd={handleCreateNewProject}/>
+                <ProjectsList
+                    projects={usersProjects}
+                    handleSelect={handleSelectProject}
+                    handleAdd={handleCreateNewProject}
+                />
             </Box>
             <Box sx={styles.mainContent}>
                 {selectedProjectService.selectedProject ? (

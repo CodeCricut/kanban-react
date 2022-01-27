@@ -76,6 +76,7 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
         );
     };
 
+    // TODO: I believe we need to use the MUI grid in order to make grids skinnier + response
     return (
         <Card
             sx={{ ...styles.container, ...cardStyles } as SxProps}
