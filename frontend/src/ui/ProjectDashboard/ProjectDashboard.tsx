@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography, Grid, Paper } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { Project } from "../../domain/project";
 import { useModalService } from "../../services/modalService";
@@ -16,9 +16,11 @@ type StylesType = {
 };
 const styles: StylesType = {
     container: {
+        width: 1,
+        height: 1,
         display: "flex",
         flexDirection: "column",
-        overflow: "hidden",
+        overflow: "scroll",
         padding: 2,
     },
     header: {
@@ -29,13 +31,20 @@ const styles: StylesType = {
     },
     headerInfo: {},
     content: {
-        minHeight: "70vh",
+        height: 0.75,
         display: "flex",
         flexDirection: {
             xs: "column",
             sm: "row",
         },
-        overflow: "auto",
+        overflowX: {
+            xs: "hidden",
+            sm: "scroll",
+        },
+        overflowY: {
+            xs: "scroll",
+            sm: "hidden",
+        },
         padding: 1,
     },
 };
@@ -75,7 +84,6 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
                         index={index}
                     />
                 ))}
-                <AddColumnCard handleAdd={handleAdd} />
             </Box>
         </Box>
     );

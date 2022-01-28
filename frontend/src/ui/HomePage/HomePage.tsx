@@ -20,19 +20,23 @@ type StylesType = {
 };
 const styles: StylesType = {
     container: {
-        marginTop: 5,
         display: "grid",
         maxWidth: 1,
+        maxHeight: "90vh",
+        overflow: "hidden",
         gridTemplateColumns: {
             xs: "1fr",
             sm: "minmax(0, 1fr) minmax(0, 3fr)",
             md: "minmax(0, 2fr) minmax(0, 9fr)",
         },
     },
-    projectList: {},
+    projectList: {
+        maxHeight: 0.9,
+    },
     mainContent: {
         maxWidth: 1,
         minWidth: 0,
+        maxHeight: 0.9,
     },
 };
 

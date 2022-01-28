@@ -4,7 +4,7 @@ import { Project } from "../../domain/project";
 import { ItemTypes } from "../shared/itemTypes";
 import { Column } from "../../domain/column";
 import { ColumnCard } from "./ColumnCard";
-import { Box } from "@mui/system";
+import { Box, Card } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { useRelocateColumn } from "../../application/relocateColumn/hook";
 
@@ -98,7 +98,7 @@ export const DraggableColumn = ({
     );
 
     return (
-        <Box ref={ref}>
+        <Box ref={ref} sx={{ display: "inline", width: "fit-content" }}>
             <ColumnCard
                 project={project}
                 column={column}

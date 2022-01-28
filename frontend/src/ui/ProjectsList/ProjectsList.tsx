@@ -13,14 +13,16 @@ import { SxProps } from "@mui/system";
 import AddIcon from "@mui/icons-material/Add";
 
 type StylesType = {
-    container: SxProps,
+    container: SxProps;
     header: SxProps & {
         heading: SxProps;
     };
+    projects: SxProps;
 };
 const styles: StylesType = {
     container: {
-        margin: 2
+        height: 1,
+        margin: 2,
     },
     header: {
         display: "flex",
@@ -31,8 +33,12 @@ const styles: StylesType = {
         heading: {
             fontSize: "1rem",
             color: "text.secondary",
-            padding: 1
+            padding: 1,
         },
+    },
+    projects: {
+        height: 0.75,
+        overflowY: "scroll",
     },
 };
 
@@ -56,7 +62,7 @@ export const ProjectsList = ({
                     <AddIcon />
                 </IconButton>
             </Box>
-            <List>
+            <List sx={styles.projects}>
                 <Divider />
                 {projects.map((project) => (
                     <React.Fragment key={project.id}>
