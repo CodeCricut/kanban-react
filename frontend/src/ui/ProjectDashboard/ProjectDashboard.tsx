@@ -84,6 +84,7 @@ export const ProjectDashboard = ({ project }: { project: Project }) => {
                         index={index}
                     />
                 ))}
+                <AddColumnCard handleAdd={handleAdd} />
             </Box>
         </Box>
     );
