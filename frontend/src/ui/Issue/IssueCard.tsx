@@ -23,6 +23,7 @@ const styles: StylesType = {
         display: "flex",
         flexDirection: "column",
         padding: 1,
+        marginRight: 1,
     },
     header: {
         display: "flex",

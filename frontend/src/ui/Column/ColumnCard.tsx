@@ -56,6 +56,7 @@ const styles: StylesType = {
         colName: {
             fontSize: "1.25rem",
         },
+        marginBottom: 1,
     },
 };
 
@@ -110,8 +111,8 @@ export const ColumnCard = ({ column, project, cardStyles }: ColumnProps) => {
                     {column.issues?.map((issue, index) =>
                         renderIssue(issue, index)
                     )}
-                    <AddIssueCard handleAdd={handleAddIssue} />
                 </Box>
+                <AddIssueCard handleAdd={handleAddIssue} />
             </Box>
         </Paper>
     );
