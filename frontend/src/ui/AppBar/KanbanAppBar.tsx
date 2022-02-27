@@ -44,13 +44,11 @@ const styles: StylesType = {
 };
 
 export const KanbanAppBar = () => {
-    const navigate = useNavigate();
-
     return (
         <AppBar position="static">
             <Toolbar sx={styles.toolbar}>
                 <Box sx={styles.toolbarHeader}>
-                    <AppBarHeader title={"kanban-react"} />
+                    <AppBarHeader title={"Kanban React"} />
                 </Box>
                 <Box sx={styles.centerContainer}></Box>
                 <Box sx={styles.rightContainer}>

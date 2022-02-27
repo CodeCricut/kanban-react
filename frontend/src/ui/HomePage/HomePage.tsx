@@ -95,7 +95,9 @@ export const HomePage = () => {
                         project={selectedProjectService.selectedProject}
                     />
                 ) : (
-                    <WelcomeCard />
+                    <Box sx={{ marginTop: 5 }}>
+                        <WelcomeCard />
+                    </Box>
                 )}
             </Box>
         </Box>
