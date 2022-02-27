@@ -28,7 +28,12 @@ export const DraggableIssue = (props: DraggableIssueProps) => {
     const [, drag] = useDrag(
         () => ({
             type: ItemTypes.ISSUE,
-            item: { id: issue.id, index, oldColumnId: column.id },
+            item: {
+                type: ItemTypes.ISSUE,
+                id: issue.id,
+                index,
+                oldColumnId: column.id,
+            },
         }),
         [issue, index]
     );
@@ -94,7 +99,11 @@ export const DraggableIssue = (props: DraggableIssueProps) => {
 
     return (
         <Box ref={ref}>
-            <IssueCard issue={issue} project={project} cardStyles={cardStyles} />
+            <IssueCard
+                issue={issue}
+                project={project}
+                cardStyles={cardStyles}
+            />
         </Box>
     );
 };
