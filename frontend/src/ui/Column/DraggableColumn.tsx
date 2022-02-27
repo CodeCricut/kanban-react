@@ -4,9 +4,10 @@ import { Project } from "../../domain/project";
 import { ItemTypes, ItemType } from "../shared/itemTypes";
 import { Column } from "../../domain/column";
 import { ColumnCard } from "./ColumnCard";
-import { Box, Card } from "@mui/material";
+import { Box } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { useRelocateColumn } from "../../application/relocateColumn/hook";
+import { useRelocateIssue } from "../../application/relocateIssue/hook";
 
 type MakeOutlineStyles = {
     (isOver: boolean, canDrop: boolean, itemType: ItemType): SxProps;
@@ -42,6 +43,7 @@ export const DraggableColumn = ({
     const ref = useRef<HTMLDivElement>(null);
 
     const relocateColumn = useRelocateColumn();
+    const relocateIssue = useRelocateIssue();
 
     const [, drag] = useDrag(
         () => ({
@@ -63,18 +65,27 @@ export const DraggableColumn = ({
                 return !(dragIndex === hoverIndex);
             } else if (item.type == ItemTypes.ISSUE) {
                 // Only allow issue to be dropped in EMPTY column
-                console.dir(column);
                 return column.issues?.length === 0;
             }
             return false;
         },
 
         drop: async (item: any) => {
-            const columnId: string = item.id;
-            const hoverIndex = index;
+            if (item.type == ItemTypes.COLUMN) {
+                const columnId: string = item.id;
+                const hoverIndex = index;
 
-            // TODO: technically, I think this is moving the column at the drop zone to the column from the drag start
-            await relocateColumn(columnId, project.id ?? "", hoverIndex);
+                await relocateColumn(columnId, project.id ?? "", hoverIndex);
+            } else if (item.type == ItemTypes.ISSUE) {
+                if (column.issues?.length !== 0) return;
+                const issueId: string = item.id;
+                await relocateIssue(
+                    issueId,
+                    project.id ?? "",
+                    column.id ?? "",
+                    0
+                );
+            }
         },
         collect: (monitor: DropTargetMonitor) => ({
             isOver: monitor.isOver(),
