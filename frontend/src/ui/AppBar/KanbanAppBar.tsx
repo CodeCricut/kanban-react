@@ -1,22 +1,17 @@
-import React from 'react'
-import {
-    Toolbar,
-    Typography,
-    InputBase,
-    IconButton,
-    AppBar,
-    Box,
-} from "@mui/material";
+import React from "react";
 import { SxProps } from "@mui/system";
-import { AppBarHeader } from './AppBarHeader';
-import { AuthButton } from './AuthButton';
+import { AppBarHeader } from "./AppBarHeader";
+import { AuthButton } from "./AuthButton";
+import { ProfileButton } from "./ProfileButton";
+import { useNavigate } from "react-router-dom";
+import { Toolbar, AppBar, Box } from "@mui/material";
 
-type StylesType ={
+type StylesType = {
     toolbar: SxProps;
     toolbarHeader: SxProps;
     centerContainer: SxProps;
     rightContainer: SxProps;
-}
+};
 const styles: StylesType = {
     toolbar: {
         display: "grid",
@@ -37,28 +32,32 @@ const styles: StylesType = {
     },
     rightContainer: {
         display: "flex",
+        alignItems: "center",
         flexDirection: "row-reverse",
         marginLeft: {
             xs: 2,
+        },
+        "& > *": {
+            marginLeft: 2,
         },
     },
 };
 
 export const KanbanAppBar = () => {
+    const navigate = useNavigate();
+
     return (
         <AppBar position="static">
             <Toolbar sx={styles.toolbar}>
                 <Box sx={styles.toolbarHeader}>
-                    <AppBarHeader
-                        title={"kanban-react"}
-                    />
+                    <AppBarHeader title={"kanban-react"} />
                 </Box>
-                <Box sx={styles.centerContainer}>
-                </Box>
+                <Box sx={styles.centerContainer}></Box>
                 <Box sx={styles.rightContainer}>
-                    <AuthButton/>
+                    <ProfileButton />
+                    <AuthButton />
                 </Box>
             </Toolbar>
         </AppBar>
-    )
-}
+    );
+};

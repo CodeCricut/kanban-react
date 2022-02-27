@@ -1,7 +1,6 @@
 import React from "react";
 
-import { IconButton, Typography } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -23,13 +22,14 @@ const styles: StylesType = {
 type AppBarHeaderProps = {
     title: string;
 };
-export const AppBarHeader = ({
-    title,
-}: AppBarHeaderProps) => {
+export const AppBarHeader = ({ title }: AppBarHeaderProps) => {
     return (
         <React.Fragment>
             <Typography sx={styles.title} variant="h6" noWrap>
-                <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+                <Link
+                    to="/"
+                    style={{ color: "inherit", textDecoration: "none" }}
+                >
                     {title}
                 </Link>
             </Typography>
