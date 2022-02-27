@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Typography, Box, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { SxProps } from "@mui/system";
@@ -24,6 +24,9 @@ const styles: StylesType = {
         flexDirection: "column",
         padding: 1,
         marginRight: 1,
+        "&:hover": {
+            cursor: "move",
+        },
     },
     header: {
         display: "flex",
@@ -50,6 +53,8 @@ type IssueCardProps = {
 };
 
 export const IssueCard = ({ issue, project, cardStyles }: IssueCardProps) => {
+    const [cardElevation, setCardElevation] = useState<number>(0);
+
     const modalService = useModalService();
     const handleEditIssue = () => {
         modalService.setModal(
@@ -60,7 +65,10 @@ export const IssueCard = ({ issue, project, cardStyles }: IssueCardProps) => {
     return (
         <Card
             sx={{ ...styles.container, ...cardStyles } as SxProps}
-            elevation={2}
+            variant="elevation"
+            onMouseOver={() => setCardElevation(2)}
+            onMouseOut={() => setCardElevation(0)}
+            elevation={cardElevation}
         >
             <Box sx={styles.header}>
                 <Box>
