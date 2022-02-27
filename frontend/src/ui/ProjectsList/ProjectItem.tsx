@@ -25,7 +25,7 @@ const styles: StylesType = {
         minWidth: "25px",
         color: "info.contrastText",
         fontWeight: "bold",
-        alignSelf: "start"
+        alignSelf: "start",
     },
 };
 type ProjectItemProps = {
@@ -35,9 +35,7 @@ type ProjectItemProps = {
 export const ProjectItem = ({ project, handleSelect }: ProjectItemProps) => {
     return (
         <ListItem disableGutters sx={styles.container}>
-            <ListItemButton disableGutters
-                onClick={handleSelect}
-            >
+            <ListItemButton disableGutters onClick={handleSelect}>
                 <Box sx={styles.projectInitial}>
                     {project.name?.charAt(0).toUpperCase() ?? "P"}
                 </Box>
