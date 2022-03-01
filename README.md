@@ -9,7 +9,7 @@
 Note: If you would like to use the website with some mock data already provided, use
 the following login credentials:
 
-**Username**: user3, **Password**: user3password
+**Username**: user1, **Password**: user1password
 
 You can find the live website at [codecricut-kanban.herokuapp.com](https://codecricut-kanban.herokuapp.com/)
 
