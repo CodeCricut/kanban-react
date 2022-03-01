@@ -16,6 +16,9 @@ app.use("/", frontendRouter);
 app.use("/docs", docsRouter);
 app.use("/api", apiRouter);
 
+/**
+ * Begin the server on the port defined by the PORT or TEST_PORT environment variable.
+ */
 function startApp(app: Express) {
     const port = process.env.PORT || process.env.TEST_PORT;
     if (!port)
