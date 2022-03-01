@@ -6,7 +6,7 @@
         "start": "ts-node ./src/index.ts",
         "dev": "nodemon",
         "test": "jest --detectOpenHandles",
-        "document": "npx tsoa spec && npx tsoa routes && typedoc --entryPointStrategy expand ./src"
+        "document": "typedoc --entryPointStrategy expand ./src"
     },
     "dependencies": {
         "@types/bcryptjs": "^2.4.2",
