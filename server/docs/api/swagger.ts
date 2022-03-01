@@ -20,7 +20,7 @@ export default {
             url: "http://www.apache.org/licenses/LICENSE-2.0.html",
         },
     },
-    schemes: ["http"],
+    schemes: ["https"],
     basePath: "/api",
     paths: {
         ...authPaths,
