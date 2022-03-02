@@ -64,6 +64,7 @@ export const ProjectsList = ({
             </Box>
             <List sx={styles.projects}>
                 <Divider />
+                {console.dir(projects)}
                 {projects.map((project) => (
                     <React.Fragment key={project.id}>
                         <ProjectItem

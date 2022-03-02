@@ -12,9 +12,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/", frontendRouter);
 app.use("/docs", docsRouter);
 app.use("/api", apiRouter);
+app.use("/", frontendRouter);
 
 /**
  * Begin the server on the port defined by the PORT or TEST_PORT environment variable.
