@@ -1,6 +1,6 @@
 # Kanban React
 
-[**Description**: Kanban React is a [MERN](https://www.geeksforgeeks.org/mern-stack/) implementation of a Trello-inspired [kanban board](https://en.wikipedia.org/wiki/Kanban_board). It is a fullstack app which uses React and MUI for a clean frontend, Express for a logical and documented API, and Mongoose and MongoDB for a safe persistence layer.
+**Description**: Kanban React is a [MERN](https://www.geeksforgeeks.org/mern-stack/) implementation of a Trello-inspired [kanban board](https://en.wikipedia.org/wiki/Kanban_board). It is a fullstack app which uses React and MUI for a clean frontend, Express for a logical and documented API, and Mongoose and MongoDB for a safe persistence layer.
 
 **Author**: Andrew Richerson
 
