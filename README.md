@@ -10,7 +10,7 @@ This project used to be hosted as a live website you could visit on Heroku, but 
 
 Please see this video demo instead!
 
-[<img src="https://github.com/CodeCricut/kanban-react/assets/20567748/b22a557c-f09d-48eb-939d-f40811f1baf8">](https://vimeo.com/874451380?share=copy)
+[![vimeo screenshot](./275298807-b22a557c-f09d-48eb-939d-f40811f1baf8.png)](https://vimeo.com/874451380?share=copy)
 
 ## Features
 
