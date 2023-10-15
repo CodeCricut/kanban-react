@@ -4,14 +4,13 @@
 
 **Author**: Andrew Richerson
 
-## Live Website
+## Demo
 
-Note: If you would like to use the website with some mock data already provided, use
-the following login credentials:
+This project used to be hosted as a live website you could visit on Heroku, but that hosting service has since discontinued it's free tier.
 
-**Username**: user1, **Password**: user1password
+Please see this video demo instead!
 
-You can find the live website at [codecricut-kanban.herokuapp.com](https://codecricut-kanban.herokuapp.com/)
+[<img src="https://github.com/CodeCricut/kanban-react/assets/20567748/b22a557c-f09d-48eb-939d-f40811f1baf8">](https://vimeo.com/874451380?share=copy)
 
 ## Features
 
